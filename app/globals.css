@@ -8,3 +8,20 @@
     text-wrap: balance;
   }
 }
+.image2 {
+	background-image: url(https://res.cloudinary.com/dmye53wps/image/upload/v1752341187/Group_2_1_qtn57f.png);
+	background-size: cover;
+	background-position: center;
+	background-blend-mode: multiply;
+}
+
+.image3 {
+	background-image: url(https://res.cloudinary.com/dmye53wps/image/upload/v1752342769/Group_2_qu8pcf.png);
+	background-size: cover;
+	background-position: center;
+	background-blend-mode: multiply;
+}
+.text {
+  /* box-shadow: 0px 4px 4px 0px #00000033; */
+  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}

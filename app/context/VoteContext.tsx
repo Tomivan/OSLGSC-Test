@@ -1,69 +1,61 @@
 "use client";
 
-import React, { createContext, useContext, useState, ReactNode } from "react";
+import React, { createContext, useContext, useState } from "react";
 
 interface VoteContextType {
-	voteSelections: { [key: string]: number };
-	setVoteSelections: React.Dispatch<
-		React.SetStateAction<{ [key: string]: number }>
-	>;
-	getTotalVotes: () => number;
-	getTotalAmount: () => number;
-	handleVoteChange: (nomineeId: string, quantity: number) => void;
-	clearVotes: () => void;
+  votes: Record<string, Record<string, number>>;
+  selectedNominees: Record<string, string>;
+  totalVotes: number;
+  handleVoteChange: (categoryId: string, nomineeId: string, quantity: number) => void;
 }
 
 const VoteContext = createContext<VoteContextType | undefined>(undefined);
 
-export const useVoteContext = () => {
-	const context = useContext(VoteContext);
-	if (context === undefined) {
-		throw new Error("useVoteContext must be used within a VoteProvider");
-	}
-	return context;
+export const VoteProvider = ({ children }: { children: React.ReactNode }) => {
+  const [votes, setVotes] = useState<Record<string, Record<string, number>>>({});
+  const [selectedNominees, setSelectedNominees] = useState<Record<string, string>>({});
+
+  const totalVotes = Object.values(votes).reduce((sum, categoryVotes) => {
+    return sum + Object.values(categoryVotes).reduce((catSum, vote) => catSum + vote, 0);
+  }, 0);
+
+  const handleVoteChange = (categoryId: string, nomineeId: string, quantity: number) => {
+    setVotes((prev) => {
+      const newVotes = { ...prev };
+      
+      if (quantity > 0) {
+        if (selectedNominees[categoryId]) {
+          newVotes[categoryId] = { ...newVotes[categoryId], [selectedNominees[categoryId]]: 0 };
+        }
+        
+        setSelectedNominees((prevSelected) => ({
+          ...prevSelected,
+          [categoryId]: nomineeId,
+        }));
+      } else {
+        setSelectedNominees((prevSelected) => {
+          const newSelected = { ...prevSelected };
+          delete newSelected[categoryId];
+          return newSelected;
+        });
+      }
+      
+      newVotes[categoryId] = { ...newVotes[categoryId], [nomineeId]: quantity };
+      return newVotes;
+    });
+  };
+
+  return (
+    <VoteContext.Provider value={{ votes, selectedNominees, totalVotes, handleVoteChange }}>
+      {children}
+    </VoteContext.Provider>
+  );
 };
 
-interface VoteProviderProps {
-	children: ReactNode;
-}
-
-export const VoteProvider: React.FC<VoteProviderProps> = ({ children }) => {
-	const [voteSelections, setVoteSelections] = useState<{
-		[key: string]: number;
-	}>({});
-
-	const getTotalVotes = () => {
-		return Object.values(voteSelections).reduce(
-			(sum, quantity) => sum + quantity,
-			0
-		);
-	};
-
-	const getTotalAmount = () => {
-		return getTotalVotes() * 100;
-	};
-
-	const handleVoteChange = (nomineeId: string, quantity: number) => {
-		setVoteSelections((prev) => ({
-			...prev,
-			[nomineeId]: quantity,
-		}));
-	};
-
-	const clearVotes = () => {
-		setVoteSelections({});
-	};
-
-	const value = {
-		voteSelections,
-		setVoteSelections,
-		getTotalVotes,
-		getTotalAmount,
-		handleVoteChange,
-		clearVotes,
-	};
-
-	return (
-		<VoteContext.Provider value={value}>{children}</VoteContext.Provider>
-	);
+export const useVoteContext = () => {
+  const context = useContext(VoteContext);
+  if (!context) {
+    throw new Error("useVoteContext must be used within a VoteProvider");
+  }
+  return context;
 };

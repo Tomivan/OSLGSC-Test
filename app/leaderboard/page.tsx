@@ -1,7 +1,6 @@
 "use client";
 
-import React from "react";
-import Link from "next/link";
+import React, { useState } from "react";
 
 const Leaderboard = () => {
 
@@ -19,8 +18,6 @@ const Leaderboard = () => {
 		{ position: 10, name: "Kunle Ibrahim", votes: 10 },
 	];
 
-	const initialEntries = leaderboardData.slice(0, 5);
-
 	return (
 		<main className="flex justify-center py-8">
 			<div className="w-[90%] md:w-[700px] mx-auto max-d">
@@ -30,8 +27,8 @@ const Leaderboard = () => {
 							REAL-TIME LEADERBOARD
 						</h2>
 					</div>
-					<div className="bg-[#E4E4E4] p-4">
-						{initialEntries.map((entry) => (
+					<div className="bg-[#E4E4E4]">
+						{leaderboardData.map((entry) => (
 							<div
 								key={entry.position}
 								className="flex items-center justify-between md:px-[28px] px-4 py-3 border-b border-gray-200 last:border-b-0"
@@ -44,14 +41,6 @@ const Leaderboard = () => {
 								</span>
 							</div>
 						))}
-
-						<Link href="/leaderboard" className="text-center bg-[#FAFAFA] rounded-lg p-2 h-8">
-							<button
-								className="text-[#3B8501] font-medium hover:text-[#2d6801] w-[98%] transition-colors duration-200"
-							>
-								View More
-							</button>
-						</Link>
 					</div>
 				</div>
 			</div>

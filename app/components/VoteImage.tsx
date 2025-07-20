@@ -1,6 +1,7 @@
 import Image from "next/image";
 import React from "react";
 import hand from "../assets/handy.png";
+import Link from "next/link";
 
 const VoteImage = () => {
 	return (
@@ -46,9 +47,11 @@ const VoteImage = () => {
 							</p>
 							<p>Voting is now open. Let your voice be heard!</p>
 						</div>
-						<button className="bg-[#3B8501] hover:bg-[] rounded-[8.4px] mt-[35px] md:mt-[25px] text-[] w-[274px] h-[49px] ">
-							VOTE NOW
-						</button>
+						<Link href="#categories">
+							<button className="bg-[#3B8501] hover:bg-[] rounded-[8.4px] mt-[35px] md:mt-[25px] text-[] w-[274px] h-[49px] ">
+								VOTE NOW
+							</button>
+						</Link>
 					</div>
 					<Image
 						src={hand}

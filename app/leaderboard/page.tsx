@@ -1,9 +1,8 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 
 const Leaderboard = () => {
-
 	// mock leaderboard data - 10
 	const leaderboardData = [
 		{ position: 1, name: "Amara Johnson", votes: 20 },

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import { VoteProvider } from "./context/VoteContext";
 
 const rale = Inter({
 	weight: ["400"],
@@ -23,7 +24,7 @@ export default function RootLayout({
 		<html lang="en">
 			<body className={rale.className}>
 				<link rel="icon" href="/logo.svg" sizes="any" />
-				{children}
+				<VoteProvider>{children}</VoteProvider>
 			</body>
 		</html>
 	);

@@ -1,9 +1,15 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, Suspense, useEffect } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
-import { PaystackButton } from "react-paystack";
+import dynamic from "next/dynamic";
 import Navbar from "../components/Navbar";
+
+// Dynamically import PaystackButton to avoid SSR issues
+const PaystackButton = dynamic(
+	() => import("react-paystack").then((mod) => mod.PaystackButton),
+	{ ssr: false }
+);
 
 interface VoterFormData {
 	email: string;
@@ -20,7 +26,7 @@ interface PaystackTransaction {
 	redirecturl: string;
 }
 
-const VoterDetails = () => {
+const VoterDetailsContent = () => {
 	const searchParams = useSearchParams();
 	const router = useRouter();
 	const votes = searchParams.get("votes") || "0";
@@ -29,6 +35,11 @@ const VoterDetails = () => {
 
 	const [formData, setFormData] = useState<VoterFormData>({ email: "" });
 	const [isProcessing, setIsProcessing] = useState(false);
+	const [isClient, setIsClient] = useState(false);
+
+	useEffect(() => {
+		setIsClient(true);
+	}, []);
 
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const { name, value } = e.target;
@@ -109,7 +120,7 @@ const VoterDetails = () => {
 					</div>
 				</div>
 
-				{formData.email ? (
+				{formData.email && isClient ? (
 					<PaystackButton
 						{...paystackConfig}
 						className="w-full bg-[#3B8501] hover:bg-[#2d6801] text-white font-bold py-4 rounded-lg mt-8 transition-colors duration-200 uppercase tracking-wide disabled:opacity-50"
@@ -120,11 +131,19 @@ const VoterDetails = () => {
 						className="w-full bg-gray-400 text-white font-bold py-4 rounded-lg mt-8 uppercase tracking-wide cursor-not-allowed"
 						disabled
 					>
-						ENTER EMAIL TO PAY
+						{formData.email ? "Loading..." : "ENTER EMAIL TO PAY"}
 					</button>
 				)}
 			</div>
 		</div>
+	);
+};
+
+const VoterDetails = () => {
+	return (
+		<Suspense fallback={<div>Loading...</div>}>
+			<VoterDetailsContent />
+		</Suspense>
 	);
 };
 

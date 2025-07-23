@@ -14,7 +14,6 @@ const FixedVoteWidget = () => {
 
   const handleVoteNow = () => {
     if (totalVotes === 0) {
-      console.log("not-voted")
       setIsNotVotedOpen(true);
     } else {
       setIsModalOpen(true);

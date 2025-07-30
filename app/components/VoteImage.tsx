@@ -5,18 +5,18 @@ import Link from "next/link";
 
 const VoteImage = () => {
 	return (
-		<main className="bg-white flex md:pb-[65px] pb-[40px] justify-center md:mt-[445px] mt-[70px] text-white ">
+		<main className="bg-white flex md:pb-[65px] pb-[40px] justify-center md:mt-[325px] mt-[70px] text-white ">
 			<section className="md:w-full w-[90%] md:max-w-[1280px] flex justify-center items-center ">
 				<div className="md:flex w-full mx-auto md:gap-[95px] justify-center">
 					<div className="w-fit md:pt-[35px] pt-80px] text-center md:text-left ">
-						<h1 className="uppercase w-fit text-[#343434] font-bold text-2xl md:text-[32px] text-center mx-auto md:mx-0 md:text-left  tracking-0 leading-[43px]">
+						<h1 className="uppercase w-fit text-[#343434] text-2xl md:text-[32px] text-center mx-auto md:mx-0 md:text-left  tracking-0 leading-[32px]">
 							VOTE FOR YOUR <br />
-							<span className="text-[#3B8501]">
+							<span className="text-[#3B8501] font-bold">
 								FAVORITE NOMINATION
 							</span>{" "}
 						</h1>
 
-						<div className="text-[#343434] text-[14px] md:text-base md:w-[598px] mt-[16px] md:mt-[24px] tracking-0 leading-[20px] md:leading-[24px]">
+						<div className="text-[#343434] text-[14px] md:text-base md:w-[598px] mt-[8px] md:mt-[24px] tracking-0 leading-[20px] md:leading-[24px]">
 							<p>
 								Welcome to the official voting website for the
 								2025 Local Government Service Commission Week
@@ -48,7 +48,7 @@ const VoteImage = () => {
 							<p>Voting is now open. Let your voice be heard!</p>
 						</div>
 						<Link href="#categories">
-							<button className="bg-[#3B8501] hover:bg-[] rounded-[8.4px] mt-[35px] md:mt-[25px] text-[] w-[274px] h-[49px] ">
+							<button className="bg-[#3B8501] hover:bg-[] rounded-[10px] mt-[26px] md:mt-[25px] text-[] w-[180px] md:w-[274px] h-[49px] ">
 								VOTE NOW
 							</button>
 						</Link>
@@ -56,7 +56,7 @@ const VoteImage = () => {
 					<Image
 						src={hand}
 						alt="hamd"
-						className="md:w-[330px]  mx-auto md:mx-0 md:h-[420px] mt-[40px]"
+						className="md:w-[330px] h-[350px] mx-auto md:mx-0 md:h-[420px] mt-[40px]"
 					/>
 				</div>
 			</section>

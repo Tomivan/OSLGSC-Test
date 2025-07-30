@@ -25,3 +25,13 @@
   /* box-shadow: 0px 4px 4px 0px #00000033; */
   text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 }
+.text2 {
+  /* box-shadow: 0px 4px 4px 0px #00000033; */
+  text-shadow: 0px 2px 2px rgba(0, 0, 0, 0.25);
+}
+.gafata {
+  font-family: var(--font-gafata);
+}
+.time {
+	box-shadow: 0px 4.06px 4.06px 0px #00000040;
+}

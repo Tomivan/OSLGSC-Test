@@ -38,45 +38,53 @@ const TimerMobile = () => {
 		return () => clearInterval(timer);
 	}, []);
 	return (
-		<main className="flex justify-center w-fit mx-auto mt-[330px] md:mt-0">
+		<main className="mt-[200px] flex justify-center  ">
 			<section>
-				<div className="bg-[#AAAAAA38] rounded-[8px] mt-[7px] px-6 py-4">
-					<p className="text-center text-gray-600 font-semibold mb-3">
+				<div className="bg-[#AAAAAA38] time rounded-[8px] md:w-[375px] mx-auto px-[18px] py-[18px]">
+					<p className="text-center text-[20px] text-[#343434]">
 						VOTE STARTS IN
 					</p>
-					<div className="flex justify-center items-center space-x-4">
-						<div className="text-center">
-							<div className="text-2xl font-bold text-[#3B8501]">
+					<div className="flex items-center justify-center gap-2 text-[32px]  text-[#3B8501]">
+						<div className="flex flex-col items-center">
+							<span className="gafata text2 tracking-[7%] text-[32px] leading-[50px] ">
 								{timeLeft.days.toString().padStart(2, "0")}
-							</div>
-							<div className="text-xs text-gray-500">days</div>
+							</span>
+							<span className="gafata text2 tracking-[7%] text-[15px] ">
+								days
+							</span>
 						</div>
-						<div className="text-[#3B8501] text-xl font-bold">
+						<span className="gafata text2 tracking-[7%] text-[21px] ">
 							:
-						</div>
-						<div className="text-center">
-							<div className="text-2xl font-bold text-[#3B8501]">
+						</span>
+						<div className="flex flex-col items-center">
+							<span className="gafata text2 tracking-[7%] text-[32px] leading-[50px] ">
 								{timeLeft.hours.toString().padStart(2, "0")}
-							</div>
-							<div className="text-xs text-gray-500">hours</div>
+							</span>
+							<span className="gafata text2 tracking-[7%] text-[15px] ">
+								hours
+							</span>
 						</div>
-						<div className="text-[#3B8501] text-xl font-bold">
+						<span className="gafata text2 tracking-[7%] text-[21px] ">
 							:
-						</div>
-						<div className="text-center">
-							<div className="text-2xl font-bold text-[#3B8501]">
+						</span>
+						<div className="flex flex-col items-center">
+							<span className="gafata text2 tracking-[7%] text-[32px] leading-[50px] ">
 								{timeLeft.minutes.toString().padStart(2, "0")}
-							</div>
-							<div className="text-xs text-gray-500">minutes</div>
+							</span>
+							<span className="gafata text2 tracking-[7%] text-[15px] ">
+								minutes
+							</span>
 						</div>
-						<div className="text-[#3B8501] text-xl font-bold">
+						<span className="gafata text2 tracking-[7%] text-[21px] ">
 							:
-						</div>
-						<div className="text-center">
-							<div className="text-2xl font-bold text-[#3B8501]">
+						</span>
+						<div className="flex flex-col items-center">
+							<span className="gafata text2 tracking-[7%] text-[32px] leading-[50px] ">
 								{timeLeft.seconds.toString().padStart(2, "0")}
-							</div>
-							<div className="text-xs text-gray-500">seconds</div>
+							</span>
+							<span className="gafata text2 tracking-[7%] text-[15px] ">
+								seconds
+							</span>
 						</div>
 					</div>
 				</div>

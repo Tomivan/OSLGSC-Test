@@ -80,19 +80,19 @@ const VoterDetailsContent = () => {
 		<div className="min-h-screen bg-white">
 			<Navbar />
 			<div className="w-full max-w-md absolute top-1/2 left-1/2 -translate-x-2/4 -translate-y-2/4 px-6">
-				<div className="bg-gray-100 rounded-lg w-60 ml-12 p-6 mb-8">
-					<div className="mb-2">
-						<p className="text-[#3B8501] font-bold text-lg">
+				<div className="bg-[#AAAAAA38] time rounded-lg w-[175px] mx-auto p-[15px] mb-8">
+					<div className="mb-2 w-fit mx-auto ">
+						<p className="text-[#3B8501] tracking-[1%] font-bold text-[24px]">
 							VOTES:{" "}
 							<span className="text-[#3B8501] font-bold text-2xl">
 								{totalVotes}
 							</span>
 						</p>
 					</div>
-					<div>
-						<p className="text-[#3B8501] font-bold text-lg">
+					<div className="tracking-[1%] w-fit mx-auto">
+						<p className="text-[#3B8501]  font-bold">
 							TO PAY:{" "}
-							<span className="text-[#3B8501] font-bold text-2xl">
+							<span className="text-[#3B8501] ml-[5px] font-semibold">
 								₦{paymentAmount}
 							</span>
 						</p>
@@ -105,7 +105,7 @@ const VoterDetailsContent = () => {
 
 				<div className="space-y-4">
 					<div>
-						<label className="block text-[#343434] text-sm font-medium mb-2">
+						<label className="block text-[#666666] text-xs font-semibold mb-2">
 							Email Address*
 						</label>
 						<input
@@ -115,7 +115,7 @@ const VoterDetailsContent = () => {
 							value={formData.email}
 							onChange={handleChange}
 							placeholder="Type here"
-							className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#3B8501] focus:border-transparent text-gray-600 placeholder-gray-400"
+							className="w-full px-4 py-3 border border-[#CCCCCC] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#3B8501] focus:border-transparent text-gray-600 placeholder-gray-400"
 						/>
 					</div>
 				</div>

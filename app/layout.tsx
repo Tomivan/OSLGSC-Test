@@ -1,14 +1,18 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Inter, Gafata } from "next/font/google";
 import "./globals.css";
 import { VoteProvider } from "./context/VoteContext";
 
-const rale = Inter({
-	weight: ["400"],
-	style: ["normal"],
+const inter = Inter({
 	subsets: ["latin"],
-	display: "swap",
 });
+
+export const gafata = Gafata({
+	weight: ["400"],
+	subsets: ["latin"],
+	variable: "--font-gafata",
+});
+
 export const metadata: Metadata = {
 	title: "OSLGSC VOTING",
 	description:
@@ -22,7 +26,7 @@ export default function RootLayout({
 }>) {
 	return (
 		<html lang="en">
-			<body className={rale.className}>
+			<body className={`${inter.className} ${gafata.variable}`}>
 				<link rel="icon" href="/logo.svg" sizes="any" />
 				<VoteProvider>{children}</VoteProvider>
 			</body>

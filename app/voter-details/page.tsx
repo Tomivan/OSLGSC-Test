@@ -119,7 +119,6 @@ const VoterDetailsContent = () => {
 						/>
 					</div>
 				</div>
-
 				{formData.email && isClient ? (
 					<PaystackButton
 						{...paystackConfig}

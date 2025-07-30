@@ -5,11 +5,13 @@ import { VoteProvider } from "./context/VoteContext";
 
 const inter = Inter({
 	subsets: ["latin"],
+	display: "swap",
 });
 
-export const gafata = Gafata({
+const gafata = Gafata({
 	weight: ["400"],
 	subsets: ["latin"],
+	display: "swap",
 	variable: "--font-gafata",
 });
 

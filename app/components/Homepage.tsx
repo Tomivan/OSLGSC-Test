@@ -19,7 +19,7 @@ const Homepage = () => {
 			<div className="flex justify-center">
 				<div className="relative w-full">
 					<div className="image2 absolute hidden md:block inset-0 w-full h-[800px] md:h-[900px] mb-[00px]"></div>
-					<div className="image3 absolute md:hidden inset-0 w-full h-[460px] md:h-[900px] mb-[00px]"></div>
+					<div className="image3 absolute md:hidden inset-0 w-full h-[478px] md:h-[900px] mb-[00px]"></div>
 					<div className="w-full relative lg:max-w-[1280px] mx-auto">
 						<div className="flex text-[#FAFAFA] justify-center items-center w-full mt-[170px] md:mt-[166px]">
 							<div>
@@ -27,7 +27,7 @@ const Homepage = () => {
 									Local Government <br /> Service Commission
 									week
 								</h1>
-								<h1 className="text text-center font-extrabold text-[33px] md:text-[67.45px] md:mb-[22.5px] tracking-0 md:leading-[82px] leading-[52px]">
+								<h1 className="text text-center font-extrabold text-[45px] md:text-[67.45px] md:mb-[22.5px] tracking-0 md:leading-[82px] leading-[46px]">
 									2025 AWARD
 								</h1>
 								<div className="hidden md:block">

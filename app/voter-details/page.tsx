@@ -1,9 +1,10 @@
 "use client";
 
 import React, { useState, Suspense, useEffect } from "react";
-import { useSearchParams, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import dynamic from "next/dynamic";
 import Navbar from "../components/Navbar";
+import { useVoteContext } from "../context/VoteContext";
 
 // Dynamically import PaystackButton to avoid SSR issues
 const PaystackButton = dynamic(
@@ -27,15 +28,14 @@ interface PaystackTransaction {
 }
 
 const VoterDetailsContent = () => {
-	const searchParams = useSearchParams();
 	const router = useRouter();
-	const votes = searchParams.get("votes") || "0";
-	const totalVotes = parseInt(votes);
+	const { totalVotes, resetVotes } = useVoteContext();
 	const paymentAmount = totalVotes * 100; // amount in Naira for display
 
 	const [formData, setFormData] = useState<VoterFormData>({ email: "" });
 	const [isProcessing, setIsProcessing] = useState(false);
 	const [isClient, setIsClient] = useState(false);
+	const [paymentSuccess, setPaymentSuccess] = useState(false);
 
 	useEffect(() => {
 		setIsClient(true);
@@ -49,6 +49,8 @@ const VoterDetailsContent = () => {
 	const processVotes = (transaction: PaystackTransaction) => {
 		console.log("Payment successful:", transaction.reference);
 		setIsProcessing(false);
+		setPaymentSuccess(true);
+		resetVotes()
 		router.push("/vote-completed");
 	};
 
@@ -85,7 +87,7 @@ const VoterDetailsContent = () => {
 						<p className="text-[#3B8501] tracking-[1%] font-bold text-[24px]">
 							VOTES:{" "}
 							<span className="text-[#3B8501] font-bold text-2xl">
-								{totalVotes}
+								{paymentSuccess ? 0 : totalVotes}
 							</span>
 						</p>
 					</div>
@@ -93,45 +95,55 @@ const VoterDetailsContent = () => {
 						<p className="text-[#3B8501]  font-bold">
 							TO PAY:{" "}
 							<span className="text-[#3B8501] ml-[5px] font-semibold">
-								₦{paymentAmount}
+								₦{paymentSuccess ? 0 : paymentAmount}
 							</span>
 						</p>
 					</div>
 				</div>
 
-				<p className="text-[#343434] text-sm mb-6 font-medium">
+				{!paymentSuccess ? (
+				<>
+					<p className="text-[#343434] text-sm mb-6 font-medium">
 					Kindly enter the following details to cast your votes:
-				</p>
+					</p>
 
-				<div className="space-y-4">
+					<div className="space-y-4">
 					<div>
 						<label className="block text-[#666666] text-xs font-semibold mb-2">
-							Email Address*
+						Email Address*
 						</label>
 						<input
-							required
-							type="email"
-							name="email"
-							value={formData.email}
-							onChange={handleChange}
-							placeholder="Type here"
-							className="w-full px-4 py-3 border border-[#CCCCCC] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#3B8501] focus:border-transparent text-gray-600 placeholder-gray-400"
+						required
+						type="email"
+						name="email"
+						value={formData.email}
+						onChange={handleChange}
+						placeholder="Type here"
+						className="w-full px-4 py-3 border border-[#CCCCCC] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#3B8501] focus:border-transparent text-gray-600 placeholder-gray-400"
 						/>
 					</div>
-				</div>
-				{formData.email && isClient ? (
+					</div>
+					{formData.email && isClient ? (
 					<PaystackButton
 						{...paystackConfig}
 						className="w-full bg-[#3B8501] hover:bg-[#2d6801] text-white font-bold py-4 rounded-lg mt-8 transition-colors duration-200 uppercase tracking-wide disabled:opacity-50"
 						disabled={isProcessing || !formData.email}
 					/>
-				) : (
+					) : (
 					<button
 						className="w-full bg-gray-400 text-white font-bold py-4 rounded-lg mt-8 uppercase tracking-wide cursor-not-allowed"
 						disabled
 					>
 						{formData.email ? "Loading..." : "ENTER EMAIL TO PAY"}
 					</button>
+					)}
+				</>
+				) : (
+				<div className="text-center py-8">
+					<p className="text-[#3B8501] font-bold text-lg">
+					Payment successful! Redirecting...
+					</p>
+				</div>
 				)}
 			</div>
 		</div>

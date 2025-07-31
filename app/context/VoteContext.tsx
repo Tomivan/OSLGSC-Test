@@ -1,25 +1,41 @@
 "use client";
 
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useState, useMemo, useCallback } from "react";
+
+// Define more specific types
+type CategoryId = string;
+type NomineeId = string;
+interface VotesState {
+  [categoryId: CategoryId]: {
+    [nomineeId: NomineeId]: number;
+  };
+}
+interface SelectedNomineesState {
+  [categoryId: CategoryId]: NomineeId[];
+}
 
 interface VoteContextType {
-  votes: Record<string, Record<string, number>>;
-  selectedNominees: Record<string, string[]>;
+  votes: VotesState;
+  selectedNominees: SelectedNomineesState;
   totalVotes: number;
-  handleVoteChange: (categoryId: string, nomineeId: string, quantity: number) => void;
+  handleVoteChange: (categoryId: CategoryId, nomineeId: NomineeId, quantity: number) => void;
+  resetVotes: () => void; // New reset function
 }
 
 const VoteContext = createContext<VoteContextType | undefined>(undefined);
 
 export const VoteProvider = ({ children }: { children: React.ReactNode }) => {
-  const [votes, setVotes] = useState<Record<string, Record<string, number>>>({});
-  const [selectedNominees, setSelectedNominees] = useState<Record<string, string[]>>({});
+  const [votes, setVotes] = useState<VotesState>({});
+  const [selectedNominees, setSelectedNominees] = useState<SelectedNomineesState>({});
 
-  const totalVotes = Object.values(votes).reduce((sum, categoryVotes) => {
-    return sum + Object.values(categoryVotes).reduce((catSum, vote) => catSum + vote, 0);
-  }, 0);
+  // Memoize total votes calculation
+  const totalVotes = useMemo(() => {
+    return Object.values(votes).reduce((sum, categoryVotes) => {
+      return sum + Object.values(categoryVotes).reduce((catSum, vote) => catSum + vote, 0);
+    }, 0);
+  }, [votes]);
 
-  const handleVoteChange = (categoryId: string, nomineeId: string, quantity: number) => {
+  const handleVoteChange = useCallback((categoryId: CategoryId, nomineeId: NomineeId, quantity: number) => {
     setVotes((prev) => {
       const newVotes = { ...prev };
       newVotes[categoryId] = { ...newVotes[categoryId], [nomineeId]: quantity };
@@ -46,10 +62,24 @@ export const VoteProvider = ({ children }: { children: React.ReactNode }) => {
       
       return newSelected;
     });
-  };
+  }, []);
+
+  // New function to reset votes
+  const resetVotes = useCallback(() => {
+    setVotes({});
+    setSelectedNominees({});
+  }, []);
+
+  const contextValue = useMemo(() => ({
+    votes,
+    selectedNominees,
+    totalVotes,
+    handleVoteChange,
+    resetVotes
+  }), [votes, selectedNominees, totalVotes, handleVoteChange, resetVotes]);
 
   return (
-    <VoteContext.Provider value={{ votes, selectedNominees, totalVotes, handleVoteChange }}>
+    <VoteContext.Provider value={contextValue}>
       {children}
     </VoteContext.Provider>
   );

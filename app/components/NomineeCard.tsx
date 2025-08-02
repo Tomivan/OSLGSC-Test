@@ -29,7 +29,7 @@ export const NomineeCard: React.FC<NomineeCardProps> = ({
 
   return (
     <div className={`bg-white rounded-[8px] w-fit mx-auto relative border ${isSelected ? "border-[#3B8501]" : "border-[#CFCDCD]"}`}>
-      <div className="absolute top-1.5 right-3 px-2 rounded text-[8px] text-black z-[900] font-semibold">
+      <div className="absolute top-1.5 right-3 px-2 rounded text-[8px] text-black z-[10] font-semibold">
         {nominee.voteCount} VOTES
       </div>
 

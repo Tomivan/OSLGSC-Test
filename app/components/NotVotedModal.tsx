@@ -6,7 +6,7 @@ type NotVotedProps = {
 
 const NotVotedModal: React.FC<NotVotedProps> = ({ onClose }) => {
 	return (
-		<main className="fixed inset-0 z-100 min-h-screen bg-black bg-opacity-50 flex items-center justify-center p-4">
+		<main className="fixed inset-0 z-[100] min-h-screen bg-black bg-opacity-50 flex items-center justify-center p-4">
 			<div className="bg-white rounded-lg p-8 max-w-sm w-full relative">
 				<button className="absolute top-4 right-4 w-8 h-8 border-[#343434] border-[0.6px] hover:bg-gray-500 rounded-full flex items-center justify-center transition-colors duration-200">
 					<svg

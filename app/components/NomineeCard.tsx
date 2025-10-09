@@ -24,36 +24,53 @@ export const NomineeCard: React.FC<NomineeCardProps> = ({
   onVoteChange,
   isSelected,
 }) => {
-  const handleIncrement = () => onVoteChange(nominee.id, voteQuantity + 1);
-  const handleDecrement = () => onVoteChange(nominee.id, voteQuantity - 1);
+  const handleIncrement = () => {
+    onVoteChange(nominee.id, voteQuantity + 1);
+  };
+
+  const handleDecrement = () => {
+    if (voteQuantity > 0) {
+      onVoteChange(nominee.id, voteQuantity - 1);
+    }
+  };
 
   return (
-    <div className={`bg-white rounded-[8px] w-fit mx-auto relative border ${isSelected ? "border-[#3B8501]" : "border-[#CFCDCD]"}`}>
-      <div className="absolute top-1.5 right-3 px-2 rounded text-[8px] text-black z-[10] font-semibold">
-        {nominee.voteCount} VOTES
+    <div 
+      className={`bg-white rounded-[8px] w-fit mx-auto relative border transition-all duration-200 ${
+        isSelected ? "border-[#3B8501] shadow-md" : "border-[#CFCDCD] hover:border-gray-400"
+      }`}
+    >
+      <div className="absolute top-1.5 right-3 px-2 py-1 rounded text-[8px] text-white bg-black bg-opacity-70 z-[10] font-semibold">
+        {nominee.voteCount}
       </div>
 
-      <div className="w-[234px] h-[205px] relative mb-3 rounded-t-[8px] overflow-hidden">
+      <div className="w-[250px] h-[250px] relative mb-3 rounded-t-[8px] overflow-hidden">
         <Image
-          src={nominee.image}
+          src={nominee.image || "/image.png"}
           alt={nominee.name}
           fill
           className="object-cover"
+          onError={(e) => {
+            // Fallback if image fails to load
+            const target = e.target as HTMLImageElement;
+            target.src = "/image.png";
+          }}
         />
       </div>
 
-      <div className="text-center mb-3">
+      <div className="text-center mb-3 px-2">
         <span className="text-black font-semibold text-sm">Name: </span>
-        <span className="text-black text-sm">{nominee.name}</span>
+        <span className="text-black text-sm break-words">{nominee.name}</span>
       </div>
 
-      <div className="flex items-center bg-[#E1E1E1] py-[12px] justify-center gap-4">
+      <div className="flex items-center bg-[#E1E1E1] py-[12px] justify-center gap-4 rounded-b-[8px]">
         <button
           onClick={handleDecrement}
-          disabled={!isSelected}
+          disabled={voteQuantity === 0}
           className="w-8 h-8 bg-[#CACACA] hover:bg-gray-300 disabled:bg-gray-100 disabled:cursor-not-allowed text-black rounded flex items-center justify-center font-bold text-lg transition-colors duration-200"
+          aria-label="Decrease votes"
         >
-          <Image src={minus} alt="minus" className="" />
+          <Image src={minus} alt="Decrease votes" width={12} height={12} />
         </button>
 
         <span className="text-black font-bold text-2xl min-w-[3rem] text-center">
@@ -63,10 +80,20 @@ export const NomineeCard: React.FC<NomineeCardProps> = ({
         <button
           onClick={handleIncrement}
           className="w-8 h-8 bg-[#CACACA] hover:bg-gray-300 disabled:bg-gray-100 disabled:cursor-not-allowed text-black rounded flex items-center justify-center font-bold text-lg transition-colors duration-200"
+          aria-label="Increase votes"
         >
-          <Image src={plus} alt="plus" className="" />
+          <Image src={plus} alt="Increase votes" width={12} height={12} />
         </button>
       </div>
+
+      {/* Selection indicator */}
+      {isSelected && (
+        <div className="absolute -top-2 -right-2 w-6 h-6 bg-[#3B8501] rounded-full flex items-center justify-center">
+          <svg className="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
+            <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+          </svg>
+        </div>
+      )}
     </div>
   );
 };

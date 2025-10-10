@@ -31,13 +31,13 @@ const TimerMobile = () => {
 
 	const [timeLeft, setTimeLeft] = useState(calculateTimeLeft());
 
-	useEffect(() => {
-		const timer = setInterval(() => {
-			setTimeLeft(calculateTimeLeft());
-		}, 1000);
+	// useEffect(() => {
+	// 	const timer = setInterval(() => {
+	// 		setTimeLeft(calculateTimeLeft());
+	// 	}, 1000);
 
-		return () => clearInterval(timer);
-	}, []);
+	// 	return () => clearInterval(timer);
+	// }, []);
 
 	return (
 		<main className="mt-[200px] flex justify-center">

@@ -9,8 +9,8 @@ import HowToVote from "./HowToVote";
 import Leaderboard from "./Leaderboard";
 import Categories from "./Categories";
 import FixedVoteWidget from "./FixedVoteWidget";
-import TimerMobile from "./TimerMobile";
-import Timer from "./Timer";
+// import TimerMobile from "./TimerMobile";
+// import Timer from "./Timer";
 
 const Homepage = () => {
 	return (

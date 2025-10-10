@@ -13,7 +13,7 @@ const PaystackButton = dynamic(
 );
 
 interface VoterFormData {
-	email: string;
+	email?: string; // Made optional
 }
 
 // Define Paystack transaction interface
@@ -29,7 +29,7 @@ interface PaystackTransaction {
 
 const VoterDetailsContent = () => {
 	const router = useRouter();
-	const { totalVotes, resetVotes } = useVoteContext();
+	const { totalVotes, resetVotes, syncWithFirebase } = useVoteContext(); // Added syncWithFirebase
 	const paymentAmount = totalVotes * 100; // amount in Naira for display
 
 	const [formData, setFormData] = useState<VoterFormData>({ email: "" });
@@ -46,16 +46,27 @@ const VoterDetailsContent = () => {
 		setFormData((prev) => ({ ...prev, [name]: value }));
 	};
 
-	const processVotes = (transaction: PaystackTransaction) => {
+	const processVotes = async (transaction: PaystackTransaction) => {
 		console.log("Payment successful:", transaction.reference);
 		setIsProcessing(false);
 		setPaymentSuccess(true);
-		resetVotes()
-		router.push("/vote-completed");
+		
+		try {
+			// Sync votes to Firebase after successful payment
+			await syncWithFirebase();
+			console.log("✅ Votes successfully updated in Firebase");
+			
+			// Reset local votes and redirect
+			resetVotes();
+			router.push("/vote-completed");
+		} catch (error) {
+			console.error("❌ Error updating votes in Firebase:", error);
+			alert("Payment successful but failed to update votes. Please contact support.");
+		}
 	};
 
 	const paystackConfig = {
-		email: formData.email,
+		email: formData.email || "voter@example.com", // Provide default email if empty
 		amount: paymentAmount * 100, // convert to kobo for Paystack
 		publicKey: process.env.NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY || "",
 		text: isProcessing
@@ -77,6 +88,9 @@ const VoterDetailsContent = () => {
 			setIsProcessing(false);
 		},
 	};
+
+	// Check if payment can proceed (has votes and client is ready)
+	const canProceedToPayment = totalVotes > 0 && isClient;
 
 	return (
 		<div className="min-h-screen bg-white">
@@ -110,10 +124,9 @@ const VoterDetailsContent = () => {
 					<div className="space-y-4">
 					<div>
 						<label className="block text-[#666666] text-xs font-semibold mb-2">
-						Email Address*
+						Email Address (Optional)
 						</label>
 						<input
-						required
 						type="email"
 						name="email"
 						value={formData.email}
@@ -123,18 +136,18 @@ const VoterDetailsContent = () => {
 						/>
 					</div>
 					</div>
-					{formData.email && isClient ? (
+
+					{canProceedToPayment ? (
 					<PaystackButton
 						{...paystackConfig}
 						className="w-full bg-[#3B8501] hover:bg-[#2d6801] text-white font-bold py-4 rounded-lg mt-8 transition-colors duration-200 uppercase tracking-wide disabled:opacity-50"
-						disabled={isProcessing || !formData.email}
 					/>
 					) : (
 					<button
 						className="w-full bg-gray-400 text-white font-bold py-4 rounded-lg mt-8 uppercase tracking-wide cursor-not-allowed"
 						disabled
 					>
-						{formData.email ? "Loading..." : "ENTER EMAIL TO PAY"}
+						{totalVotes === 0 ? "NO VOTES TO PAY FOR" : "LOADING..."}
 					</button>
 					)}
 				</>

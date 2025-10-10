@@ -67,7 +67,7 @@ const FullLeaderboard = () => {
       case 3:
         return "bg-orange-300 text-orange-900";
       default:
-        return "bg-white text-gray-600";
+        return "bg-whit text-gray-600";
     }
   };
 
@@ -139,7 +139,7 @@ const FullLeaderboard = () => {
                 {contestants.map((contestant) => (
                   <div
                     key={contestant.id}
-                    className="flex items-center justify-between px-6 py-4 hover:bg-gray-100 transition-colors duration-200"
+                    className="flex items-center justify-between md:px-6 md:py-4 px-3 py-2 hover:bg-gray-100 transition-colors duration-200"
                   >
                     <div className="flex items-center space-x-4">
                       <div className={`w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm ${getPositionColor(contestant.position)}`}>
@@ -149,7 +149,7 @@ const FullLeaderboard = () => {
                         <span className="text-gray-800 font-medium block">
                           {contestant.name}
                         </span>
-                        <span className="text-gray-500 text-sm">
+                        <span className="text-gray-500 md:text-sm text-xs ">
                           {contestant.category}
                         </span>
                       </div>

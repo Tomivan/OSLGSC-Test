@@ -16,7 +16,7 @@ const Officials = () => {
 						<Image src={chairw} alt="Chairperson" className="" />
 						<div className=" text-[17.7px] leading-[24px] text-center ">
 							<h1 className="text-[#000000]">
-								Ms. Olvia Olubukunola Onabanjo
+								Ms. Olivia Olubukunola Onabanjo
 							</h1>
 							<h1 className="text-[#3B8501] uppercase font-bold mt-[8px] ">
 								Chairman

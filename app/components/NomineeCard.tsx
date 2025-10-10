@@ -36,7 +36,7 @@ export const NomineeCard: React.FC<NomineeCardProps> = ({
 
   return (
     <div 
-      className={`bg-white rounded-[8px] w-fit mx-auto relative border transition-all duration-200 ${
+      className={`bg-white rounded-[8px] w-[271px] h-[380px] mx-auto relative border transition-all duration-200 ${
         isSelected ? "border-[#3B8501] shadow-md" : "border-[#CFCDCD] hover:border-gray-400"
       }`}
     >
@@ -44,7 +44,7 @@ export const NomineeCard: React.FC<NomineeCardProps> = ({
         {nominee.voteCount}
       </div>
 
-      <div className="w-[250px] h-[250px] relative mb-3 rounded-t-[8px] overflow-hidden">
+      <div className="w-[269px] h-[250px] relative mb-3 rounded-t-[8px] overflow-hidden">
         <Image
           src={nominee.image || "/image.png"}
           alt={nominee.name}
@@ -58,9 +58,9 @@ export const NomineeCard: React.FC<NomineeCardProps> = ({
         />
       </div>
 
-      <div className="text-center mb-3 px-2">
+      <div className="text-center mb-3 px-2 h-[48px] flex justify-center items-center ">
         <span className="text-black font-semibold text-sm">Name: </span>
-        <span className="text-black text-sm break-words">{nominee.name}</span>
+        <span className="text-black text-sm break-words">{""}{nominee.name}</span>
       </div>
 
       <div className="flex items-center bg-[#E1E1E1] py-[12px] justify-center gap-4 rounded-b-[8px]">

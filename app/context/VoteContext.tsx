@@ -1,8 +1,8 @@
 "use client";
 
-import React, { createContext, useContext, useState, useMemo, useCallback, useEffect } from "react";
+import React, { createContext, useContext, useState, useMemo, useCallback } from "react";
 import { db } from "../lib/firebase"; // Adjust path as needed
-import { doc, updateDoc, increment, getDoc } from "firebase/firestore";
+import { doc, updateDoc, increment } from "firebase/firestore";
 
 // Define more specific types
 type CategoryId = string;
@@ -60,7 +60,7 @@ export const VoteProvider = ({ children }: { children: React.ReactNode }) => {
       // Get all vote changes that need to be synced
       const updates: Promise<void>[] = [];
       
-      Object.entries(votes).forEach(([categoryId, categoryVotes]) => {
+      Object.values(votes).forEach((categoryVotes) => {
         Object.entries(categoryVotes).forEach(([nomineeId, voteCount]) => {
           if (voteCount > 0) {
             const nomineeRef = doc(db, "contestants", nomineeId);

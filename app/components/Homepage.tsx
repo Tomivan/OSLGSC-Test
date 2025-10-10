@@ -9,8 +9,8 @@ import HowToVote from "./HowToVote";
 import Leaderboard from "./Leaderboard";
 import Categories from "./Categories";
 import FixedVoteWidget from "./FixedVoteWidget";
-// import TimerMobile from "./TimerMobile";
-// import Timer from "./Timer";
+import TimerMobile from "./TimerMobile";
+import Timer from "./Timer";
 
 const Homepage = () => {
 	return (
@@ -30,17 +30,17 @@ const Homepage = () => {
 								<h1 className="text text-center font-extrabold text-[45px] md:text-[67.45px] md:mb-[22.5px] tracking-0 md:leading-[82px] leading-[46px]">
 									2025 AWARD
 								</h1>
-								{/* <div className="hidden md:block">
+								<div className="hidden md:block">
 									<Timer />
-								</div> */}
+								</div>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-			{/* <div className="md:hidden block">
+			<div className="md:hidden block">
 				<TimerMobile />
-			</div> */}
+			</div>
 			<VoteImage />
 			<Officials />
 			<VotingRules />

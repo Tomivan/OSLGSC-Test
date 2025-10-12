@@ -6,6 +6,7 @@ import { db } from "../../lib/firebase";
 import { FontAwesomeIcon } from  '@fortawesome/react-fontawesome';
 import { faCheckToSlot, faPerson, faTableColumns } from '@fortawesome/free-solid-svg-icons';
 import { useAdminAuth } from "../../context/AdminAuthContext";
+import Image from 'next/image';
 
 interface Contestant {
   id: string;
@@ -130,9 +131,7 @@ const AdminDashboard = () => {
         totalCategories: categories.size
       });
 
-      console.log("Dashboard data loaded successfully");
-
-    } catch (err: any) {
+    } catch (err: any) {// eslint-disable-line @typescript-eslint/no-explicit-any
       console.error("Error fetching dashboard data:", err);
       
       if (err.code === 'permission-denied') {
@@ -308,10 +307,12 @@ const AdminDashboard = () => {
                           <div className="flex items-center">
                             {contestant.imageUrl && (
                               <div className="flex-shrink-0 h-10 w-10">
-                                <img
-                                  className="h-10 w-10 rounded-full object-cover"
-                                  src={contestant.imageUrl}
-                                  alt={contestant.name}
+                                <Image
+                                className="h-10 w-10 rounded-full object-cover"
+                                src={contestant.imageUrl}
+                                alt={contestant.name}
+                                width={40}
+                                height={40}
                                 />
                               </div>
                             )}

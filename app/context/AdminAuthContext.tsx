@@ -128,7 +128,7 @@ export const AdminAuthProvider = ({ children }: { children: React.ReactNode }) =
         setError("Access denied. Admin privileges required.");
         return false;
       }
-    } catch (error: any) {
+    } catch (error: any) {// eslint-disable-line @typescript-eslint/no-explicit-any
       console.error("Login error:", error);
       
       // Handle specific Firebase auth errors

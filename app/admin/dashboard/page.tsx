@@ -80,7 +80,7 @@ const AdminDashboard = () => {
           };
 
           contestantsData.push(contestant);
-          totalVotes += voteCount;
+          totalVotes += data.votes;
           categories.add(contestant.category);
         } catch (voteError) {
           console.error(`Error fetching votes for contestant ${contestantDoc.id}:`, voteError);

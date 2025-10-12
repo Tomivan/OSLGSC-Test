@@ -1,8 +1,8 @@
 "use client";
 
 import React, { createContext, useContext, useState, useMemo, useCallback } from "react";
-import { db } from "../lib/firebase"; // Adjust path as needed
-import { doc, updateDoc, increment } from "firebase/firestore";
+import { db } from "../lib/firebase";
+import { doc, increment, writeBatch } from "firebase/firestore";
 
 // Define more specific types
 type CategoryId = string;
@@ -16,15 +16,24 @@ interface SelectedNomineesState {
   [categoryId: CategoryId]: NomineeId[];
 }
 
+interface SyncResult {
+  success: boolean;
+  error?: string;
+  syncedVotes?: number;
+  transactionId?: string;
+}
+
 interface VoteContextType {
   votes: VotesState;
   selectedNominees: SelectedNomineesState;
   totalVotes: number;
+  isSyncing: boolean;
   handleVoteChange: (categoryId: CategoryId, nomineeId: NomineeId, quantity: number) => void;
   resetVotes: () => void;
   getVoteQuantity: (categoryId: CategoryId, nomineeId: NomineeId) => number;
   isNomineeSelected: (categoryId: CategoryId, nomineeId: NomineeId) => boolean;
-  syncWithFirebase: () => Promise<void>; // New function to sync votes
+  syncWithFirebase: () => Promise<SyncResult>;
+  getVoteSummary: () => { [nomineeId: string]: number };
 }
 
 const VoteContext = createContext<VoteContextType | undefined>(undefined);
@@ -51,41 +60,115 @@ export const VoteProvider = ({ children }: { children: React.ReactNode }) => {
     return selectedNominees[categoryId]?.includes(nomineeId) || false;
   }, [selectedNominees]);
 
-  // Function to sync votes with Firebase
-  const syncWithFirebase = useCallback(async () => {
-    if (isSyncing) return;
+  // Get summary of all votes by nominee
+  const getVoteSummary = useCallback(() => {
+    const summary: { [nomineeId: string]: number } = {};
     
+    Object.values(votes).forEach((categoryVotes) => {
+      Object.entries(categoryVotes).forEach(([nomineeId, voteCount]) => {
+        if (voteCount > 0) {
+          summary[nomineeId] = (summary[nomineeId] || 0) + voteCount;
+        }
+      });
+    });
+    
+    return summary;
+  }, [votes]);
+
+  // Enhanced function to sync votes with Firebase
+  const syncWithFirebase = useCallback(async (): Promise<SyncResult> => {
+    if (isSyncing) {
+      return { 
+        success: false, 
+        error: "Sync already in progress. Please wait." 
+      };
+    }
+    
+    // Check if there are any votes to sync
+    if (totalVotes === 0) {
+      return { 
+        success: false, 
+        error: "No votes to sync. Please select some votes first." 
+      };
+    }
+
     setIsSyncing(true);
+    
     try {
-      // Get all vote changes that need to be synced
-      const updates: Promise<void>[] = [];
+      const voteSummary = getVoteSummary();
+      const nomineeIds = Object.keys(voteSummary);
       
-      Object.values(votes).forEach((categoryVotes) => {
-        Object.entries(categoryVotes).forEach(([nomineeId, voteCount]) => {
-          if (voteCount > 0) {
-            const nomineeRef = doc(db, "contestants", nomineeId);
-            updates.push(
-              updateDoc(nomineeRef, {
-                votes: increment(voteCount)
-              })
-            );
-          }
-        });
+      console.log("🔄 Starting Firebase sync for votes:", voteSummary);
+      console.log("📊 Total votes to sync:", totalVotes);
+      console.log("🎯 Nominees to update:", nomineeIds);
+
+      // Use batch write for atomic updates
+      const batch = writeBatch(db);
+      let totalSyncedVotes = 0;
+
+      // Add all vote updates to the batch
+      Object.entries(voteSummary).forEach(([nomineeId, voteCount]) => {
+        if (voteCount > 0) {
+          const nomineeRef = doc(db, "contestants", nomineeId);
+          batch.update(nomineeRef, {
+            votes: increment(voteCount),
+            updatedAt: new Date() // Track when votes were last updated
+          });
+          totalSyncedVotes += voteCount;
+        }
       });
 
-      await Promise.all(updates);
-      console.log("✅ Votes synced with Firebase");
-      
+      // Commit the batch
+      await batch.commit();
+
+      console.log("✅ Successfully synced votes to Firebase");
+      console.log("📈 Total votes recorded:", totalSyncedVotes);
+      console.log("🎯 Updated nominees:", nomineeIds);
+
+      // Generate transaction ID for tracking
+      const transactionId = `vote_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+
       // Reset local votes after successful sync
       setVotes({});
       setSelectedNominees({});
-      
-    } catch (error) {
+
+      return {
+        success: true,
+        syncedVotes: totalSyncedVotes,
+        transactionId
+      };
+
+    } catch (error: any) {
       console.error("❌ Error syncing votes with Firebase:", error);
+      
+      let errorMessage = "Failed to sync votes with database";
+      
+      // Handle specific Firebase errors
+      if (error.code === 'permission-denied') {
+        errorMessage = "Permission denied. Please check Firestore security rules allow vote updates.";
+      } else if (error.code === 'unavailable') {
+        errorMessage = "Network error. Please check your internet connection and try again.";
+      } else if (error.code === 'failed-precondition') {
+        errorMessage = "Database error. Please try again or contact support.";
+      } else if (error.code === 'not-found') {
+        errorMessage = "Contestant not found. The voting data may have been updated.";
+      }
+
+      console.error("Sync error details:", {
+        code: error.code,
+        message: error.message,
+        voteSummary: getVoteSummary(),
+        totalVotes
+      });
+
+      return {
+        success: false,
+        error: errorMessage
+      };
     } finally {
       setIsSyncing(false);
     }
-  }, [votes, isSyncing]);
+  }, [votes, isSyncing, totalVotes, getVoteSummary]);
 
   const handleVoteChange = useCallback((categoryId: CategoryId, nomineeId: NomineeId, quantity: number) => {
     console.log(`Vote change: ${categoryId}, ${nomineeId}, ${quantity}`);
@@ -146,20 +229,24 @@ export const VoteProvider = ({ children }: { children: React.ReactNode }) => {
     votes,
     selectedNominees,
     totalVotes,
+    isSyncing,
     handleVoteChange,
     resetVotes,
     getVoteQuantity,
     isNomineeSelected,
-    syncWithFirebase
+    syncWithFirebase,
+    getVoteSummary
   }), [
     votes, 
     selectedNominees, 
     totalVotes, 
+    isSyncing,
     handleVoteChange, 
     resetVotes,
     getVoteQuantity,
     isNomineeSelected,
-    syncWithFirebase
+    syncWithFirebase,
+    getVoteSummary
   ]);
 
   return (

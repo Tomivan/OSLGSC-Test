@@ -96,7 +96,7 @@ const Officials = () => {
 							<h1 className="text-[#000000]">
 								Engr. Olanike Ogunbona
 							</h1>
-							<h1 className="text-[#000000] uppercase font-bold mt-[8px] ">
+							<h1 className="text-[#3B8501] uppercase font-bold mt-[8px] ">
 								Permanent Secretary
 							</h1>
 						</div>

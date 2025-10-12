@@ -8,7 +8,7 @@ const VoteImage = () => {
 		<main className="bg-white flex pb-[40px] lg:pb-[65px] justify-center mt-[60px] md:mt-[320px] lg:mt-[370px] text-white">
 			<section className="w-[90%] lg:w-full max-w-[1280px] flex justify-center items-center">
 				{/* Layout container */}
-				<div className="w-full mx-auto flex flex-col lg:flex-row justify-center items-center gap-[40px] lg:gap-[95px]">
+				<div className="w-full mx-auto flex flex-col lg:flex-row justify-center items-center gap-[40px] lg:gap-[60px]">
 
 					{/* LEFT SIDE — TEXT SECTION */}
 					<div className="w-full md:w-[90%] lg:w-fit pt-[20px] lg:pt-[35px] text-center md:text-center lg:text-left">
@@ -54,11 +54,13 @@ const VoteImage = () => {
 					</div>
 
 					{/* RIGHT SIDE — IMAGE */}
+					<div className="lg:ml-[10px]">
 					<Image
 						src={hand}
 						alt="hand"
 						className="w-[250px] md:w-[280px] lg:w-[330px] h-[320px] md:h-[360px] lg:h-[420px] mt-[40px] lg:mt-0 mx-auto lg:mx-0"
 					/>
+					</div>
 				</div>
 			</section>
 		</main>

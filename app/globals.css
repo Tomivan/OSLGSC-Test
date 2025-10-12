@@ -35,3 +35,10 @@
 .time {
 	box-shadow: 0px 4.06px 4.06px 0px #00000040;
 }
+@media (min-width: 1024px) and (max-width: 1115px) {
+  .cate{
+	display: grid;
+grid-template-columns: repeat(3, 1fr)!important;
+gap: 20px!important;
+  }
+}

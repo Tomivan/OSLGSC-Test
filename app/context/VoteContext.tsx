@@ -148,7 +148,7 @@ export const VoteProvider = ({ children }: { children: React.ReactNode }) => {
       transactionId
     };
 
-  } catch (error: any) {
+  } catch (error: any) {// eslint-disable-line @typescript-eslint/no-explicit-any
     console.error("❌ SYNC FAILED WITH ERROR:", error);
     console.error("Error code:", error.code);
     console.error("Error message:", error.message);

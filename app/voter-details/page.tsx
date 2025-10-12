@@ -58,7 +58,7 @@ const VoterDetailsContent = () => {
 			// Reset local votes and redirect
 			resetVotes();
 			router.push("/vote-completed");
-		} catch (error) {
+		} catch (error) { // eslint-disable-line @typescript-eslint/no-explicit-any
 			alert("Payment successful but failed to update votes. Please contact support.");
 		}
 	};

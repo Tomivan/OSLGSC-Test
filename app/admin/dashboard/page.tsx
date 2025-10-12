@@ -75,7 +75,7 @@ const AdminDashboard = () => {
             id: contestantDoc.id,
             name: data.name || "Unnamed Contestant",
             category: data.category || "Uncategorized",
-            votes: voteCount,
+            votes: data.votes,
             imageUrl: data.imageUrl || data.photoUrl
           };
 

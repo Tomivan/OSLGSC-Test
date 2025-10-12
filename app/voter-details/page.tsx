@@ -59,6 +59,7 @@ const VoterDetailsContent = () => {
 			resetVotes();
 			router.push("/vote-completed");
 		} catch (error) { // eslint-disable-line @typescript-eslint/no-explicit-any
+			console.log(error)
 			alert("Payment successful but failed to update votes. Please contact support.");
 		}
 	};

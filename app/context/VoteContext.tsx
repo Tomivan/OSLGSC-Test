@@ -138,7 +138,7 @@ export const VoteProvider = ({ children }: { children: React.ReactNode }) => {
         transactionId
       };
 
-    } catch (error: any) {
+    } catch (error: any) {// eslint-disable-line @typescript-eslint/no-explicit-any
       console.error("❌ Error syncing votes with Firebase:", error);
       
       let errorMessage = "Failed to sync votes with database";

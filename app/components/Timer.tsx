@@ -1,8 +1,10 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 
 const Timer = () => {
-	const targetDate = new Date("2025-11-12T08:23:59"); 
+	// Use useMemo to prevent targetDate from being recreated on every render
+	const targetDate = useMemo(() => new Date("2025-11-12T08:23:59"), []);
+
 	const [timeLeft, setTimeLeft] = useState({
 		days: 0,
 		hours: 0,
@@ -36,7 +38,7 @@ const Timer = () => {
 		const timer = setInterval(updateTimer, 1000);
 
 		return () => clearInterval(timer);
-	}, [targetDate]);
+	}, [targetDate]); // targetDate is now stable
 
 	return (
 		<main>

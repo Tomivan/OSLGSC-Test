@@ -76,102 +76,117 @@ export const VoteProvider = ({ children }: { children: React.ReactNode }) => {
   }, [votes]);
 
   // Enhanced function to sync votes with Firebase
-  const syncWithFirebase = useCallback(async (): Promise<SyncResult> => {
-    if (isSyncing) {
+ const syncWithFirebase = useCallback(async (): Promise<SyncResult> => {
+  if (isSyncing) {
+    return { 
+      success: false, 
+      error: "Sync already in progress. Please wait." 
+    };
+  }
+  
+  if (totalVotes === 0) {
+    return { 
+      success: false, 
+      error: "No votes to sync. Please select some votes first." 
+    };
+  }
+
+  setIsSyncing(true);
+  
+  try {
+    const voteSummary = getVoteSummary();
+    const nomineeIds = Object.keys(voteSummary);
+    
+    console.log("=== VOTE SYNC DEBUG ===");
+    console.log("Total votes to sync:", totalVotes);
+    console.log("Vote summary by nominee:", voteSummary);
+    console.log("Nominee IDs:", nomineeIds);
+    
+    if (nomineeIds.length === 0) {
+      console.log("No nominee IDs found in vote summary");
       return { 
         success: false, 
-        error: "Sync already in progress. Please wait." 
-      };
-    }
-    
-    // Check if there are any votes to sync
-    if (totalVotes === 0) {
-      return { 
-        success: false, 
-        error: "No votes to sync. Please select some votes first." 
+        error: "No valid votes to sync" 
       };
     }
 
-    setIsSyncing(true);
-    
-    try {
-      const voteSummary = getVoteSummary();
-      const nomineeIds = Object.keys(voteSummary);
-      
-      console.log("🔄 Starting Firebase sync for votes:", voteSummary);
-      console.log("📊 Total votes to sync:", totalVotes);
-      console.log("🎯 Nominees to update:", nomineeIds);
+    const batch = writeBatch(db);
+    let totalSyncedVotes = 0;
 
-      // Use batch write for atomic updates
-      const batch = writeBatch(db);
-      let totalSyncedVotes = 0;
-
-      // Add all vote updates to the batch
-      Object.entries(voteSummary).forEach(([nomineeId, voteCount]) => {
-        if (voteCount > 0) {
-          const nomineeRef = doc(db, "contestants", nomineeId);
-          batch.update(nomineeRef, {
-            votes: increment(voteCount),
-            updatedAt: new Date() // Track when votes were last updated
-          });
-          totalSyncedVotes += voteCount;
-        }
-      });
-
-      // Commit the batch
-      await batch.commit();
-
-      console.log("✅ Successfully synced votes to Firebase");
-      console.log("📈 Total votes recorded:", totalSyncedVotes);
-      console.log("🎯 Updated nominees:", nomineeIds);
-
-      // Generate transaction ID for tracking
-      const transactionId = `vote_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
-
-      // Reset local votes after successful sync
-      setVotes({});
-      setSelectedNominees({});
-
-      return {
-        success: true,
-        syncedVotes: totalSyncedVotes,
-        transactionId
-      };
-
-    } catch (error: any) {// eslint-disable-line @typescript-eslint/no-explicit-any
-      console.error("❌ Error syncing votes with Firebase:", error);
-      
-      let errorMessage = "Failed to sync votes with database";
-      
-      // Handle specific Firebase errors
-      if (error.code === 'permission-denied') {
-        errorMessage = "Permission denied. Please check Firestore security rules allow vote updates.";
-      } else if (error.code === 'unavailable') {
-        errorMessage = "Network error. Please check your internet connection and try again.";
-      } else if (error.code === 'failed-precondition') {
-        errorMessage = "Database error. Please try again or contact support.";
-      } else if (error.code === 'not-found') {
-        errorMessage = "Contestant not found. The voting data may have been updated.";
+    // Verify each nominee document exists and log details
+    for (const [nomineeId, voteCount] of Object.entries(voteSummary)) {
+      if (voteCount > 0) {
+        const nomineeRef = doc(db, "contestants", nomineeId);
+        console.log(`Preparing to update nominee ${nomineeId} with +${voteCount} votes`);
+        
+        batch.update(nomineeRef, {
+          votes: increment(voteCount),
+          lastUpdated: new Date()
+        });
+        
+        totalSyncedVotes += voteCount;
       }
-
-      console.error("Sync error details:", {
-        code: error.code,
-        message: error.message,
-        voteSummary: getVoteSummary(),
-        totalVotes
-      });
-
-      return {
-        success: false,
-        error: errorMessage
-      };
-    } finally {
-      setIsSyncing(false);
     }
-  }, [votes, isSyncing, totalVotes, getVoteSummary]);
+
+    console.log(`Committing batch with ${totalSyncedVotes} total votes...`);
+    
+    // Commit the batch
+    await batch.commit();
+    
+    console.log("✅ Batch commit successful!");
+    console.log(`Successfully synced ${totalSyncedVotes} votes`);
+
+    const transactionId = `vote_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+
+    // Reset local votes after successful sync
+    setVotes({});
+    setSelectedNominees({});
+
+    return {
+      success: true,
+      syncedVotes: totalSyncedVotes,
+      transactionId
+    };
+
+  } catch (error: any) {
+    console.error("❌ SYNC FAILED WITH ERROR:", error);
+    console.error("Error code:", error.code);
+    console.error("Error message:", error.message);
+    console.error("Error details:", error);
+    
+    let errorMessage = "Failed to sync votes with database";
+    
+    if (error.code) {
+      switch (error.code) {
+        case 'permission-denied':
+          errorMessage = "Database permission denied. Please check Firestore security rules.";
+          break;
+        case 'unavailable':
+          errorMessage = "Network error. Please check your internet connection.";
+          break;
+        case 'failed-precondition':
+          errorMessage = "Document may not exist or is in an invalid state.";
+          break;
+        case 'not-found':
+          errorMessage = "Contestant document not found. The ID may be incorrect.";
+          break;
+        default:
+          errorMessage = `Database Error: ${error.code} - ${error.message}`;
+      }
+    }
+    
+    console.error("Final error message:", errorMessage);
+
+    return {
+      success: false,
+      error: errorMessage
+    };
+  } finally {
+    setIsSyncing(false);
+  }
+}, [votes, isSyncing, totalVotes, getVoteSummary]);
 
   const handleVoteChange = useCallback((categoryId: CategoryId, nomineeId: NomineeId, quantity: number) => {
-    console.log(`Vote change: ${categoryId}, ${nomineeId}, ${quantity}`);
     
     setVotes((prev) => {
       const newVotes = { ...prev };

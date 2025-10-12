@@ -54,13 +54,11 @@ const VoterDetailsContent = () => {
 		try {
 			// Sync votes to Firebase after successful payment
 			await syncWithFirebase();
-			console.log("✅ Votes successfully updated in Firebase");
 			
 			// Reset local votes and redirect
 			resetVotes();
 			router.push("/vote-completed");
 		} catch (error) {
-			console.error("❌ Error updating votes in Firebase:", error);
 			alert("Payment successful but failed to update votes. Please contact support.");
 		}
 	};
@@ -81,7 +79,6 @@ const VoterDetailsContent = () => {
 			setIsProcessing(false);
 		},
 		onError: (error: Error) => {
-			console.error("Paystack Error:", error);
 			alert(
 				`Payment error: ${error.message || "Unknown error occurred"}`
 			);

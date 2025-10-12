@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter, Gafata } from "next/font/google";
 import "./globals.css";
 import { VoteProvider } from "./context/VoteContext";
+import { AdminAuthProvider } from "./context/AdminAuthContext";
 
 const inter = Inter({
 	subsets: ["latin"],
@@ -30,7 +31,11 @@ export default function RootLayout({
 		<html lang="en">
 			<body className={`${inter.className} ${gafata.variable}`}>
 				<link rel="icon" href="/logo.svg" sizes="any" />
-				<VoteProvider>{children}</VoteProvider>
+				<AdminAuthProvider>
+					<VoteProvider>
+						{children}
+					</VoteProvider>
+				</AdminAuthProvider>
 			</body>
 		</html>
 	);

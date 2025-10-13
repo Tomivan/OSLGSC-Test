@@ -19,7 +19,7 @@ const gafata = Gafata({
 export const metadata: Metadata = {
 	title: "OSLGSC VOTING",
 	description:
-		"Ogun State Local Government Service Commission Award Voting Platform",
+		"Ogun State Local Government Service Award Voting Platform",
 };
 
 export default function RootLayout({

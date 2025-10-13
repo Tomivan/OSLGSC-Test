@@ -13,7 +13,7 @@ const AdminNav = () => {
                     className="w-[80px] h-[80px] md:w-[92px] md:h-[92px]"
                 />
                 <h1 className="font-bold w-fit text-[13.5px] leading-[18px] md:text-lg uppercase text-center text-[#343434] my-auto">
-                    Ogun State Local Government Service Commission Award
+                    Ogun State Local Government Service Award
                 </h1>
             </section>
         </div>

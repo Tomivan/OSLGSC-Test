@@ -24,7 +24,7 @@ const Homepage = () => {
 						<div className="flex text-[#FAFAFA] justify-center items-center w-full mt-[170px] md:mt-[166px]">
 							<div>
 								<h1 className="font-bold text-[19.44px] text-center uppercase md:text-[42.1px] tracking-0 leading-[26px] md:leading-[60px]">
-									Local Government <br /> Service Commission
+									Local Government <br /> Service
 									week
 								</h1>
 								<h1 className="text text-center font-extrabold text-[45px] md:text-[67.45px] md:mb-[22.5px] tracking-0 md:leading-[82px] leading-[46px]">

@@ -41,7 +41,7 @@ const TimerMobile = () => {
 	return (
 		<main className="mt-[200px] flex justify-center">
 			<section>
-				<div className="bg-[#AAAAAA38] backdrop-blur-md rounded-[8px] md:w-[375px] mx-auto px-[18px] py-[18px] border border-transparent [border-image:linear-gradient(100.4deg,#FF0000_30.66%,#FFA700_71.98%,#FB00FF_111.31%)_1]">
+				<div className="bg-[#AAAAAA38] time backdrop-blur-md rounded-[8px] md:w-[375px] mx-auto px-[18px] py-[18px] border border-[#FAFAFA] ]">
 					<p className="text-center text-[20px] text-[#343434]">
 						VOTE ENDS IN
 					</p>

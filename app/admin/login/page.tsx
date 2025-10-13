@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useAdminAuth } from "../../context/AdminAuthContext";
 import Link from "next/link";
-import Navbar from "@/app/components/Navbar";
+import AdminNav from "../adminNav";
 
 const AdminLogin = () => {
   const [email, setEmail] = useState("");
@@ -44,7 +44,7 @@ const AdminLogin = () => {
 
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
-      <Navbar />
+      <AdminNav />
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
         <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
           Admin Portal

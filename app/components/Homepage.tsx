@@ -23,7 +23,7 @@ const Homepage = () => {
 					<div className="w-full relative lg:max-w-[1280px] mx-auto">
 						<div className="flex text-[#FAFAFA] justify-center items-center w-full mt-[170px] md:mt-[166px]">
 							<div>
-								<h1 className="font-bold text-[19.44px] text-center uppercase md:text-[42.1px] tracking-0 leading-[26px] md:leading-[60px]">
+								<h1 className="font-bold text-[27.44px] text-center uppercase md:text-[42.1px] tracking-0 leading-[36px] md:leading-[60px]">
 									Local Government <br /> Service
 									week
 								</h1>

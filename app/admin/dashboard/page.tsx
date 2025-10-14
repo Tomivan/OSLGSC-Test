@@ -1,12 +1,11 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { collection, getDocs } from "firebase/firestore";
+import { collection, collectionGroup, getDocs } from "firebase/firestore";
 import { db } from "../../lib/firebase";
 import { FontAwesomeIcon } from  '@fortawesome/react-fontawesome';
 import { faCheckToSlot, faPerson, faTableColumns } from '@fortawesome/free-solid-svg-icons';
 import { useAdminAuth } from "../../context/AdminAuthContext";
-import Image from 'next/image';
 
 interface Contestant {
   id: string;
@@ -46,105 +45,101 @@ const AdminDashboard = () => {
   }, [admin]);
 
   const fetchDashboardData = async () => {
-    try {
-      setIsLoading(true);
-      setError(null);
-      console.log("Fetching dashboard data...");
+  try {
+    setIsLoading(true);
+    setError(null);
+    console.log("Fetching dashboard data...");
 
-      // Fetch contestants from Firestore
-      const contestantsSnapshot = await getDocs(collection(db, "contestants"));
-      console.log(`Found ${contestantsSnapshot.size} contestants`);
-      
-      const contestantsData: Contestant[] = [];
-      let totalVotes = 0;
-      const categories = new Set<string>();
+    // Fetch all contestants and all votes in parallel
+    const [contestantsSnapshot, votesSnapshot] = await Promise.all([
+      getDocs(collection(db, "contestants")),
+      getDocs(collectionGroup(db, "votes")) // This gets all votes across all contestants
+    ]);
 
-      for (const contestantDoc of contestantsSnapshot.docs) {
-        const data = contestantDoc.data();
-        console.log(`Processing contestant: ${data.name}`);
-        
-        try {
-          // Get votes count from votes subcollection
-          const votesSnapshot = await getDocs(
-            collection(db, "contestants", contestantDoc.id, "votes")
-          );
-          const voteCount = votesSnapshot.size;
-          console.log(`Contestant ${data.name} has ${voteCount} votes`);
+    console.log(`Found ${contestantsSnapshot.size} contestants`);
+    console.log(`Found ${votesSnapshot.size} total votes`);
 
-          const contestant: Contestant = {
-            id: contestantDoc.id,
-            name: data.name || "Unnamed Contestant",
-            category: data.category || "Uncategorized",
-            votes: data.votes,
-            imageUrl: data.imageUrl || data.photoUrl
-          };
-
-          contestantsData.push(contestant);
-          totalVotes += data.votes;
-          categories.add(contestant.category);
-        } catch (voteError) {
-          console.error(`Error fetching votes for contestant ${contestantDoc.id}:`, voteError);
-          // Continue with other contestants even if one fails
-          const contestant: Contestant = {
-            id: contestantDoc.id,
-            name: data.name || "Unnamed Contestant",
-            category: data.category || "Uncategorized",
-            votes: 0,
-            imageUrl: data.imageUrl || data.photoUrl
-          };
-          contestantsData.push(contestant);
-          categories.add(contestant.category);
-        }
+    // Create a map of contestant IDs to vote counts
+    const voteCounts = new Map<string, number>();
+    votesSnapshot.forEach((voteDoc) => {
+      // Extract contestant ID from the vote document path
+      const pathParts = voteDoc.ref.path.split('/');
+      if (pathParts.length >= 3) {
+        const contestantId = pathParts[1];
+        voteCounts.set(contestantId, (voteCounts.get(contestantId) || 0) + 1);
       }
+    });
 
-      // Group contestants by category and sort each group by votes (descending)
-      const groupedByCategory: CategoryGroup[] = [];
+    const contestantsData: Contestant[] = [];
+    let totalVotes = 0;
+    const categories = new Set<string>();
+
+    contestantsSnapshot.forEach((contestantDoc) => {
+      const data = contestantDoc.data();
+      const voteCount = voteCounts.get(contestantDoc.id) || data.votes || 0;
       
-      categories.forEach(category => {
-        const categoryContestants = contestantsData
-          .filter(contestant => contestant.category === category)
-          .sort((a, b) => b.votes - a.votes); // Sort by votes descending
-        
-        const categoryTotalVotes = categoryContestants.reduce((sum, contestant) => sum + contestant.votes, 0);
-        
-        groupedByCategory.push({
-          category,
-          contestants: categoryContestants,
-          totalVotes: categoryTotalVotes
-        });
-      });
+      console.log(`Contestant ${data.name} has ${voteCount} votes`);
 
-      // Sort categories by total votes (descending) or alphabetically
-      groupedByCategory.sort((a, b) => {
-        // Sort by total votes descending first
-        if (b.totalVotes !== a.totalVotes) {
-          return b.totalVotes - a.totalVotes;
-        }
-        // If same votes, sort alphabetically
-        return a.category.localeCompare(b.category);
-      });
+      const contestant: Contestant = {
+        id: contestantDoc.id,
+        name: data.name || "Unnamed Contestant",
+        category: data.category || "Uncategorized",
+        votes: voteCount,
+        imageUrl: data.imageUrl || data.photoUrl
+      };
 
-      setCategoryGroups(groupedByCategory);
-      setStats({
-        totalVotes,
-        totalContestants: contestantsData.length,
-        totalCategories: categories.size
-      });
+      contestantsData.push(contestant);
+      totalVotes += voteCount;
+      categories.add(contestant.category);
+    });
 
-    } catch (err: any) {// eslint-disable-line @typescript-eslint/no-explicit-any
-      console.error("Error fetching dashboard data:", err);
+    // Rest of your grouping and sorting logic remains the same...
+    const groupedByCategory: CategoryGroup[] = [];
+    
+    categories.forEach(category => {
+      const categoryContestants = contestantsData
+        .filter(contestant => contestant.category === category)
+        .sort((a, b) => b.votes - a.votes);
       
-      if (err.code === 'permission-denied') {
-        setError("Permission denied. Please check your Firestore security rules.");
-      } else if (err.code === 'unavailable') {
-        setError("Network error. Please check your internet connection.");
-      } else {
-        setError("Failed to load dashboard data. Please check the console for details.");
+      const categoryTotalVotes = categoryContestants.reduce((sum, contestant) => sum + contestant.votes, 0);
+      
+      groupedByCategory.push({
+        category,
+        contestants: categoryContestants,
+        totalVotes: categoryTotalVotes
+      });
+    });
+
+    groupedByCategory.sort((a, b) => {
+      if (b.totalVotes !== a.totalVotes) {
+        return b.totalVotes - a.totalVotes;
       }
-    } finally {
-      setIsLoading(false);
+      return a.category.localeCompare(b.category);
+    });
+
+    setCategoryGroups(groupedByCategory);
+    setStats({
+      totalVotes,
+      totalContestants: contestantsData.length,
+      totalCategories: categories.size
+    });
+
+    console.log("Dashboard data loaded successfully");
+
+  } catch (err: any) {// eslint-disable-line @typescript-eslint/no-explicit-any
+    console.error("Error fetching dashboard data:", err);
+    
+    if (err.code === 'permission-denied') {
+      setError("Permission denied. Please check your Firestore security rules.");
+    } else if (err.code === 'unavailable') {
+      setError("Network error. Please check your internet connection.");
+    } else {
+      setError("Failed to load dashboard data. Please check the console for details.");
     }
-  };
+  } finally {
+    setIsLoading(false);
+  }
+};
 
   if (isLoading) {
     return (
@@ -305,17 +300,6 @@ const AdminDashboard = () => {
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
                           <div className="flex items-center">
-                            {contestant.imageUrl && (
-                              <div className="flex-shrink-0 h-10 w-10">
-                                <Image
-                                className="h-10 w-10 rounded-full object-cover"
-                                src={contestant.imageUrl}
-                                alt={contestant.name}
-                                width={40}
-                                height={40}
-                                />
-                              </div>
-                            )}
                             <div className={contestant.imageUrl ? "ml-4" : ""}>
                               <div className="text-sm font-medium text-gray-900">
                                 {contestant.name}

@@ -2,9 +2,7 @@
 const nextConfig = {
     images: {
     domains: [
-      'firebasestorage.googleapis.com',
-      'lh3.googleusercontent.com', // If you use Google auth profile images
-      'storage.googleapis.com'
+      'firebasestorage.googleapis.com'
     ],
     remotePatterns: [
       {

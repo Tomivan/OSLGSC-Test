@@ -56,7 +56,7 @@ const Categories = () => {
         const categoryData: Category[] = uniqueCategories.map((categoryName, index) => ({
           id: `cat-${index + 1}`, // Generate unique ID for category
           name: categoryName,
-          isOpen: index === 0 // Open first category by default
+          isOpen: index === null
         }));
 
         setCategories(categoryData);

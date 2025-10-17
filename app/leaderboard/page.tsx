@@ -129,7 +129,7 @@ const FullLeaderboard = () => {
             </p>
           </div>
           
-          <div className="bg-[#E4E4E4]">
+          <div className="bg-white">
             {contestants.length === 0 ? (
               <div className="text-center py-8 text-gray-600">
                 No contestants found.

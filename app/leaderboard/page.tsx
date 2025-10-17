@@ -57,20 +57,6 @@ const FullLeaderboard = () => {
     fetchAllContestants();
   }, []);
 
-  // Function to get position badge color
-  const getPositionColor = (position: number) => {
-    switch (position) {
-      case 1:
-        return "bg-yellow-400 text-yellow-900";
-      case 2:
-        return "bg-gray-300 text-gray-700";
-      case 3:
-        return "bg-orange-300 text-orange-900";
-      default:
-        return "bg-whit text-gray-600";
-    }
-  };
-
   if (loading) {
     return (
       <main className="flex justify-center py-8 min-h-screen bg-gray-50">
@@ -142,7 +128,7 @@ const FullLeaderboard = () => {
                     className="flex items-center justify-between md:px-6 md:py-4 px-3 py-2 hover:bg-gray-100 transition-colors duration-200"
                   >
                     <div className="flex items-center space-x-4">
-                      <div className={`w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm ${getPositionColor(contestant.position)}`}>
+                      <div className={`w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm ${(contestant.position)}`}>
                         {contestant.position}
                       </div>
                       <div>

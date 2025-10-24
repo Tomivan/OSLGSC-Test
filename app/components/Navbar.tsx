@@ -14,7 +14,7 @@ const Navbar = () => {
 					alt="OSLGSC Logo"
 					className="w-[53px] h-[53px] md:w-[92px] md:h-[92px]"
 				/>
-		<h1 className="font-bold w-[145px] md:w-[283px] text-[11px] md:leading-[18px] md:text-base uppercase md:ml-[5px] text-[#343434] my-auto">
+				<h1 className="font-bold w-[145px] md:w-[283px] text-[11px] md:leading-[18px] md:text-base uppercase md:ml-[5px] text-[#343434] my-auto">
 					Ogun State Local Government Service
 				</h1>
 				</div>

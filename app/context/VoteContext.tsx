@@ -97,10 +97,7 @@ export const VoteProvider = ({ children }: { children: React.ReactNode }) => {
     const voteSummary = getVoteSummary();
     const nomineeIds = Object.keys(voteSummary);
     
-    console.log("=== VOTE SYNC DEBUG ===");
     console.log("Total votes to sync:", totalVotes);
-    console.log("Vote summary by nominee:", voteSummary);
-    console.log("Nominee IDs:", nomineeIds);
     
     if (nomineeIds.length === 0) {
       console.log("No nominee IDs found in vote summary");
@@ -117,7 +114,6 @@ export const VoteProvider = ({ children }: { children: React.ReactNode }) => {
     for (const [nomineeId, voteCount] of Object.entries(voteSummary)) {
       if (voteCount > 0) {
         const nomineeRef = doc(db, "contestants", nomineeId);
-        console.log(`Preparing to update nominee ${nomineeId} with +${voteCount} votes`);
         
         batch.update(nomineeRef, {
           votes: increment(voteCount),
@@ -133,7 +129,6 @@ export const VoteProvider = ({ children }: { children: React.ReactNode }) => {
     // Commit the batch
     await batch.commit();
     
-    console.log("✅ Batch commit successful!");
     console.log(`Successfully synced ${totalSyncedVotes} votes`);
 
     const transactionId = `vote_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
@@ -149,9 +144,6 @@ export const VoteProvider = ({ children }: { children: React.ReactNode }) => {
     };
 
   } catch (error: any) {// eslint-disable-line @typescript-eslint/no-explicit-any
-    console.error("❌ SYNC FAILED WITH ERROR:", error);
-    console.error("Error code:", error.code);
-    console.error("Error message:", error.message);
     console.error("Error details:", error);
     
     let errorMessage = "Failed to sync votes with database";

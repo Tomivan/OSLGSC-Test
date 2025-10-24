@@ -29,7 +29,7 @@ interface PaystackTransaction {
 
 const VoterDetailsContent = () => {
 	const router = useRouter();
-	const { totalVotes, resetVotes, syncWithFirebase } = useVoteContext(); // Added syncWithFirebase
+	const { totalVotes, resetVotes, syncWithFirebase } = useVoteContext();
 	const paymentAmount = totalVotes * 100; // amount in Naira for display
 
 	const [formData, setFormData] = useState<VoterFormData>({ email: "" });
@@ -65,9 +65,22 @@ const VoterDetailsContent = () => {
 	};
 
 	const paystackConfig = {
-		email: formData.email || "voter@example.com", // Provide default email if empty
+		email: formData.email || "voter@example.com", 
 		amount: paymentAmount * 100, // convert to kobo for Paystack
 		publicKey: process.env.NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY || "",
+		metadata: {
+			custom_fields: [
+			{
+				display_name: "Vote Data",
+				variable_name: "vote_data",
+				value: JSON.stringify({
+				totalVotes: totalVotes,
+				timestamp: new Date().toISOString(),
+				email: formData.email || "anonymous"
+				})
+			}
+			]
+		},
 		text: isProcessing
 			? "Processing..."
 			: `Pay ₦${paymentAmount.toLocaleString()}`,

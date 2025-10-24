@@ -56,7 +56,7 @@ const VoterDetailsContent = () => {
 			await syncWithFirebase();
 			
 			// Reset local votes and redirect
-			resetVotes();
+			await resetVotes();
 			router.push("/vote-completed");
 		} catch (error) { // eslint-disable-line @typescript-eslint/no-explicit-any
 			console.log(error)

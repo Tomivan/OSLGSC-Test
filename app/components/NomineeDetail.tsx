@@ -22,7 +22,7 @@ interface NomineeDetailProps {
 
 export const NomineeDetailPage: React.FC<NomineeDetailProps> = ({ nominee }) => {
   const router = useRouter();
-  const { handleVoteChange, getVoteQuantity, totalVotes } = useVoteContext();
+  const { handleVoteChange, getVoteQuantity} = useVoteContext();
   const [voteInput, setVoteInput] = useState<string>("");
   const currentVotes = getVoteQuantity(nominee.categoryId, nominee.id);
 

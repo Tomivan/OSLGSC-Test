@@ -12,7 +12,7 @@ const VoteImage = () => {
 
 					{/* LEFT SIDE — TEXT SECTION */}
 					<div className="w-full md:w-[90%] lg:w-fit pt-[20px] lg:pt-[35px] text-center md:text-center lg:text-left">
-						<h1 className="uppercase w-fit text-[#343434] text-2xl md:text-[32px] text-center mx-auto lg:mx-0 md:mb-[20px] text-left md:text-center lg:text-left tracking-0 leading-[32px]"> VOTE FOR YOUR <br /> <span className="text-[#3B8501] font-bold"> FAVORITE NOMINATION </span>{" "} </h1>
+						<h1 className="uppercase w-fit text-[#343434] text-2xl md:text-[32px] text-center mx-auto lg:mx-0 md:mb-[20px] text-left md:text-center lg:text-left tracking-0 leading-[32px]"> VOTE FOR YOUR <br /> <span className="text-[#3B8501] font-bold"> FAVORITE NOMINEE </span>{" "} </h1>
 
 						<div className="text-[#343434] text-[14px] md:text-base md:w-[90%] lg:w-[598px] mt-[8px] lg:mt-[24px] leading-[20px] lg:leading-[24px] text-center lg:text-left mx-auto lg:mx-0">
 							<p>

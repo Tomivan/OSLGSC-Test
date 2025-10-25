@@ -69,15 +69,17 @@ const VoterDetailsContent = () => {
 		amount: paymentAmount * 100, // convert to kobo for Paystack
 		publicKey: process.env.NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY || "",
 		metadata: {
+			voteData: {
+			totalVotes: totalVotes,
+			timestamp: new Date().toISOString(),
+			email: formData.email || "anonymous",
+			},
+			// Keep custom_fields for Paystack dashboard display
 			custom_fields: [
 			{
 				display_name: "Vote Data",
 				variable_name: "vote_data",
-				value: JSON.stringify({
-				totalVotes: totalVotes,
-				timestamp: new Date().toISOString(),
-				email: formData.email || "anonymous"
-				})
+				value: `${totalVotes} votes`
 			}
 			]
 		},
@@ -128,10 +130,6 @@ const VoterDetailsContent = () => {
 
 				{!paymentSuccess ? (
 				<>
-					<p className="text-[#343434] text-sm mb-6 font-medium">
-					Kindly enter the following details to cast your votes:
-					</p>
-
 					<div className="space-y-4">
 					<div>
 						<label className="block text-[#666666] text-xs font-semibold mb-2">
@@ -169,7 +167,10 @@ const VoterDetailsContent = () => {
 					</p>
 				</div>
 				)}
-			</div>
+				<p className="text-red-500 text-sm mb-6 mt-8 font-medium">
+					Kindly return to the application to ensure your payment is confirmed
+				</p>
+			</div> 
 		</div>
 	);
 };

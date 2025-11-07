@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 
 const TimerMobile = () => {
 	const calculateTimeLeft = () => {
-		const targetDate = new Date("2025-11-12T08:23:59");
+		const targetDate = new Date("2025-11-12T23:59:59");
 		const now = new Date();
 
 		const difference = targetDate.getTime() - now.getTime();

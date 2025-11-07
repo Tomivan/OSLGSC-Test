@@ -3,7 +3,7 @@ import React, { useState, useEffect, useMemo } from "react";
 
 const Timer = () => {
 	// Use useMemo to prevent targetDate from being recreated on every render
-	const targetDate = useMemo(() => new Date("2025-11-12T08:23:59"), []);
+	const targetDate = useMemo(() => new Date("2025-11-12T23:59:59"), []);
 
 	const [timeLeft, setTimeLeft] = useState({
 		days: 0,

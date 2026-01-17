@@ -47,7 +47,7 @@ export const NomineeCard: React.FC<NomineeCardProps> = ({
       
       <div className="w-[269px] h-[250px] relative mb-3 rounded-t-[8px] overflow-hidden">
         <Image
-          src={nominee.image || "/image.png"}
+          src={"/image.png"}
           alt={nominee.name}
           fill
           className="object-cover"

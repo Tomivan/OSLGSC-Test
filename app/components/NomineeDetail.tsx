@@ -86,7 +86,7 @@ export const NomineeDetailPage: React.FC<NomineeDetailProps> = ({ nominee }) => 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 p-6">
             <div className="relative w-full h-[350px] bg-gray-200 rounded-lg overflow-hidden">
               <Image
-                src={nominee.image || "/image.png"}
+                src={ "/image.png"}
                 alt={nominee.name}
                 fill
                 className="object-cover"

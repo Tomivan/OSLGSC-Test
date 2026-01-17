@@ -13,7 +13,6 @@ interface Contestant {
   category: string;
   imageUrl?: string;
   votes: number;
-  score?: number;
 }
 
 interface Category {
@@ -206,7 +205,7 @@ const Categories = () => {
                                   id: contestant.id,
                                   name: contestant.name,
                                   image: getImageUrl(contestant),
-                                  voteCount: contestant.score || 0,
+                                  voteCount: contestant.votes || 0,
                                 }}
                                 voteQuantity={voteQuantity}
                                 onVoteChange={(

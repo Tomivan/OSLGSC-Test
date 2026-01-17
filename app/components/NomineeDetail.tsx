@@ -17,6 +17,7 @@ interface NomineeDetailProps {
     category: string;
     categoryId: string;
     bio?: string;
+    score?: number;
   };
 }
 
@@ -97,7 +98,7 @@ export const NomineeDetailPage: React.FC<NomineeDetailProps> = ({ nominee }) => 
                 }}
               />
               <div className="absolute top-3 right-3 px-3 py-1.5 rounded-full text-xs font-semibold text-white bg-black bg-opacity-70">
-                {nominee.voteCount} votes
+                {nominee.score} votes
               </div>
             </div>
 

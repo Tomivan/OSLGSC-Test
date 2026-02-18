@@ -40,7 +40,6 @@ export const AdminAuthProvider = ({ children }: { children: React.ReactNode }) =
 
       if (adminDoc.exists()) {
         const adminData = adminDoc.data();
-        console.log("Admin data:", adminData);
         
         // Only include fields that actually exist in your database
         return {
@@ -54,7 +53,6 @@ export const AdminAuthProvider = ({ children }: { children: React.ReactNode }) =
       console.log("User not found in admins collection");
       return null;
     } catch (error) {
-      console.error("Error converting to admin user:", error);
       return null;
     }
   };
@@ -67,26 +65,20 @@ export const AdminAuthProvider = ({ children }: { children: React.ReactNode }) =
 
       try {
         if (firebaseUser) {
-          console.log("Firebase user authenticated:", firebaseUser.uid);
           const adminUser = await convertToAdminUser(firebaseUser);
-          console.log("Admin user after conversion:", adminUser);
           
           if (adminUser) {
             setAdmin(adminUser);
-            console.log("Admin user set in state");
           } else {
             // User is authenticated but not an admin - sign them out
-            console.log("User is not an admin, signing out...");
             await signOut(auth);
             setAdmin(null);
             setError("Access denied. Admin privileges required.");
           }
         } else {
-          console.log("No firebase user");
           setAdmin(null);
         }
       } catch (error) {
-        console.error("Auth state change error:", error);
         setError("Authentication error occurred.");
         setAdmin(null);
       } finally {
@@ -102,31 +94,24 @@ export const AdminAuthProvider = ({ children }: { children: React.ReactNode }) =
     setError(null);
 
     try {
-      console.log("Attempting login for:", email);
       
       // Sign in with Firebase Auth
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
       const firebaseUser = userCredential.user;
-      
-      console.log("Firebase auth successful:", firebaseUser.uid);
-
+  
       // Check if user is in admins collection
       const adminUser = await convertToAdminUser(firebaseUser);
-      console.log("Admin check result:", adminUser);
       
       if (adminUser) {
         setAdmin(adminUser);
-        console.log("Login successful - admin user set");
         return true;
       } else {
         // User is not an admin - sign them out
-        console.log("User is not an admin, signing out...");
         await signOut(auth);
         setError("Access denied. Admin privileges required.");
         return false;
       }
-    } catch (error: any) {// eslint-disable-line @typescript-eslint/no-explicit-any
-      console.error("Login error:", error);
+    } catch (error: any) {
       
       // Handle specific Firebase auth errors
       switch (error.code) {
@@ -161,7 +146,6 @@ export const AdminAuthProvider = ({ children }: { children: React.ReactNode }) =
       setAdmin(null);
       setError(null);
     } catch (error) {
-      console.error("Logout error:", error);
       setError("Logout failed. Please try again.");
     }
   };

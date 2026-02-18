@@ -50,10 +50,9 @@ export const AdminAuthProvider = ({ children }: { children: React.ReactNode }) =
       }
       
       // User is not in admins collection
-      console.log("User not found in admins collection");
       return null;
     } catch (error) {
-      return null;
+      throw error;
     }
   };
 
@@ -81,6 +80,7 @@ export const AdminAuthProvider = ({ children }: { children: React.ReactNode }) =
       } catch (error) {
         setError("Authentication error occurred.");
         setAdmin(null);
+        console.log(error)
       } finally {
         setIsLoading(false);
       }
@@ -147,6 +147,7 @@ export const AdminAuthProvider = ({ children }: { children: React.ReactNode }) =
       setError(null);
     } catch (error) {
       setError("Logout failed. Please try again.");
+      console.error(error);
     }
   };
 

@@ -34,13 +34,10 @@ export const AdminAuthProvider = ({ children }: { children: React.ReactNode }) =
   // Convert Firebase User to AdminUser
   const convertToAdminUser = async (firebaseUser: User): Promise<AdminUser | null> => {
     try {
-      console.log("Checking admin privileges for:", firebaseUser.uid);
       
       // Check if user exists in admins collection
       const adminDoc = await getDoc(doc(db, "admins", firebaseUser.uid));
-      
-      console.log("Admin document exists:", adminDoc.exists());
-      
+
       if (adminDoc.exists()) {
         const adminData = adminDoc.data();
         console.log("Admin data:", adminData);

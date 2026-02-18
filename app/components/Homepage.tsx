@@ -11,6 +11,7 @@ import Categories from "./Categories";
 import FixedVoteWidget from "./FixedVoteWidget";
 import TimerMobile from "./TimerMobile";
 import Timer from "./Timer";
+import Image from "next/image";
 
 const Homepage = () => {
 	return (
@@ -18,8 +19,33 @@ const Homepage = () => {
 			<Navbar />
 			<div className="flex justify-center">
 				<div className="relative w-full">
-					<div className="image2 absolute hidden md:block inset-0 w-full h-[800px] md:h-[900px] mb-[00px]"></div>
-					<div className="image3 absolute md:hidden inset-0 w-full h-[478px] md:h-[900px] mb-[00px]"></div>
+					{/* Desktop background image */}
+					<div className="absolute hidden md:block inset-0 w-full h-[800px] md:h-[900px]">
+						<Image
+							src="https://res.cloudinary.com/dmye53wps/image/upload/v1752341187/Group_2_1_qtn57f.png"
+							alt="Desktop background"
+							fill
+							priority={true} 
+							fetchPriority="high" 
+							className="object-cover object-center"
+							sizes="100vw"
+							style={{ backgroundBlendMode: "multiply" }}
+						/>
+					</div>
+					
+					<div className="absolute md:hidden inset-0 w-full h-[478px] md:h-[900px]">
+						<Image
+							src="https://res.cloudinary.com/dmye53wps/image/upload/v1753009214/Here_section_background_1_u0eqfn.svg"
+							alt="Mobile background"
+							fill
+							priority={true} 
+							fetchPriority="high" 
+							className="object-cover object-center"
+							sizes="100vw"
+							style={{ backgroundBlendMode: "multiply" }}
+						/>
+					</div>
+					
 					<div className="w-full relative lg:max-w-[1280px] mx-auto">
 						<div className="flex text-[#FAFAFA] justify-center items-center w-full mt-[170px] md:mt-[166px]">
 							<div>

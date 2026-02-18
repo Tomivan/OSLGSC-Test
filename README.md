@@ -5,7 +5,7 @@ local government. Each vote costs 100 naira, and payment is processed using Pays
 
 To run locally
 
-Clone the repo: git clone https://github.com/Tomivan/Teepremium.git
+Clone the repo: git clone https://github.com/Tomivan/OSLGSC-Test.git
 
 Navigate into the project: cd oslgsc-voting
 

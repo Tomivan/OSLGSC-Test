@@ -114,7 +114,7 @@ export const AdminAuthProvider = ({ children }: { children: React.ReactNode }) =
     } catch (error: any) {
       
       // Handle specific Firebase auth errors
-      switch (error.code) {
+      switch (error.code) {// eslint-disable-line @typescript-eslint/no-explicit-any
         case "auth/invalid-email":
           setError("Invalid email address.");
           break;

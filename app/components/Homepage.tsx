@@ -21,7 +21,6 @@ const Homepage = () => {
 			<Navbar />
 			<div className="flex justify-center">
 				<div className="relative w-full">
-					{/* Desktop background image */}
 					<div className="absolute hidden md:block inset-0 w-full h-[800px] md:h-[900px]">
 						<Image
 							src={Hero}

@@ -1,8 +1,8 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { NomineeCard } from "./NomineeCard";
-import { useVoteContext } from "../context/VoteContext";
+import { useVote, useSocket } from "../context/VoteContext";
 import { db } from "../lib/firebase";
 import { collection, getDocs } from "firebase/firestore";
 
@@ -26,7 +26,17 @@ const Categories = () => {
   const [contestants, setContestants] = useState<Contestant[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const { votes, selectedNominees, handleVoteChange } = useVoteContext();
+  
+  const { 
+    votes, 
+    selectedNominees, 
+    handleVoteChange,
+    liveVotes,
+    syncWithFirebase,
+    isSyncing
+  } = useVote();
+  
+  const { isConnected } = useSocket();
 
   // Fetch contestants from Firestore
   useEffect(() => {
@@ -34,7 +44,6 @@ const Categories = () => {
       try {
         setLoading(true);
         
-        // Fetch all contestants
         const contestantsSnapshot = await getDocs(collection(db, "contestants"));
         const contestantsData: Contestant[] = contestantsSnapshot.docs.map(doc => ({
           id: doc.id,
@@ -43,20 +52,18 @@ const Categories = () => {
 
         setContestants(contestantsData);
 
-        // FIXED: Extract unique categories without using spread with Set
         const allCategories = contestantsData
           .map(c => c.category)
-          .filter(Boolean); // Remove any undefined/null categories
+          .filter(Boolean);
 
         const uniqueCategories = allCategories.filter((category, index, array) => 
           array.indexOf(category) === index
         );
 
-        // Convert to category objects
         const categoryData: Category[] = uniqueCategories.map((categoryName, index) => ({
-          id: `cat-${index + 1}`, // Generate unique ID for category
+          id: `cat-${index + 1}`,
           name: categoryName,
-          isOpen: index === null
+          isOpen: false
         }));
 
         setCategories(categoryData);
@@ -72,6 +79,36 @@ const Categories = () => {
     fetchContestants();
   }, []);
 
+  // AUTO-SYNC: Whenever votes change, sync to Firebase
+  useEffect(() => {
+    const autoSync = async () => {
+      // Only sync if there are votes and we're not already syncing
+      if (Object.keys(votes).length > 0 && !isSyncing && isConnected) {
+        console.log("Auto-syncing votes...");
+        const result = await syncWithFirebase();
+        if (result.success) {
+          console.log(`Auto-sync successful: ${result.syncedVotes} votes synced`);
+        }
+      }
+    };
+
+    // Debounce the sync to avoid too many requests
+    const timeoutId = setTimeout(autoSync, 3000); // Sync 3 seconds after last vote
+    
+    return () => clearTimeout(timeoutId);
+  }, [votes, isSyncing, isConnected, syncWithFirebase]);
+
+  // Also sync when component unmounts (user leaves page)
+  useEffect(() => {
+    return () => {
+      if (Object.keys(votes).length > 0 && !isSyncing) {
+        // Use navigator.sendBeacon for unmount sync (more reliable)
+        const syncData = JSON.stringify({ votes, timestamp: Date.now() });
+        navigator.sendBeacon('/api/sync-votes', syncData);
+      }
+    };
+  }, [votes, isSyncing]);
+
   const toggleCategory = (categoryId: string) => {
     setCategories((prev) =>
       prev.map((cat) =>
@@ -80,15 +117,31 @@ const Categories = () => {
     );
   };
 
-  // Get contestants for a specific category
   const getContestantsForCategory = (categoryName: string) => {
     return contestants.filter(contestant => contestant.category === categoryName);
   };
 
-  // Fallback image in case imageUrl is missing
-  const getImageUrl = (contestant: Contestant) => {
-    return contestant.imageUrl || "/image.png"; // Fallback to your default image
+  const getLiveVoteCount = (contestant: Contestant): number => {
+    const firebaseVotes = contestant.votes || 0;
+    const liveIncrement = liveVotes[contestant.id] || 0;
+    return firebaseVotes + liveIncrement;
   };
+
+  const getImageUrl = (contestant: Contestant) => {
+    return contestant.imageUrl || "/image.png";
+  };
+
+  const sortedContestantsByCategory = useMemo(() => {
+    const map = new Map();
+    categories.forEach(category => {
+      const categoryContestants = getContestantsForCategory(category.name);
+      const sorted = [...categoryContestants].sort((a, b) => 
+        getLiveVoteCount(b) - getLiveVoteCount(a)
+      );
+      map.set(category.name, sorted);
+    });
+    return map;
+  }, [categories, contestants, liveVotes]);
 
   if (loading) {
     return (
@@ -142,13 +195,37 @@ const Categories = () => {
     >
       <section className="w-full max-w-[1200px] px-4">
         <div className="w-full">
-          <h1 className="text-[#3B8501] text-center uppercase font-bold text-2xl md:text-[32px] tracking-0 leading-[43px] mb-8">
-            CATEGORIES
-          </h1>
+          <div className="flex justify-between items-center mb-8">
+            <h1 className="text-[#3B8501] text-center uppercase font-bold text-2xl md:text-[32px] tracking-0 leading-[43px]">
+              CATEGORIES
+            </h1>
+            
+            {/* Live connection indicator */}
+            {isConnected ? (
+              <div className="flex items-center gap-2 bg-green-50 px-3 py-1 rounded-full">
+                <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
+                <span className="text-sm text-green-700">Live</span>
+              </div>
+            ) : (
+              <div className="flex items-center gap-2 bg-yellow-50 px-3 py-1 rounded-full">
+                <span className="w-2 h-2 bg-yellow-500 rounded-full"></span>
+                <span className="text-sm text-yellow-700">Reconnecting...</span>
+              </div>
+            )}
+          </div>
+
+          {/* Auto-sync status indicator - subtle and temporary */}
+          {isSyncing && (
+            <div className="mb-4 p-2 bg-blue-50 border border-blue-200 rounded-lg animate-pulse">
+              <p className="text-blue-600 text-sm text-center">
+                ⚡ Syncing votes...
+              </p>
+            </div>
+          )}
 
           <div className="space-y-4">
             {categories.map((category) => {
-              const categoryContestants = getContestantsForCategory(category.name);
+              const categoryContestants = sortedContestantsByCategory.get(category.name) || [];
               
               return (
                 <div
@@ -159,11 +236,20 @@ const Categories = () => {
                     onClick={() => toggleCategory(category.id)}
                     className="w-full px-4 py-3 text-left text-black font-medium bg-white hover:bg-gray-50 rounded-[8px] transition-colors duration-200 flex items-center justify-between"
                   >
-                    <span>
-                      {category.name}
-                      {categoryContestants.length > 0 && (
-                        <span className="ml-2 text-sm text-gray-500">
-                          ({categoryContestants.length} nominees)
+                    <span className="flex items-center gap-2">
+                      <span>
+                        {category.name}
+                        {categoryContestants.length > 0 && (
+                          <span className="ml-2 text-sm text-gray-500">
+                            ({categoryContestants.length} nominee{categoryContestants.length !== 1 ? 's' : ''})
+                          </span>
+                        )}
+                      </span>
+                      
+                      {/* Show if category has live activity */}
+                      {categoryContestants.some((c: { id: string | number; }) => liveVotes[c.id] > 0) && (
+                        <span className="ml-2 text-xs bg-orange-100 text-orange-700 px-2 py-1 rounded-full animate-pulse">
+                          🔴 voting now
                         </span>
                       )}
                     </span>
@@ -192,11 +278,12 @@ const Categories = () => {
                         </div>
                       ) : (
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-4 cate">
-                          {categoryContestants.map((contestant) => {
+                          {categoryContestants.map((contestant: Contestant) => {
                             const isSelected =
                               selectedNominees[category.id]?.includes(contestant.id);
                             const voteQuantity =
                               votes[category.id]?.[contestant.id] || 0;
+                            const liveIncrement = liveVotes[contestant.id] || 0;
 
                             return (
                               <NomineeCard
@@ -205,18 +292,12 @@ const Categories = () => {
                                   id: contestant.id,
                                   name: contestant.name,
                                   image: getImageUrl(contestant),
-                                  voteCount: contestant.votes || 0,
+                                  voteCount: getLiveVoteCount(contestant),
+                                  liveIncrement
                                 }}
                                 voteQuantity={voteQuantity}
-                                onVoteChange={(
-                                  nomineeId,
-                                  quantity
-                                ) =>
-                                  handleVoteChange(
-                                    category.id,
-                                    nomineeId,
-                                    quantity
-                                  )
+                                onVoteChange={(nomineeId, quantity) =>
+                                  handleVoteChange(category.id, nomineeId, quantity)
                                 }
                                 isSelected={isSelected}
                                 categoryId={category.id}

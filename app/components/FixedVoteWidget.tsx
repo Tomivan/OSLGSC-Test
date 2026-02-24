@@ -1,13 +1,13 @@
 "use client";
 
 import React, { useState } from "react";
-import { useVoteContext } from "../context/VoteContext";
+import { useVote } from "../context/VoteContext";
 import VoteConfirmationModal from "./VoteConfirmationModal";
 import NotVotedModal from "./NotVotedModal";
 import { useRouter } from "next/navigation";
 
 const FixedVoteWidget = () => {
-  const { totalVotes } = useVoteContext();
+  const { totalVotes } = useVote();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isNotVotedOpen, setIsNotVotedOpen] = useState(false);
   const router = useRouter();

@@ -11,6 +11,7 @@ interface NomineeCardProps {
     name: string;
     image: string;
     voteCount: number;
+    liveIncrement?: number;
   };
   voteQuantity: number;
   onVoteChange: (nomineeId: string, quantity: number) => void;
@@ -41,8 +42,8 @@ export const NomineeCard: React.FC<NomineeCardProps> = ({
         isSelected ? "border-[#3B8501] shadow-md" : "border-[#CFCDCD] hover:border-gray-400"
       }`}
     >
-      <div className="absolute top-1.5 right-3 px-2 py-1 rounded text-[8px] text-white bg-black bg-opacity-70 z-[10] font-semibold">
-        {nominee.voteCount}
+      <div className="absolute top-1.5 right-3 px-2 py-1 rounded text-[8px] text-white bg-black bg-opacity-70 z-[10] font-semibold flex items-center gap-1">
+        <span>{nominee.voteCount}</span>
       </div>
       
       <div className="w-[269px] h-[250px] relative mb-3 rounded-t-[8px] overflow-hidden">
@@ -78,9 +79,11 @@ export const NomineeCard: React.FC<NomineeCardProps> = ({
           <Image src={minus} alt="Decrease votes" width={12} height={12} />
         </button>
         
-        <span className="text-black font-bold text-2xl min-w-[3rem] text-center">
-          {voteQuantity}
-        </span>
+        <div className="flex items-center gap-1 min-w-[3rem] justify-center">
+          <span className="text-black font-bold text-2xl">
+            {voteQuantity}
+          </span>
+        </div>
         
         <button
           onClick={handleIncrement}
@@ -91,7 +94,6 @@ export const NomineeCard: React.FC<NomineeCardProps> = ({
         </button>
       </div>
       
-      {/* Selection indicator */}
       {isSelected && (
         <div className="absolute -top-2 -right-2 w-6 h-6 bg-[#3B8501] rounded-full flex items-center justify-center">
           <svg className="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">

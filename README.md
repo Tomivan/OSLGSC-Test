@@ -1,9 +1,21 @@
-Ogun State Local Government Service Voting Application
+# Ogun State Local Government Service Voting Application
 
 The voting app was built for users to vote for thier preferred candidates for an award ceremony within the
 local government. Each vote costs 100 naira, and payment is processed using Paystack API. Firebase is used to store nominees' details.
 
-To run locally
+# Stack
+
+Next
+
+Typscript
+
+Tailwind
+
+Context API
+
+Firebase 
+
+# To run locally
 
 Clone the repo: git clone https://github.com/Tomivan/OSLGSC-Test.git
 

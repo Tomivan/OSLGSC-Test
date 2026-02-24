@@ -1,7 +1,8 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import Link from "next/link";
+import { useVote, useSocket } from "../context/VoteContext";
 import { db } from "../lib/firebase";
 import { collection, getDocs, orderBy, query, limit } from "firebase/firestore";
 
@@ -13,9 +14,12 @@ interface Contestant {
 }
 
 const Leaderboard = () => {
-  const [topContestants, setTopContestants] = useState<Contestant[]>([]);
+  const [baseContestants, setBaseContestants] = useState<Contestant[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  
+  const { liveVotes } = useVote();
+  const { isConnected } = useSocket();
 
   // Fetch top 5 contestants by votes
   useEffect(() => {
@@ -23,7 +27,6 @@ const Leaderboard = () => {
       try {
         setLoading(true);
         
-        // Query to get top 5 contestants ordered by votes (descending)
         const contestantsQuery = query(
           collection(db, "contestants"),
           orderBy("votes", "desc"),
@@ -43,7 +46,7 @@ const Leaderboard = () => {
           });
         });
 
-        setTopContestants(contestantsData);
+        setBaseContestants(contestantsData);
         setError(null);
       } catch (err) {
         console.error("Error fetching leaderboard:", err);
@@ -55,6 +58,17 @@ const Leaderboard = () => {
 
     fetchTopContestants();
   }, []);
+
+  // Combine base votes with live increments and re-sort
+  const liveLeaderboard = useMemo(() => {
+    const updated = baseContestants.map(contestant => ({
+      ...contestant,
+      liveVotes: contestant.votes + (liveVotes[contestant.id] || 0),
+      liveIncrement: liveVotes[contestant.id] || 0
+    }));
+
+    return updated.sort((a, b) => b.liveVotes - a.liveVotes);
+  }, [baseContestants, liveVotes]);
 
   if (loading) {
     return (
@@ -107,23 +121,39 @@ const Leaderboard = () => {
             </h2>
           </div>
           <div className="bg-[#E4E4E4] p-4">
-            {topContestants.length === 0 ? (
+            {liveLeaderboard.length === 0 ? (
               <div className="text-center py-4 text-gray-600">
                 No contestants found.
               </div>
             ) : (
               <>
-                {topContestants.map((contestant, index) => (
+                {liveLeaderboard.map((contestant, index) => (
                   <div
                     key={contestant.id}
-                    className="flex items-center justify-between md:px-[28px] px-4 py-3 border-b border-gray-200 last:border-b-0"
+                    className="flex items-center justify-between md:px-[28px] px-4 py-3 border-b border-gray-200 last:border-b-0 hover:bg-gray-100 transition-colors duration-200"
                   >
-                    <span className="text-gray-700">
-                      {index + 1}. {contestant.name}
-                    </span>
-                    <span className="text-gray-700">
-                      {contestant.votes} votes
-                    </span>
+                    <div className="flex items-center gap-3">
+                      <span className="text-gray-700 font-medium min-w-[2rem]">
+                        #{index + 1}
+                      </span>
+                      <span className="text-gray-700">
+                        {contestant.name}
+                      </span>
+                      <span className="text-xs text-gray-500 hidden sm:inline">
+                        ({contestant.category})
+                      </span>
+                    </div>
+                    
+                    <div className="flex items-center gap-2">
+                      <span className="text-gray-700 font-semibold">
+                        {contestant.liveVotes.toLocaleString()}
+                      </span>
+                      {contestant.liveIncrement > 0 && (
+                        <span className="text-orange-500 text-sm font-bold animate-pulse bg-orange-100 px-2 py-0.5 rounded-full">
+                          +{contestant.liveIncrement}
+                        </span>
+                      )}
+                    </div>
                   </div>
                 ))}
 
@@ -132,9 +162,17 @@ const Leaderboard = () => {
                   className="block text-center bg-[#FAFAFA] rounded-lg p-2 mt-2 hover:bg-gray-100 transition-colors duration-200"
                 >
                   <button className="text-[#3B8501] font-medium hover:text-[#2d6801] w-full transition-colors duration-200">
-                    View More
+                    View Full Leaderboard →
                   </button>
                 </Link>
+
+                {isConnected && liveLeaderboard.some(c => c.liveIncrement > 0) && (
+                  <div className="text-center mt-2">
+                    <span className="text-xs text-orange-500 animate-pulse">
+                      🔴 Live updates active
+                    </span>
+                  </div>
+                )}
               </>
             )}
           </div>

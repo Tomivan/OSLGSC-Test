@@ -48,16 +48,12 @@ const AdminDashboard = () => {
   try {
     setIsLoading(true);
     setError(null);
-    console.log("Fetching dashboard data...");
 
     // Fetch all contestants and all votes in parallel
     const [contestantsSnapshot, votesSnapshot] = await Promise.all([
       getDocs(collection(db, "contestants")),
-      getDocs(collectionGroup(db, "votes")) // This gets all votes across all contestants
+      getDocs(collectionGroup(db, "votes")) 
     ]);
-
-    console.log(`Found ${contestantsSnapshot.size} contestants`);
-    console.log(`Found ${votesSnapshot.size} total votes`);
 
     // Create a map of contestant IDs to vote counts
     const voteCounts = new Map<string, number>();
@@ -78,7 +74,6 @@ const AdminDashboard = () => {
       const data = contestantDoc.data();
       const voteCount = voteCounts.get(contestantDoc.id) || data.votes || 0;
       
-      console.log(`Contestant ${data.name} has ${voteCount} votes`);
 
       const contestant: Contestant = {
         id: contestantDoc.id,
@@ -123,8 +118,6 @@ const AdminDashboard = () => {
       totalContestants: contestantsData.length,
       totalCategories: categories.size
     });
-
-    console.log("Dashboard data loaded successfully");
 
   } catch (err: any) {// eslint-disable-line @typescript-eslint/no-explicit-any
     console.error("Error fetching dashboard data:", err);

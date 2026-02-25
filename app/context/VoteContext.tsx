@@ -32,6 +32,13 @@ interface SyncResult {
   transactionId?: string;
 }
 
+// Socket event data types
+interface VoteUpdateData extends LiveVoteUpdate {}
+interface BatchVoteUpdateData extends Array<LiveVoteUpdate> {}
+interface ConnectError extends Error {
+  description?: string;
+}
+
 interface VoteContextType {
   // State
   votes: VotesState;
@@ -53,9 +60,9 @@ interface SocketContextType {
   isConnected: boolean;
   socketError: string | null;
   reconnect: () => void;
-  emit: (event: string, data: any) => void;
-  on: (event: string, callback: (data: any) => void) => void;
-  off: (event: string, callback?: (data: any) => void) => void;
+  emit: <T = any>(event: string, data: T) => void;
+  on: <T = any>(event: string, callback: (data: T) => void) => void;
+  off: (event: string, callback?: () => void) => void;
 }
 
 // Create contexts
@@ -86,12 +93,16 @@ export const VoteProvider: React.FC<VoteProviderProps> = ({
   const pendingUpdatesRef = useRef<Record<string, number>>({});
   const updateTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
-  // Memoize total votes
-  const totalVotes = useMemo<number>(() => {
-    return Object.values(votes).reduce((sum, categoryVotes) => {
-      return sum + Object.values(categoryVotes).reduce((catSum, vote) => catSum + vote, 0);
-    }, 0);
-  }, [votes]);
+  // Get user ID
+  const getUserId = useCallback((): string => {
+    if (typeof window === 'undefined') return '';
+    let userId = localStorage.getItem('userId');
+    if (!userId) {
+      userId = `user_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+      localStorage.setItem('userId', userId);
+    }
+    return userId;
+  }, []);
 
   // Socket connection
   useEffect(() => {
@@ -115,21 +126,21 @@ export const VoteProvider: React.FC<VoteProviderProps> = ({
       setIsConnected(false);
     });
 
-    socket.on('connect_error', (error: Error) => {
+    socket.on('connect_error', (error: ConnectError) => {
       setSocketError(error.message);
     });
 
-    socket.on('vote-update', (data: LiveVoteUpdate) => {
+    socket.on('vote-update', (data: VoteUpdateData) => {
       setLiveVotes(prev => ({
         ...prev,
         [data.nomineeId]: (prev[data.nomineeId] || 0) + data.increment
       }));
     });
 
-    socket.on('batch-vote-update', (updates: LiveVoteUpdate[]) => {
+    socket.on('batch-vote-update', (data: BatchVoteUpdateData) => {
       setLiveVotes(prev => {
         const newLiveVotes = { ...prev };
-        updates.forEach(({ nomineeId, increment }) => {
+        data.forEach(({ nomineeId, increment }) => {
           newLiveVotes[nomineeId] = (newLiveVotes[nomineeId] || 0) + increment;
         });
         return newLiveVotes;
@@ -142,18 +153,7 @@ export const VoteProvider: React.FC<VoteProviderProps> = ({
       }
       socket.disconnect();
     };
-  }, [socketUrl]);
-
-  // Get user ID
-  const getUserId = useCallback((): string => {
-    if (typeof window === 'undefined') return '';
-    let userId = localStorage.getItem('userId');
-    if (!userId) {
-      userId = `user_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
-      localStorage.setItem('userId', userId);
-    }
-    return userId;
-  }, []);
+  }, [socketUrl, getUserId]);
 
   // Queue socket updates
   const queueSocketUpdate = useCallback((nomineeId: string, incrementValue: number): void => {
@@ -176,6 +176,13 @@ export const VoteProvider: React.FC<VoteProviderProps> = ({
       }
     }, 500);
   }, []);
+
+  // Memoize total votes
+  const totalVotes = useMemo<number>(() => {
+    return Object.values(votes).reduce((sum, categoryVotes) => {
+      return sum + Object.values(categoryVotes).reduce((catSum, vote) => catSum + vote, 0);
+    }, 0);
+  }, [votes]);
 
   // Helper functions
   const getVoteQuantity = useCallback((categoryId: CategoryId, nomineeId: NomineeId): number => {
@@ -319,11 +326,12 @@ export const VoteProvider: React.FC<VoteProviderProps> = ({
         syncedVotes: totalSyncedVotes,
         transactionId 
       };
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error("Sync error:", error);
+      const errorMessage = error instanceof Error ? error.message : "Failed to sync votes";
       return { 
         success: false, 
-        error: error?.message || "Failed to sync votes" 
+        error: errorMessage
       };
     } finally {
       setIsSyncing(false);
@@ -363,9 +371,9 @@ export const VoteProvider: React.FC<VoteProviderProps> = ({
     isConnected,
     socketError,
     reconnect: () => socketRef.current?.connect(),
-    emit: (event: string, data: any) => socketRef.current?.emit(event, data),
-    on: (event: string, callback: (data: any) => void) => socketRef.current?.on(event, callback),
-    off: (event: string, callback?: (data: any) => void) => socketRef.current?.off(event, callback),
+    emit: <T,>(event: string, data: T) => socketRef.current?.emit(event, data),
+    on: <T,>(event: string, callback: (data: T) => void) => socketRef.current?.on(event, callback),
+    off: (event: string, callback?: () => void) => socketRef.current?.off(event, callback),
   }), [isConnected, socketError]);
 
   return (

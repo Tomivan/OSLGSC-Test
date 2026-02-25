@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, useMemo } from "react";
+import React, { useState, useEffect, useMemo, useCallback } from "react";
 import { NomineeCard } from "./NomineeCard";
 import { useVote, useSocket } from "../context/VoteContext";
 import { db } from "../lib/firebase";
@@ -84,7 +84,6 @@ const Categories = () => {
     const autoSync = async () => {
       // Only sync if there are votes and we're not already syncing
       if (Object.keys(votes).length > 0 && !isSyncing && isConnected) {
-        console.log("Auto-syncing votes...");
         const result = await syncWithFirebase();
         if (result.success) {
           console.log(`Auto-sync successful: ${result.syncedVotes} votes synced`);
@@ -93,7 +92,7 @@ const Categories = () => {
     };
 
     // Debounce the sync to avoid too many requests
-    const timeoutId = setTimeout(autoSync, 3000); // Sync 3 seconds after last vote
+    const timeoutId = setTimeout(autoSync, 3000); 
     
     return () => clearTimeout(timeoutId);
   }, [votes, isSyncing, isConnected, syncWithFirebase]);
@@ -117,16 +116,15 @@ const Categories = () => {
     );
   };
 
-  const getContestantsForCategory = (categoryName: string) => {
+  const getContestantsForCategory = useCallback((categoryName: string) => {
     return contestants.filter(contestant => contestant.category === categoryName);
-  };
+  }, [contestants]);
 
-  const getLiveVoteCount = (contestant: Contestant): number => {
+  const getLiveVoteCount = useCallback((contestant: Contestant): number => {
     const firebaseVotes = contestant.votes || 0;
     const liveIncrement = liveVotes[contestant.id] || 0;
     return firebaseVotes + liveIncrement;
-  };
-
+  }, [liveVotes]);
   const getImageUrl = (contestant: Contestant) => {
     return contestant.imageUrl || "/image.png";
   };

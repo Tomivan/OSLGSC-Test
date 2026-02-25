@@ -4,7 +4,7 @@ import React, { useState, Suspense, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import dynamic from "next/dynamic";
 import Navbar from "../components/Navbar";
-import { useVoteContext } from "../context/VoteContext";
+import { useVote } from "../context/VoteContext";
 
 // Dynamically import PaystackButton to avoid SSR issues
 const PaystackButton = dynamic(
@@ -13,7 +13,7 @@ const PaystackButton = dynamic(
 );
 
 interface VoterFormData {
-	email?: string; // Made optional
+	email?: string; 
 }
 
 // Define Paystack transaction interface
@@ -29,8 +29,8 @@ interface PaystackTransaction {
 
 const VoterDetailsContent = () => {
 	const router = useRouter();
-	const { totalVotes, resetVotes, syncWithFirebase } = useVoteContext();
-	const paymentAmount = totalVotes * 100; // amount in Naira for display
+	const { totalVotes, resetVotes, syncWithFirebase } = useVote();
+	const paymentAmount = totalVotes * 100;
 
 	const [formData, setFormData] = useState<VoterFormData>({ email: "" });
 	const [isProcessing, setIsProcessing] = useState(false);

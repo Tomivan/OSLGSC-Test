@@ -238,7 +238,7 @@ export const NomineeDetailPage: React.FC<NomineeDetailProps> = ({ nominee }) => 
                   {currentVotes > 0 && (
                     <div className="p-3 bg-green-50 border border-green-200 rounded-lg">
                       <p className="text-green-700 text-sm">
-                        🗳️ You're contributing {currentVotes} vote{currentVotes !== 1 ? 's' : ''} to {nominee.name}
+                         You&apos;re contributing {currentVotes} vote{currentVotes !== 1 ? 's' : ''} to {nominee.name}
                       </p>
                     </div>
                   )}

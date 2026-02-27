@@ -11,14 +11,14 @@ export default function AdminLayout({
 }) {
   const { admin, isLoading } = useAdminAuth();
   const router = useRouter();
-  const pathname = usePathname(); // Add this hook
+  const pathname = usePathname(); 
 
   useEffect(() => {
     // Only redirect if we're NOT on the login page and not authenticated
     if (!isLoading && !admin && pathname !== "/admin/login") {
       router.push("/admin/login");
     }
-  }, [admin, isLoading, router, pathname]); // Add pathname to dependencies
+  }, [admin, isLoading, router, pathname]); 
 
   if (isLoading) {
     return (
@@ -34,7 +34,7 @@ export default function AdminLayout({
   }
 
   if (!admin) {
-    return null; // Will redirect in useEffect
+    return null; 
   }
 
   return (

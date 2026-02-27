@@ -6,14 +6,31 @@ import VoteImage from "./VoteImage";
 import Officials from "./Officials";
 import VotingRules from "./VotingRules";
 import HowToVote from "./HowToVote";
-import Leaderboard from "./Leaderboard";
-import Categories from "./Categories";
 import FixedVoteWidget from "./FixedVoteWidget";
 import TimerMobile from "./TimerMobile";
 import Timer from "./Timer";
 import Image from "next/image";
 import Hero from "../assets/Hero.avif";
 import HeroMobile from "../assets/Here_section_background_1.webp";
+import dynamic from "next/dynamic";
+
+const Leaderboard = dynamic(() => import("./Leaderboard"), {
+  loading: () => (
+    <div className="flex justify-center py-12">
+      <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-[#3B8501]"></div>
+    </div>
+  ),
+  ssr: false
+});
+
+const Categories = dynamic(() => import("./Categories"), {
+  loading: () => (
+    <div className="flex justify-center py-12">
+      <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-[#3B8501]"></div>
+    </div>
+  ),
+  ssr: false
+});
 
 const Homepage = () => {
 	return (

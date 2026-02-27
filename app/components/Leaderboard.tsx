@@ -159,7 +159,7 @@ const Leaderboard = () => {
 
                 <Link
                   href="/leaderboard"
-                  className="block text-center bg-[#FAFAFA] rounded-lg p-2 mt-2 hover:bg-gray-100 transition-colors duration-200"
+                  className="block text-center bg-[#FAFAFA] rounded-lg p-4 mt-2 hover:bg-gray-100 transition-colors duration-200"
                 >
                   <button className="text-[#3B8501] font-medium hover:text-[#2d6801] w-full transition-colors duration-200">
                     View Full Leaderboard →

@@ -130,7 +130,8 @@ const Categories = () => {
   };
 
   const sortedContestantsByCategory = useMemo(() => {
-    const map = new Map();
+
+  const map = new Map();
     categories.forEach(category => {
       const categoryContestants = getContestantsForCategory(category.name);
       const sorted = [...categoryContestants].sort((a, b) => 
@@ -139,7 +140,7 @@ const Categories = () => {
       map.set(category.name, sorted);
     });
     return map;
-  }, [categories, contestants, liveVotes]);
+  }, [categories, getContestantsForCategory, getLiveVoteCount]);
 
   if (loading) {
     return (

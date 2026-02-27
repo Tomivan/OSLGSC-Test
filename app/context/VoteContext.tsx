@@ -33,8 +33,8 @@ interface SyncResult {
 }
 
 // Socket event data types
-interface VoteUpdateData extends LiveVoteUpdate {}
-interface BatchVoteUpdateData extends Array<LiveVoteUpdate> {}
+type VoteUpdateData = LiveVoteUpdate;
+type BatchVoteUpdateData = LiveVoteUpdate[];
 interface ConnectError extends Error {
   description?: string;
 }
@@ -60,9 +60,9 @@ interface SocketContextType {
   isConnected: boolean;
   socketError: string | null;
   reconnect: () => void;
-  emit: <T = any>(event: string, data: T) => void;
-  on: <T = any>(event: string, callback: (data: T) => void) => void;
-  off: (event: string, callback?: () => void) => void;
+  emit: <T = unknown>(event: string, data: T) => void;
+  on: <T = unknown>(event: string, callback: (data: T) => void) => void;
+  off: <T = unknown>(event: string, callback?: (data: T) => void) => void;
 }
 
 // Create contexts
@@ -185,9 +185,12 @@ export const VoteProvider: React.FC<VoteProviderProps> = ({
   }, [votes]);
 
   // Helper functions
+  const votesRef = useRef<VotesState>(votes);
+  useEffect(() => { votesRef.current = votes; }, [votes]);
+
   const getVoteQuantity = useCallback((categoryId: CategoryId, nomineeId: NomineeId): number => {
-    return votes[categoryId]?.[nomineeId] || 0;
-  }, [votes]);
+    return votesRef.current[categoryId]?.[nomineeId] || 0;
+  }, []);
 
   const isNomineeSelected = useCallback((categoryId: CategoryId, nomineeId: NomineeId): boolean => {
     return selectedNominees[categoryId]?.includes(nomineeId) || false;
@@ -336,7 +339,7 @@ export const VoteProvider: React.FC<VoteProviderProps> = ({
     } finally {
       setIsSyncing(false);
     }
-  }, [votes, isSyncing, totalVotes, getVoteSummary, liveVotes, getUserId]);
+  }, [isSyncing, totalVotes, getVoteSummary, liveVotes, getUserId]);
 
   // Memoized vote context value
   const voteContextValue = useMemo<VoteContextType>(() => ({
@@ -368,13 +371,14 @@ export const VoteProvider: React.FC<VoteProviderProps> = ({
   ]);
 
   const socketContextValue = useMemo<SocketContextType>(() => ({
-    isConnected,
-    socketError,
-    reconnect: () => socketRef.current?.connect(),
-    emit: <T,>(event: string, data: T) => socketRef.current?.emit(event, data),
-    on: <T,>(event: string, callback: (data: T) => void) => socketRef.current?.on(event, callback),
-    off: (event: string, callback?: () => void) => socketRef.current?.off(event, callback),
-  }), [isConnected, socketError]);
+  isConnected,
+  socketError,
+  reconnect: () => socketRef.current?.connect(),
+  emit: <T,>(event: string, data: T) => socketRef.current?.emit(event, data),
+  on: <T,>(event: string, callback: (data: T) => void) => socketRef.current?.on(event, callback),
+  off: <T = unknown>(event: string, callback?: (data: T) => void) => 
+  socketRef.current?.off(event, callback as ((...args: unknown[]) => void) | undefined),
+}), [isConnected, socketError]);
 
   return (
     <VoteContext.Provider value={voteContextValue}>

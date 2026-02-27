@@ -8,7 +8,8 @@ import {
   User 
 } from "firebase/auth";
 import { doc, getDoc } from "firebase/firestore";
-import { auth, db } from "../lib/firebase";
+import { auth } from "../lib/firebaseAdmin";
+import { db } from "../lib/firebase";
 
 interface AdminUser {
   uid: string;

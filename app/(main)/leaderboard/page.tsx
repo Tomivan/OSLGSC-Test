@@ -1,8 +1,8 @@
 "use client";
 
 import React, { useState, useEffect, useMemo } from "react";
-import { useVote, useSocket } from "../context/VoteContext";
-import { db } from "../lib/firebase";
+import { useVote, useSocket } from "../../context/VoteContext";
+import { db } from "../../lib/firebase";
 import { collection, getDocs, orderBy, query } from "firebase/firestore";
 
 interface Contestant {

@@ -3,8 +3,8 @@
 import React, { useState, Suspense, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import dynamic from "next/dynamic";
-import Navbar from "../components/Navbar";
-import { useVote } from "../context/VoteContext";
+import Navbar from "../../components/Navbar";
+import { useVote } from "../../context/VoteContext";
 
 // Dynamically import PaystackButton to avoid SSR issues
 const PaystackButton = dynamic(

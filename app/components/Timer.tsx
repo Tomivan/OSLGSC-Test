@@ -2,7 +2,6 @@
 import React, { useState, useEffect, useMemo } from "react";
 
 const Timer = () => {
-	// Use useMemo to prevent targetDate from being recreated on every render
 	const targetDate = useMemo(() => new Date("2025-11-12T23:59:59"), []);
 
 	const [timeLeft, setTimeLeft] = useState({
@@ -38,7 +37,7 @@ const Timer = () => {
 		const timer = setInterval(updateTimer, 1000);
 
 		return () => clearInterval(timer);
-	}, [targetDate]); // targetDate is now stable
+	}, [targetDate]); 
 
 	return (
 		<main>
@@ -48,7 +47,6 @@ const Timer = () => {
 						VOTE ENDS IN
 					</p>
 					<div className="flex items-center justify-center gap-4 text-[47px] md:text-[42.36px] text-[#3B8501]">
-						{/* Days */}
 						<div className="flex flex-col items-center">
 							<span className="gafata text2 tracking-[7%] text-[42px] leading-[50px] ">
 								{timeLeft.days.toString().padStart(2, "0")}

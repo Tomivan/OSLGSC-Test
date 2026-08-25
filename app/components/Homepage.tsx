@@ -10,7 +10,7 @@ import FixedVoteWidget from "./FixedVoteWidget";
 import TimerMobile from "./TimerMobile";
 import Timer from "./Timer";
 import Image from "next/image";
-import Hero from "../assets/Hero.avif";
+import Hero from "../assets/hero.svg";
 import HeroMobile from "../assets/Here_section_background_1.webp";
 import dynamic from "next/dynamic";
 
@@ -47,34 +47,38 @@ const Homepage = () => {
 							fetchPriority="high" 
 							className="object-cover object-center"
 							sizes="100vw"
-							style={{ backgroundBlendMode: "multiply" }}
+							style={{ background: "#e5ffcc" }}
 						/>
 					</div>
 					
 					<div className="absolute md:hidden inset-0 w-full h-[478px] md:h-[900px]">
 						<Image
-							src={HeroMobile}
+							src={Hero}
 							alt="Mobile background"
 							fill
 							priority={true} 
 							fetchPriority="high" 
 							className="object-cover object-center"
 							sizes="100vw"
-							style={{ backgroundBlendMode: "multiply" }}
+							style={{ background: "#e5ffcc" }}
 						/>
 					</div>
 					
 					<div className="w-full relative lg:max-w-[1280px] mx-auto">
-						<div className="flex text-[#FAFAFA] justify-center items-center w-full mt-[170px] md:mt-[166px]">
-							<div>
-								<h1 className="font-bold text-[27.44px] text-center uppercase md:text-[42.1px] tracking-0 leading-[36px] md:leading-[60px]">
-									Local Government <br /> Service
-									week
-								</h1>
-								<h1 className="text text-center font-extrabold text-[45px] md:text-[67.45px] md:mb-[22.5px] tracking-0 md:leading-[82px] leading-[46px]">
-									2025 AWARD
-								</h1>
-								<div className="hidden md:block">
+						<div className="flex w-full mt-[170px] md:mt-[166px]">
+							<div className="flex justify-around w-full">
+								<div>
+									<h1 className="text text-left text-[#3b8501] font-extrabold text-[45px] md:text-[67.45px] md:mb-[22.5px] tracking-0 md:leading-[82px] leading-[46px]">
+										2026 AWARD
+									</h1>
+									<h2 className="font-bold text-[27.44px] uppercase md:text-[42.1px] tracking-0 leading-[36px] md:leading-[60px]">
+										Local Government 
+									</h2>
+									<h2 className="font-bold text-[20px] uppercase md:text-[32px] tracking-0 leading-[30px] md:leading-[55px]">
+										Service Commission Week
+									</h2>
+								</div>
+								<div className="hidden md:block mt-[5%]">
 									<Timer />
 								</div>
 							</div>

@@ -12,6 +12,8 @@ const FixedVoteWidget = () => {
   const [isNotVotedOpen, setIsNotVotedOpen] = useState(false);
   const router = useRouter();
 
+  const date = new Date().getFullYear();
+
   const handleVoteNow = () => {
     if (totalVotes === 0) {
       setIsNotVotedOpen(true);
@@ -50,7 +52,7 @@ const FixedVoteWidget = () => {
       </div>
 
       <div className="bg-[#343434] text-white text-center pb-[12px] py-2 text-xs">
-        Teepremium Agency © 2025
+        Teepremium Agency © {date}
       </div>
     </div>
 	  {isModalOpen && (

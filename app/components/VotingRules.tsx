@@ -4,6 +4,7 @@ import rule1 from "../assets/rule1.svg";
 import rule2 from "../assets/rule2.svg";
 import rule3 from "../assets/rule3.svg";
 import rule4 from "../assets/rule4.svg";
+import rule5 from "../assets/rule5.svg";
 
 const VotingRules = () => {
 	return (
@@ -67,6 +68,19 @@ const VotingRules = () => {
 							<Image
 								src={rule4}
 								alt="Rule 1"
+								className="w-[61px] h-[61px] mx-auto mb-[16px]"
+							/>
+						</div>
+						<div className="w-[160px] mt-[40px] md:mt-0 ">
+							<h1 className="text-[20px] uppercase font-bold mt-[16px] tracking-0 leading-[100%]">
+								Rule 5
+							</h1>
+							<p className="text-[#FAFAFA] my-[12px] ">
+								Return to page after payment to see vote
+							</p>
+							<Image
+								src={rule5}
+								alt="Rule 5"
 								className="w-[61px] h-[61px] mx-auto mb-[16px]"
 							/>
 						</div>

@@ -11,7 +11,6 @@ import TimerMobile from "./TimerMobile";
 import Timer from "./Timer";
 import Image from "next/image";
 import Hero from "../assets/hero.svg";
-import HeroMobile from "../assets/Here_section_background_1.webp";
 import dynamic from "next/dynamic";
 
 const Leaderboard = dynamic(() => import("./Leaderboard"), {

@@ -42,8 +42,16 @@ export const NomineeCard: React.FC<NomineeCardProps> = ({
         isSelected ? "border-[#3B8501] shadow-md" : "border-[#CFCDCD] hover:border-gray-400"
       }`}
     >
-      <div className="absolute top-1.5 right-3 px-2 py-1 rounded text-[8px] text-white bg-black bg-opacity-70 z-[10] font-semibold flex items-center gap-1">
-        <span>{nominee.voteCount}</span>
+      <div className="absolute top-1.5 left-3 right-3 flex justify-between items-center z-[10]">
+        <Link 
+          href={`/nominee/${nominee.id}?category=${categoryId}`}
+          className="text-black text-[8px] bg-[#ffffff] rounded-l-sm font-semibold no-underline hover:text-[#3B8501] transition-colors duration-200"
+        >
+          Copy link
+        </Link>
+        <div className="px-2 py-1 rounded text-[8px] text-white bg-black bg-opacity-70 font-semibold flex items-center gap-1">
+          <span>{nominee.voteCount}</span>
+        </div>
       </div>
       
       <div className="w-[269px] h-[250px] relative mb-3 rounded-t-[8px] overflow-hidden">
@@ -61,12 +69,9 @@ export const NomineeCard: React.FC<NomineeCardProps> = ({
       
       <div className="text-center mb-3 px-2 h-[48px] flex justify-center items-center">
         <span className="text-black font-semibold text-sm">Name: </span>
-        <Link 
-          href={`/nominee/${nominee.id}?category=${categoryId}`}
-          className="text-black text-sm break-words hover:text-[#3B8501] hover:underline transition-colors duration-200 ml-1 cursor-pointer"
-        >
+        <span className="text-black text-sm break-words ml-1">
           {nominee.name}
-        </Link>
+        </span>
       </div>
       
       <div className="flex items-center bg-[#E1E1E1] py-[12px] justify-center gap-4 rounded-b-[8px]">

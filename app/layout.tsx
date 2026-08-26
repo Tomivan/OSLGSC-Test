@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Inter, Gafata } from "next/font/google";
+import { Providers } from "./providers";
 import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"], display: "swap" });
@@ -15,7 +16,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en">
       <body className={`${inter.className} ${gafata.variable}`}>
         <link rel="icon" href="/logo.svg" sizes="any" />
-        {children}
+        <Providers>
+          {children}
+        </Providers>
       </body>
     </html>
   );

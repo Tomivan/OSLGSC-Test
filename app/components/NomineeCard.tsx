@@ -45,7 +45,7 @@ export const NomineeCard: React.FC<NomineeCardProps> = ({
       <div className="absolute top-1.5 left-3 right-3 flex justify-between items-center z-[10]">
         <Link 
           href={`/nominee/${nominee.id}?category=${categoryId}`}
-          className="text-black text-[8px] bg-[#ffffff] rounded-l-sm font-semibold no-underline hover:text-[#3B8501] transition-colors duration-200"
+          className="text-black text-[8px] bg-[#ffffff] rounded-l-sm p-2 font-semibold no-underline hover:text-[#3B8501] transition-colors duration-200"
         >
           Copy link
         </Link>

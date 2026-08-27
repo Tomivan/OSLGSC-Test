@@ -12,6 +12,7 @@ import Timer from "./Timer";
 import Image from "next/image";
 import Hero from "../assets/hero.svg";
 import dynamic from "next/dynamic";
+import OfficialsMobile from "./OfficialsMobile";
 
 const Leaderboard = dynamic(() => import("./Leaderboard"), {
   loading: () => (
@@ -64,22 +65,20 @@ const Homepage = () => {
 					</div>
 					
 					<div className="w-full relative lg:max-w-[1280px] mx-auto">
-						<div className="flex w-full mt-[170px] md:mt-[166px]">
-							<div className="flex justify-around w-full">
-								<div>
-									<h1 className="text text-left text-[#3b8501] font-extrabold text-[45px] md:text-[67.45px] md:mb-[22.5px] tracking-0 md:leading-[82px] leading-[46px]">
-										2026 AWARD
-									</h1>
-									<h2 className="font-bold text-[27.44px] uppercase md:text-[42.1px] tracking-0 leading-[36px] md:leading-[60px]">
-										Local Government 
-									</h2>
-									<h2 className="font-bold text-[20px] uppercase md:text-[32px] tracking-0 leading-[30px] md:leading-[55px]">
-										Service Commission Week
-									</h2>
-								</div>
-								<div className="hidden md:block mt-[5%]">
-									<Timer />
-								</div>
+						<div className="w-full mt-[170px] md:mt-[166px]">
+							<div className="text-center">
+								<h1 className="text text-[#3b8501] font-extrabold text-[45px] md:text-[67.45px] md:mb-[22.5px] tracking-0 md:leading-[82px] leading-[46px]">
+									2026 Local
+								</h1>
+								<h2 className="font-extrabold text-[#3b8501] text-[45px] md:text-[67.45px] md:mb-[22.5px] tracking-0 md:leading-[82px] leading-[46px]">
+									Government Service
+								</h2>
+								<h2 className="font-extrabold text-[#3b8501] text-[45px] md:text-[67.45px] md:mb-[22.5px] tracking-0 md:leading-[82px] leading-[46px]">
+									 Week Award
+								</h2>
+							</div>
+							<div className="hidden md:block mt-[5%]">
+								<Timer />
 							</div>
 						</div>
 					</div>
@@ -89,7 +88,12 @@ const Homepage = () => {
 				<TimerMobile />
 			</div>
 			<VoteImage />
-			<Officials />
+			<div className="hidden md:block mt-[5%]">
+				<Officials />
+			</div>
+			<div className="md:hidden block">
+				<OfficialsMobile />
+			</div>
 			<VotingRules />
 			<HowToVote />
 			<Leaderboard />

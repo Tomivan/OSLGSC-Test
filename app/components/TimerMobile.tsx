@@ -39,7 +39,7 @@ const TimerMobile = () => {
 	}, []);
 
 	return (
-		<main className="mt-[250px] flex justify-center">
+		<main className="mt-[150px] flex justify-center">
 			<section>
 				<div className="bg-[#AAAAAA38] time backdrop-blur-md rounded-[8px] md:w-[375px] mx-auto px-[18px] py-[18px] border border-[#FAFAFA] ]">
 					<p className="text-center text-[20px] text-[#343434]">

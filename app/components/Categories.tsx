@@ -6,7 +6,6 @@ import { useVote, useSocket } from "../context/VoteContext";
 import { db } from "../lib/firebase";
 import { collection, getDocs } from "firebase/firestore";
 
-// Types based on your database structure
 interface Contestant {
   id: string;
   name: string;
@@ -200,7 +199,7 @@ const Categories = () => {
             </h1>
             
             {/* Live connection indicator */}
-            {isConnected ? (
+            {/* {isConnected ? (
               <div className="flex items-center gap-2 bg-green-50 px-3 py-1 rounded-full">
                 <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
                 <span className="text-sm text-green-700">Live</span>
@@ -210,7 +209,7 @@ const Categories = () => {
                 <span className="w-2 h-2 bg-yellow-500 rounded-full"></span>
                 <span className="text-sm text-yellow-700">Reconnecting...</span>
               </div>
-            )}
+            )} */}
           </div>
 
           {/* Auto-sync status indicator - subtle and temporary */}

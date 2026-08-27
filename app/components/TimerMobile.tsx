@@ -39,11 +39,11 @@ const TimerMobile = () => {
 	}, []);
 
 	return (
-		<main className="mt-[150px] flex justify-center">
+		<main className="mt-[20px] flex justify-center">
 			<section>
-				<div className="bg-[#AAAAAA38] time backdrop-blur-md rounded-[8px] md:w-[375px] mx-auto px-[18px] py-[18px] border border-[#FAFAFA] ]">
+				<div className="bg-[#fafafa] time backdrop-blur-md rounded-[8px] md:w-[375px] mx-auto px-[18px] py-[18px] border border-[#FAFAFA] ]">
 					<p className="text-center text-[20px] text-[#343434]">
-						VOTE ENDS IN
+						VOTE STARTS IN
 					</p>
 
 					<div className="flex items-center justify-center gap-2 text-[#3B8501]">

@@ -65,15 +65,15 @@ const Homepage = () => {
 					</div>
 					
 					<div className="w-full relative lg:max-w-[1280px] mx-auto">
-						<div className="w-full mt-[170px] md:mt-[166px]">
+						<div className="w-full mt-[100px] md:mt-[166px]">
 							<div className="text-center">
-								<h1 className="text text-[#3b8501] font-extrabold text-[45px] md:text-[67.45px] md:mb-[22.5px] tracking-0 md:leading-[82px] leading-[46px]">
+								<h1 className="text text-[#3b8501] font-extrabold uppercase text-[32px] md:text-[67.45px] md:mb-[22.5px] tracking-0 md:leading-[82px] leading-[46px]">
 									2026 Local
 								</h1>
-								<h2 className="font-extrabold text-[#3b8501] text-[45px] md:text-[67.45px] md:mb-[22.5px] tracking-0 md:leading-[82px] leading-[46px]">
+								<h2 className="font-extrabold text-[#3b8501] uppercase text-[32px] md:text-[67.45px] md:mb-[22.5px] tracking-0 md:leading-[82px] leading-[46px]">
 									Government Service
 								</h2>
-								<h2 className="font-extrabold text-[#3b8501] text-[45px] md:text-[67.45px] md:mb-[22.5px] tracking-0 md:leading-[82px] leading-[46px]">
+								<h2 className="font-extrabold text-[#3b8501] uppercase text-[32px] md:text-[67.45px] md:mb-[22.5px] tracking-0 md:leading-[82px] leading-[46px]">
 									 Week Award
 								</h2>
 							</div>

@@ -14,16 +14,16 @@ const OfficialsMobile = () => {
 				<div className="w-full">
 					<div className="w-fit mx-auto mb-[50px] md:mb-[22px]">
 						<div className="mb-[16px] md:mb-[22px]">
-							<h1 className="text-[#000000] text-[14px] md:text-[20px] font-bold uppercase">
+							<h1 className="uppercase w-fit text-2xl md:text-[32px] mx-[10px] lg:mx-0 md:mb-[20px]  tracking-0 leading-[32px]">
 								VOTING IS NOW OPEN.
 							</h1>
-							<h1 className="text-[#3b8501] text-[14px] md:text-[20px] font-bold uppercase">
+							<h1 className="uppercase w-fit font-bold text-[#3b8501] text-2xl md:text-[32px] mx-[10px] lg:mx-0 md:mb-[20px] tracking-0 leading-[32px]">
 								LET YOUR VOICE BE HEARD!
 							</h1>
-							<p className="text-[#343434] text-[11px] md:text-[14px] mt-[12px] max-w-[600px] mx-auto leading-[20px] md:leading-[24px]">
+							<p className="text-[12px] md:text-[14px] mt-[12px] max-w-[600px] mx-auto leading-[20px] md:leading-[24px]">
 								Explore the inspiring nominations, learn about the remarkable initiatives and dedication of your colleagues, friends, and family, and cast your vote for those who best embody the spirit of public service.
 							</p>
-							<p className="text-[#343434] text-[11px] md:text-[14px] mt-[12px] max-w-[600px] mx-auto leading-[20px] md:leading-[24px]">
+							<p className="text-[12px] md:text-[14px] mt-[12px] max-w-[600px] mx-auto leading-[20px] md:leading-[24px]">
 								Thank you for joining this special recognition event. Your participation helps ensure deserving efforts are celebrated and supports a continued culture of dedication and innovation within the Local Government Service Commission.
 							</p>
 						</div>
@@ -120,13 +120,13 @@ const OfficialsMobile = () => {
 						</div>
 
 						<div className="mt-[26px] md:mt-[22px]">
-							<h1 className="text-[#000000] text-[14px] md:text-[20px] font-bold uppercase">
+							<h1 className="uppercase w-fit text-2xl md:text-[32px] mx-[10px] lg:mx-0 md:mb-[20px] tracking-0 leading-[32px]">
 								MAKE YOUR VOTE COUNT,
 							</h1>
-							<h1 className="text-[#3b8501] text-[14px] md:text-[20px] font-bold uppercase">
+							<h1 className="uppercase w-fit font-bold text-[#3b8501] text-2xl md:text-[32px] mx-[10px] lg:mx-0 md:mb-[20px] tracking-0 leading-[32px]">
 								FOLLOW THE INSTRUCTION CAREFULLY
 							</h1>
-							<p className="text-[#343434] text-[11px] md:text-[14px] mt-[12px] max-w-[600px] mx-auto leading-[20px] md:leading-[24px]">
+							<p className="text-[12px] md:text-[14px] mt-[12px] max-w-[600px] mx-auto leading-[20px] md:leading-[24px]">
 								Follow the voting rules carefully. The system is designed to ensure that your vote counts. Every stage of the voting process needs to be followed. A detailed instruction on how to vote is provided below.
 							</p>
 						</div>

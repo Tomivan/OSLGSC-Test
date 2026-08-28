@@ -1,5 +1,12 @@
 "use client";
 import React, { useState, useEffect, useMemo } from "react";
+import { Exo } from "next/font/google";
+
+const exoFont = Exo({ 
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  display: "swap"
+});
 
 const Timer = () => {
 	const targetDate = useMemo(() => new Date("2025-11-12T23:59:59"), []);
@@ -40,7 +47,7 @@ const Timer = () => {
 	}, [targetDate]); 
 
 	return (
-		<main>
+		<main className={exoFont.className}>
 			<section>
 				<div className="bg-[#FAFAFA] time rounded-[8px] md:w-[375px] mx-auto py-[20px]">
 					<p className="text-center text-[24.4px] text-[#343434]">

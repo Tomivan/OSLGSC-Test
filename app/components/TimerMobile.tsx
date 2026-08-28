@@ -1,5 +1,12 @@
 "use client";
 import React, { useState, useEffect } from "react";
+import { Exo } from "next/font/google";
+
+const exoFont = Exo({ 
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  display: "swap"
+});
 
 const TimerMobile = () => {
 	const calculateTimeLeft = () => {
@@ -39,10 +46,10 @@ const TimerMobile = () => {
 	}, []);
 
 	return (
-		<main className="mt-[20px] flex justify-center">
+		<main className={`${exoFont.className} mt-[20px] flex justify-center`}>
 			<section>
-				<div className="bg-[#fafafa] time backdrop-blur-md rounded-[8px] md:w-[375px] mx-auto px-[18px] py-[18px] border border-[#FAFAFA] ]">
-					<p className="text-center text-[20px] text-[#343434]">
+				<div className="bg-[#fafafa] time backdrop-blur-md rounded-[8px] md:w-[375px] mx-auto px-[18px] py-[18px] border border-[#FAFAFA]">
+					<p className="text-center text-[20px] text-[#343434] font-semibold">
 						VOTE STARTS IN
 					</p>
 
@@ -50,17 +57,17 @@ const TimerMobile = () => {
 						{["days", "hours", "minutes", "seconds"].map((unit, i) => (
 							<React.Fragment key={unit}>
 								<div className="flex flex-col items-center">
-									<span className="gafata text2 tracking-[7%] text-[32px] leading-[50px]">
+									<span className="font-bold tracking-[7%] text-[32px] leading-[50px]">
 										{timeLeft[unit as keyof typeof timeLeft]
 											.toString()
 											.padStart(2, "0")}
 									</span>
-									<span className="gafata text2 tracking-[7%] text-[15px]">
+									<span className="font-medium tracking-[7%] text-[15px] uppercase">
 										{unit}
 									</span>
 								</div>
 								{i < 3 && (
-									<span className="gafata text2 tracking-[7%] text-[21px]">
+									<span className="font-bold tracking-[7%] text-[21px]">
 										:
 									</span>
 								)}

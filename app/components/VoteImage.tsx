@@ -14,9 +14,13 @@ const VoteImage = () => {
 					<div className="w-full md:w-[90%] lg:w-fit pt-[20px] lg:pt-[35px] text-center md:text-center lg:text-left">
 						<h2 className="uppercase w-fit text-[#343434] text-2xl md:text-[32px] mx-[20px] lg:mx-0 md:mb-[20px] text-left md:text-center lg:text-left tracking-0 leading-[32px]"> VOTE FOR YOUR <br /> <span className="text-[#3B8501] font-bold"> FAVORITE NOMINEE </span>{" "} </h2>
 
-						<div className="text-[#343434] text-[14px] md:text-base md:w-[90%] lg:w-[598px] mt-[8px] lg:mt-[24px] leading-[20px] lg:leading-[24px] text-left ml-[20px] lg:text-left mx-auto lg:mx-0">
+						<div className="text-[#343434] text-[11px] md:text-base md:w-[90%] lg:w-[598px] mt-[8px] lg:mt-[24px] leading-[20px] lg:leading-[24px] text-left ml-[20px] lg:text-left mx-auto lg:mx-0">
 							<p className="mb-[8px]">
-								As we honor the vital contributions of our committed local government workforce, we invite you to take part in recognizing excellence. Your vote is essential in celebrating the individuals and teams who have gone above and beyond to serve our communities.
+								As we honor the vital contributions of our committed local <br /> 
+								government workforce, we invite you to take part in <br />
+								recognizing excellence. Your vote is essential in celebrating <br /> 
+								the individuals and teams who have gone above and beyond to <br /> 
+								serve our communities.
 							</p>
 						</div>
 

@@ -25,23 +25,23 @@ const Officials = () => {
 					</div>
 				</div>
             
-				<div className="mt-[30px] max-w-[800px] mx-auto pl-28">
-				<h2 className="uppercase font-bold text-xl md:text-2xl mb-4">
+				<div className="mt-[30px] max-w-[800px] mx-auto pl-40">
+				<h2 className="uppercase font-bold text-xl md:text-3xl mb-4">
 					VOTING IS NOW OPEN
 				</h2>
-				<h2 className="text-[#3B8501] uppercase font-bold text-xl md:text-2xl mb-4">
+				<h2 className="text-[#3B8501] uppercase font-bold text-xl md:text-3xl mb-4">
 					LET YOUR VOICE BE HEARD!
 				</h2>
 				<p className="text-[#343434] text-sm md:text-base leading-[1.6] max-w-[700px] mx-auto">
-					Explore the inspiring nominations, learn about the remarkable 
+					Explore the inspiring nominations, learn about the remarkable <br />
 					initiatives and dedication of your colleagues, friends, and 
-					family, and cast your vote for those who best embody the spirit 
-					of public service.
+					family, <br /> and cast your vote for those who best embody the spirit 
+					of <br /> public service.
 				</p>
 				<p className="text-[#343434] text-sm md:text-base leading-[1.6] max-w-[700px] mx-auto mt-4">
-					Thank you for joining this special recognition event. Your 
-					participation helps ensure deserving efforts are celebrated and 
-					supports a continued culture of dedication and innovation within 
+					Thank you for joining this special recognition event. Your <br />
+					participation helps ensure deserving efforts are celebrated and  <br />
+					supports a continued culture of dedication and innovation within  <br />
 					the Local Government Service Commission.
 				</p>
 				</div>
@@ -114,21 +114,21 @@ const Officials = () => {
           </div>
 
           <div className="w-fit pt-4 my-[50px] md:my-[40px] flex justify-between">
-			<div className="mt-[30px] max-w-[800px] mx-auto">
-				<h2 className="uppercase font-bold text-xl md:text-2xl mb-4">
+			<div className="mt-[30px] max-w-[800px] pl-20 mx-auto">
+				<h2 className="uppercase font-bold text-xl md:text-3xl mb-4">
 					MAKE YOUR VOTE COUNT,
 				</h2>
-				<h2 className="text-[#3B8501] uppercase font-bold text-xl md:text-2xl mb-4">
-					FOLLOW THE INSTRUCTION CAREFULLY
+				<h2 className="text-[#3B8501] uppercase font-bold text-xl md:text-3xl mb-4">
+					FOLLOW THE INSTRUCTION <br />CAREFULLY
 				</h2>
 				<p className="text-[#343434] text-sm md:text-base leading-[1.6] max-w-[700px] mx-auto">
 					Follow the voting rules carefully. The system is designed to 
-					ensure that your vote counts. Every stage of the voting process 
-					needs to be followed. A detailed instruction on how to vote is 
+					ensure that <br /> your vote counts. Every stage of the voting process 
+					needs to be <br /> followed. A detailed instruction on how to vote is 
 					provided below.
 				</p>
             </div>
-			<div className="pl-40">
+			<div className="pl-72">
 				<Image
 				src={perm}
 				alt="permanent secretary"

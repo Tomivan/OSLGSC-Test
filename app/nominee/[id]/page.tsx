@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { useParams, useSearchParams } from "next/navigation";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "../../lib/firebase";
-import { NomineeDetailPage } from "../../components/NomineeDetail";
+import { NomineeDetailPage } from "../../components/nomineeDetail/NomineeDetail";
 
 interface NomineeData {
   id: string;

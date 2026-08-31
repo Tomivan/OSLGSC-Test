@@ -2,8 +2,9 @@
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
-import minus from "../assets/minus.png";
-import plus from "../assets/plus.png";
+import minus from "../../assets/minus.png";
+import plus from "../../assets/plus.png";
+import styles from "./NomineeCard.module.css";
 
 interface NomineeCardProps {
   nominee: {
@@ -37,29 +38,25 @@ export const NomineeCard: React.FC<NomineeCardProps> = ({
   };
 
   return (
-    <div
-      className={`bg-white rounded-[8px] w-[271px] h-[380px] mx-auto relative border transition-all duration-200 ${
-        isSelected ? "border-[#3B8501] shadow-md" : "border-[#CFCDCD] hover:border-gray-400"
-      }`}
-    >
-      <div className="absolute top-1.5 left-3 right-3 flex justify-between items-center z-[10]">
+    <div className={`${styles.card} ${isSelected ? styles.cardSelected : styles.cardUnselected}`}>
+      <div className={styles.header}>
         <Link 
           href={`/nominee/${nominee.id}?category=${categoryId}`}
-          className="text-black text-[8px] bg-[#ffffff] rounded-l-sm p-2 font-semibold no-underline hover:text-[#3B8501] transition-colors duration-200"
+          className={styles.copyLink}
         >
           Copy link
         </Link>
-        <div className="px-2 py-1 rounded text-[8px] text-white bg-black bg-opacity-70 font-semibold flex items-center gap-1">
+        <div className={styles.voteBadge}>
           <span>{nominee.voteCount}</span>
         </div>
       </div>
       
-      <div className="w-[269px] h-[250px] relative mb-3 rounded-t-[8px] overflow-hidden">
+      <div className={styles.imageWrapper}>
         <Image
           src={"/image.png"}
           alt={nominee.name}
           fill
-          className="object-cover"
+          className={styles.image}
           onError={(e) => {
             const target = e.target as HTMLImageElement;
             target.src = "/image.png";
@@ -67,32 +64,32 @@ export const NomineeCard: React.FC<NomineeCardProps> = ({
         />
       </div>
       
-      <div className="text-center mb-3 px-2 h-[48px] flex justify-center items-center">
-        <span className="text-black font-semibold text-sm">Name: </span>
-        <span className="text-black text-sm break-words ml-1">
+      <div className={styles.nameContainer}>
+        <span className={styles.nameLabel}>Name: </span>
+        <span className={styles.nameText}>
           {nominee.name}
         </span>
       </div>
       
-      <div className="flex items-center bg-[#E1E1E1] py-[12px] justify-center gap-4 rounded-b-[8px]">
+      <div className={styles.controls}>
         <button
           onClick={handleDecrement}
           disabled={voteQuantity === 0}
-          className="w-8 h-8 bg-[#CACACA] hover:bg-gray-300 disabled:bg-gray-100 disabled:cursor-not-allowed text-black rounded flex items-center justify-center font-bold text-lg transition-colors duration-200"
+          className={`${styles.controlButton} ${voteQuantity === 0 ? styles.controlButtonDisabled : ''}`}
           aria-label="Decrease votes"
         >
           <Image src={minus} alt="Decrease votes" width={12} height={12} />
         </button>
         
-        <div className="flex items-center gap-1 min-w-[3rem] justify-center">
-          <span className="text-black font-bold text-2xl">
+        <div className={styles.voteQuantity}>
+          <span className={styles.voteQuantityText}>
             {voteQuantity}
           </span>
         </div>
         
         <button
           onClick={handleIncrement}
-          className="w-8 h-8 bg-[#CACACA] hover:bg-gray-300 disabled:bg-gray-100 disabled:cursor-not-allowed text-black rounded flex items-center justify-center font-bold text-lg transition-colors duration-200"
+          className={styles.controlButton}
           aria-label="Increase votes"
         >
           <Image src={plus} alt="Increase votes" width={12} height={12} />
@@ -100,8 +97,8 @@ export const NomineeCard: React.FC<NomineeCardProps> = ({
       </div>
       
       {isSelected && (
-        <div className="absolute -top-2 -right-2 w-6 h-6 bg-[#3B8501] rounded-full flex items-center justify-center">
-          <svg className="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
+        <div className={styles.selectedBadge}>
+          <svg className={styles.selectedIcon} fill="currentColor" viewBox="0 0 20 20">
             <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
           </svg>
         </div>

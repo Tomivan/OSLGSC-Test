@@ -1,0 +1,66 @@
+.mainContainer {
+  width: 100%;
+}
+
+.timerContainer {
+  background-color: #FAFAFA;
+  border-radius: 8px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+@media (min-width: 768px) {
+  .timerContainer {
+    width: 375px;
+  }
+}
+
+.timerLabel {
+  text-align: center;
+  font-size: 24.4px;
+  color: #343434;
+}
+
+.timerDisplay {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  font-size: 47px;
+  color: #3B8501;
+}
+
+@media (min-width: 768px) {
+  .timerDisplay {
+    font-size: 42.36px;
+  }
+}
+
+.timeUnit {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.timeValue {
+  font-size: 42px;
+  line-height: 50px;
+  letter-spacing: 7%;
+}
+
+@media (min-width: 768px) {
+  .timeValue {
+    font-size: 42.36px;
+  }
+}
+
+.timeLabel {
+  font-size: 15px;
+  letter-spacing: 7%;
+}
+
+.timeSeparator {
+  font-size: 21px;
+}

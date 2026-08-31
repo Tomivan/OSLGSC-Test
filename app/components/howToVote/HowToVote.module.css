@@ -1,0 +1,138 @@
+.mainContainer {
+  background-color: white;
+  display: flex;
+  justify-content: center;
+  padding-bottom: 40px;
+}
+
+@media (min-width: 768px) {
+  .mainContainer {
+    padding-bottom: 65px;
+  }
+}
+
+.sectionContainer {
+  width: 90%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@media (min-width: 768px) {
+  .sectionContainer {
+    width: 100%;
+    max-width: 1280px;
+  }
+}
+
+.contentWrapper {
+  padding-top: 40px;
+  width: 100%;
+}
+
+@media (min-width: 768px) {
+  .contentWrapper {
+    padding-top: 95px;
+  }
+}
+
+.mainTitle {
+  color: #3B8501;
+  text-align: center;
+  text-transform: uppercase;
+  font-weight: bold;
+  font-size: 1.5rem;
+  letter-spacing: 0;
+  line-height: 43px;
+}
+
+@media (min-width: 768px) {
+  .mainTitle {
+    font-size: 32px;
+  }
+}
+
+.subtitle {
+  color: #343434;
+  font-weight: bold;
+  margin-top: 8px;
+  text-align: center;
+  font-size: 0.75rem;
+  letter-spacing: 0;
+  line-height: 20px;
+}
+
+@media (min-width: 768px) {
+  .subtitle {
+    margin-top: 16px;
+    font-size: 1rem;
+    line-height: 100%;
+  }
+}
+
+.stepsGrid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin-top: 24px;
+  justify-content: center;
+}
+
+.stepCard {
+  background-color: #3B8501;
+  padding: 26px;
+  border-radius: 10px;
+  flex: 1;
+  min-width: 200px;
+  max-width: 280px;
+}
+
+.stepNumber {
+  font-size: 10px;
+  letter-spacing: 0;
+  color: #FAFAFA;
+  line-height: 20px;
+}
+
+@media (min-width: 768px) {
+  .stepNumber {
+    font-size: 13px;
+    line-height: 100%;
+  }
+}
+
+.stepTitle {
+  font-weight: bold;
+  font-size: 14px;
+  letter-spacing: 0;
+  color: #FAFAFA;
+  line-height: 20px;
+  margin-top: 6px;
+  margin-bottom: 6px;
+}
+
+@media (min-width: 768px) {
+  .stepTitle {
+    font-size: 18px;
+    line-height: 24px;
+  }
+}
+
+.stepDescription {
+  font-size: 11px;
+  letter-spacing: 0;
+  line-height: 20px;
+  color: #FAFAFA;
+}
+
+@media (min-width: 768px) {
+  .stepDescription {
+    font-size: 14px;
+    line-height: 24px;
+  }
+}
+
+.noteText {
+  color: #F3FF0D;
+  font-weight: bold;
+}

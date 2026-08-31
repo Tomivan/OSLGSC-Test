@@ -1,0 +1,124 @@
+.mainContainer {
+  background-color: #3B8501;
+  display: flex;
+  justify-content: center;
+  color: white;
+}
+
+.sectionContainer {
+  width: 90%;
+}
+
+@media (min-width: 768px) {
+  .sectionContainer {
+    width: 100%;
+    max-width: 1280px;
+  }
+}
+
+.contentWrapper {
+  margin-top: 60px;
+  margin-bottom: 60px;
+  text-align: center;
+}
+
+@media (min-width: 768px) {
+  .contentWrapper {
+    margin-top: 71px;
+    margin-bottom: 71px;
+  }
+}
+
+.mainTitle {
+  text-transform: uppercase;
+  text-align: center;
+  font-weight: bold;
+  font-size: 1.5rem;
+  letter-spacing: 0;
+  line-height: 100%;
+}
+
+@media (min-width: 768px) {
+  .mainTitle {
+    font-size: 32px;
+  }
+}
+
+.subtitle {
+  font-weight: bold;
+  margin-top: 8px;
+  font-size: 0.75rem;
+  letter-spacing: 0;
+  line-height: 20px;
+}
+
+@media (min-width: 768px) {
+  .subtitle {
+    margin-top: 16px;
+    font-size: 1rem;
+    line-height: 100%;
+  }
+}
+
+.rulesGrid {
+  margin-top: 20px;
+  width: fit-content;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+@media (min-width: 768px) {
+  .rulesGrid {
+    display: flex;
+    gap: 74px;
+  }
+}
+
+.ruleItem {
+  width: 160px;
+}
+
+.ruleItemMiddle {
+  margin-top: 40px;
+  margin-bottom: 40px;
+}
+
+@media (min-width: 768px) {
+  .ruleItemMiddle {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+}
+
+.ruleItemLast {
+  margin-top: 40px;
+}
+
+@media (min-width: 768px) {
+  .ruleItemLast {
+    margin-top: 0;
+  }
+}
+
+.ruleTitle {
+  font-size: 20px;
+  text-transform: uppercase;
+  font-weight: bold;
+  margin-top: 16px;
+  letter-spacing: 0;
+  line-height: 100%;
+}
+
+.ruleDescription {
+  color: #FAFAFA;
+  margin-top: 12px;
+  margin-bottom: 12px;
+}
+
+.ruleImage {
+  width: 61px;
+  height: 61px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 16px;
+}

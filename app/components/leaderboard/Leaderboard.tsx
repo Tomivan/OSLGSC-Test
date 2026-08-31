@@ -2,9 +2,10 @@
 
 import React, { useState, useEffect, useMemo } from "react";
 import Link from "next/link";
-import { useVote, useSocket } from "../context/VoteContext";
-import { db } from "../lib/firebase";
+import { useVote, useSocket } from "../../context/VoteContext";
+import { db } from "../../lib/firebase";
 import { collection, getDocs, orderBy, query, limit } from "firebase/firestore";
+import styles from "./Leaderboard.module.css";
 
 interface Contestant {
   id: string;
@@ -21,7 +22,6 @@ const Leaderboard = () => {
   const { liveVotes } = useVote();
   const { isConnected } = useSocket();
 
-  // Fetch top 5 contestants by votes
   useEffect(() => {
     const fetchTopContestants = async () => {
       try {
@@ -59,7 +59,6 @@ const Leaderboard = () => {
     fetchTopContestants();
   }, []);
 
-  // Combine base votes with live increments and re-sort
   const liveLeaderboard = useMemo(() => {
     const updated = baseContestants.map(contestant => ({
       ...contestant,
@@ -72,18 +71,18 @@ const Leaderboard = () => {
 
   if (loading) {
     return (
-      <main className="flex justify-center py-8">
-        <div className="w-[90%] md:w-[740px] mx-auto max-d">
-          <div className="bg-white rounded-lg overflow-hidden shadow-lg border border-gray-200">
-            <div className="bg-[#3B8501] text-white text-center py-3">
-              <h2 className="font-bold text-lg uppercase tracking-wide">
+      <main className={styles.loadingMain}>
+        <div className={styles.loadingContainer}>
+          <div className={styles.leaderboardWrapper}>
+            <div className={styles.leaderboardHeader}>
+              <h2 className={styles.leaderboardTitle}>
                 REAL-TIME LEADERBOARD
               </h2>
             </div>
-            <div className="bg-[#E4E4E4] p-4">
-              <div className="text-center py-4">
-                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#3B8501] mx-auto"></div>
-                <p className="mt-2 text-gray-600">Loading leaderboard...</p>
+            <div className={styles.leaderboardBody}>
+              <div className={styles.loaderContent}>
+                <div className={styles.loaderSpinner}></div>
+                <p className={styles.loadingText}>Loading leaderboard...</p>
               </div>
             </div>
           </div>
@@ -94,16 +93,16 @@ const Leaderboard = () => {
 
   if (error) {
     return (
-      <main className="flex justify-center py-8">
-        <div className="w-[90%] md:w-[740px] mx-auto max-d">
-          <div className="bg-white rounded-lg overflow-hidden shadow-lg border border-gray-200">
-            <div className="bg-[#3B8501] text-white text-center py-3">
-              <h2 className="font-bold text-lg uppercase tracking-wide">
+      <main className={styles.loadingMain}>
+        <div className={styles.loadingContainer}>
+          <div className={styles.leaderboardWrapper}>
+            <div className={styles.leaderboardHeader}>
+              <h2 className={styles.leaderboardTitle}>
                 REAL-TIME LEADERBOARD
               </h2>
             </div>
-            <div className="bg-[#E4E4E4] p-4 text-center">
-              <p className="text-red-600">{error}</p>
+            <div className={styles.leaderboardBody}>
+              <p className={styles.errorText}>{error}</p>
             </div>
           </div>
         </div>
@@ -112,17 +111,17 @@ const Leaderboard = () => {
   }
 
   return (
-    <main className="flex justify-center py-8">
-      <div className="w-[90%] md:w-[740px] mx-auto max-d">
-        <div className="bg-white rounded-lg overflow-hidden shadow-lg border border-gray-200">
-          <div className="bg-[#3B8501] text-white text-center py-3">
-            <h2 className="font-bold text-lg uppercase tracking-wide">
+    <main className={styles.mainContainer}>
+      <div className={styles.container}>
+        <div className={styles.leaderboardWrapper}>
+          <div className={styles.leaderboardHeader}>
+            <h2 className={styles.leaderboardTitle}>
               REAL-TIME LEADERBOARD
             </h2>
           </div>
-          <div className="bg-[#E4E4E4] p-4">
+          <div className={styles.leaderboardBody}>
             {liveLeaderboard.length === 0 ? (
-              <div className="text-center py-4 text-gray-600">
+              <div className={styles.emptyState}>
                 No contestants found.
               </div>
             ) : (
@@ -130,26 +129,26 @@ const Leaderboard = () => {
                 {liveLeaderboard.map((contestant, index) => (
                   <div
                     key={contestant.id}
-                    className="flex items-center justify-between md:px-[28px] px-4 py-3 border-b border-gray-200 last:border-b-0 hover:bg-gray-100 transition-colors duration-200"
+                    className={styles.leaderboardItem}
                   >
-                    <div className="flex items-center gap-3">
-                      <span className="text-gray-700 font-medium min-w-[2rem]">
+                    <div className={styles.contestantInfo}>
+                      <span className={styles.rank}>
                         #{index + 1}
                       </span>
-                      <span className="text-gray-700">
+                      <span className={styles.contestantName}>
                         {contestant.name}
                       </span>
-                      <span className="text-xs text-gray-500 hidden sm:inline">
+                      <span className={styles.contestantCategory}>
                         ({contestant.category})
                       </span>
                     </div>
                     
-                    <div className="flex items-center gap-2">
-                      <span className="text-gray-700 font-semibold">
+                    <div className={styles.voteInfo}>
+                      <span className={styles.voteCount}>
                         {contestant.liveVotes.toLocaleString()}
                       </span>
                       {contestant.liveIncrement > 0 && (
-                        <span className="text-orange-500 text-sm font-bold animate-pulse bg-orange-100 px-2 py-0.5 rounded-full">
+                        <span className={styles.liveIncrement}>
                           +{contestant.liveIncrement}
                         </span>
                       )}
@@ -159,16 +158,16 @@ const Leaderboard = () => {
 
                 <Link
                   href="/leaderboard"
-                  className="block text-center bg-[#FAFAFA] rounded-lg p-4 mt-2 hover:bg-gray-100 transition-colors duration-200"
+                  className={styles.viewAllLink}
                 >
-                  <button className="text-[#3B8501] font-medium hover:text-[#2d6801] w-full transition-colors duration-200">
+                  <button className={styles.viewAllButton}>
                     View Full Leaderboard →
                   </button>
                 </Link>
 
                 {isConnected && liveLeaderboard.some(c => c.liveIncrement > 0) && (
-                  <div className="text-center mt-2">
-                    <span className="text-xs text-orange-500 animate-pulse">
+                  <div className={styles.liveIndicator}>
+                    <span className={styles.liveIndicatorText}>
                       🔴 Live updates active
                     </span>
                   </div>

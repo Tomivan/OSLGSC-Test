@@ -1,0 +1,456 @@
+.pageContainer {
+  min-height: 100vh;
+  background-color: #F9FAFB;
+  padding-bottom: 8rem;
+}
+
+.headerBar {
+  background-color: white;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  border-bottom: 1px solid #E5E7EB;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.headerContent {
+  max-width: 72rem;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.backButton {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #4B5563;
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: color 0.15s ease;
+}
+
+.backButton:hover {
+  color: #111827;
+}
+
+.backIcon {
+  width: 1.5rem;
+  height: 1.5rem;
+  color: #3B8501;
+}
+
+.backText {
+  font-weight: 500;
+  color: #3B8501;
+}
+
+.statusContainer {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.statusLive {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background-color: #F0FDF4;
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
+  padding-top: 0.375rem;
+  padding-bottom: 0.375rem;
+  border-radius: 9999px;
+}
+
+.statusDotLive {
+  width: 0.5rem;
+  height: 0.5rem;
+  background-color: #22C55E;
+  border-radius: 9999px;
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.statusTextLive {
+  font-size: 0.75rem;
+  color: #15803D;
+  font-weight: 500;
+}
+
+.statusReconnecting {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background-color: #FEFCE8;
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
+  padding-top: 0.375rem;
+  padding-bottom: 0.375rem;
+  border-radius: 9999px;
+}
+
+.statusDotReconnecting {
+  width: 0.5rem;
+  height: 0.5rem;
+  background-color: #EAB308;
+  border-radius: 9999px;
+}
+
+.statusTextReconnecting {
+  font-size: 0.75rem;
+  color: #A16207;
+  font-weight: 500;
+}
+
+.statusSyncing {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background-color: #EFF6FF;
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
+  padding-top: 0.375rem;
+  padding-bottom: 0.375rem;
+  border-radius: 9999px;
+}
+
+.statusDotSyncing {
+  width: 0.5rem;
+  height: 0.5rem;
+  background-color: #3B82F6;
+  border-radius: 9999px;
+  animation: ping 1s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+@keyframes ping {
+  75%, 100% {
+    transform: scale(2);
+    opacity: 0;
+  }
+}
+
+.statusTextSyncing {
+  font-size: 0.75rem;
+  color: #1D4ED8;
+  font-weight: 500;
+}
+
+.contentContainer {
+  max-width: 64rem;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-top: 1.5rem;
+  padding-bottom: 1.5rem;
+}
+
+.card {
+  background-color: white;
+  border-radius: 0.5rem;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+}
+
+.cardGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+  padding: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .cardGrid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.imageContainer {
+  position: relative;
+  width: 100%;
+  height: 350px;
+  background-color: #E5E7EB;
+  border-radius: 0.5rem;
+  overflow: hidden;
+}
+
+.image {
+  object-fit: cover;
+}
+
+.voteBadge {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
+  padding-top: 0.375rem;
+  padding-bottom: 0.375rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: white;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.liveIncrementBadge {
+  color: #FDBA74;
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+.liveVotingBadge {
+  position: absolute;
+  top: 0.75rem;
+  left: 0.75rem;
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
+  padding-top: 0.375rem;
+  padding-bottom: 0.375rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: white;
+  background-color: rgba(249, 115, 22, 0.9);
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+.liveVotingDot {
+  width: 0.5rem;
+  height: 0.5rem;
+  background-color: white;
+  border-radius: 9999px;
+  animation: ping 1s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+.detailsContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.nomineeName {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #111827;
+  margin-bottom: 0.5rem;
+}
+
+.categoryText {
+  color: #4B5563;
+  margin-bottom: 1rem;
+  font-size: 0.875rem;
+}
+
+.categoryName {
+  font-weight: 600;
+  color: #1F2937;
+}
+
+.bioContainer {
+  margin-bottom: 1.5rem;
+  padding: 1rem;
+  background-color: #F9FAFB;
+  border-radius: 0.5rem;
+}
+
+.bioTitle {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #374151;
+  margin-bottom: 0.5rem;
+}
+
+.bioText {
+  font-size: 0.875rem;
+  color: #4B5563;
+}
+
+.liveIndicator {
+  margin-bottom: 1rem;
+  padding: 0.75rem;
+  background-color: #FFF7ED;
+  border: 1px solid #FED7AA;
+  border-radius: 0.5rem;
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+.liveIndicatorText {
+  color: #C2410C;
+  font-size: 0.875rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.liveIndicatorDot {
+  width: 0.5rem;
+  height: 0.5rem;
+  background-color: #F97316;
+  border-radius: 9999px;
+  animation: ping 1s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+.voteSection {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.inputLabel {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: #374151;
+  margin-bottom: 0.375rem;
+}
+
+.inputGroup {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.voteInput {
+  flex: 1;
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  border: 1px solid #D1D5DB;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  text-align: center;
+  outline: none;
+}
+
+.voteInput:focus {
+  outline: none;
+  border-color: transparent;
+}
+
+.applyButton {
+  padding-left: 1.25rem;
+  padding-right: 1.25rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  background-color: #3B8501;
+  color: white;
+  font-size: 0.875rem;
+  font-weight: 600;
+  border-radius: 0.5rem;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.applyButton:hover {
+  background-color: #2d6601;
+}
+
+.applyButtonDisabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.controlsContainer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #E1E1E1;
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  border-radius: 0.5rem;
+}
+
+.controlButton {
+  width: 2.5rem;
+  height: 2.5rem;
+  background-color: #CACACA;
+  border-radius: 0.5rem;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.controlButton:hover {
+  background-color: #D1D5DB;
+}
+
+.controlButtonDisabled {
+  background-color: #F3F4F6;
+  cursor: not-allowed;
+}
+
+.voteDisplay {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.voteCountDisplay {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #111827;
+}
+
+.liveIncrementDisplay {
+  color: #F97316;
+  font-weight: bold;
+  font-size: 0.875rem;
+  background-color: #FFEDD5;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
+  border-radius: 9999px;
+  animation: bounce 1s infinite;
+}
+
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-25%);
+  }
+}
+
+.confirmationBox {
+  padding: 0.75rem;
+  background-color: #F0FDF4;
+  border: 1px solid #BBF7D0;
+  border-radius: 0.5rem;
+}
+
+.confirmationText {
+  color: #15803D;
+  font-size: 0.875rem;
+}

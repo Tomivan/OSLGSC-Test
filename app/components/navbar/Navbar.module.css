@@ -1,0 +1,97 @@
+.navbarContainer {
+  max-width: 28rem;
+  display: flex;
+  justify-content: space-between;
+  background-color: white;
+  overflow: hidden;
+}
+
+@media (min-width: 768px) {
+  .navbarContainer {
+    max-width: 1280px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+.navbarSection {
+  padding: 1rem;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  margin-left: auto;
+  margin-right: auto;
+  align-items: center;
+}
+
+@media (min-width: 768px) {
+  .navbarSection {
+    width: 80%;
+  }
+}
+
+.logoWrapper {
+  display: flex;
+}
+
+.logoImage {
+  width: 53px;
+  height: 53px;
+}
+
+@media (min-width: 768px) {
+  .logoImage {
+    width: 92px;
+    height: 92px;
+  }
+}
+
+.logoText {
+  font-weight: bold;
+  width: 200px;
+  font-size: 11px;
+  color: #343434;
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+@media (min-width: 768px) {
+  .logoText {
+    width: 283px;
+    line-height: 18px;
+    font-size: 1rem;
+    margin-left: 5px;
+  }
+}
+
+.adminLink {
+  color: #3B8501;
+  font-size: 0.875rem;
+  font-weight: 500;
+  margin-top: auto;
+  margin-bottom: auto;
+  text-decoration: none;
+}
+
+.adminLink:hover {
+  color: #2d6801;
+}
+
+.adminButton {
+  background-color: #3B8501;
+  color: white;
+  width: 75px;
+  height: 31px;
+  font-size: 9px;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+}
+
+@media (min-width: 768px) {
+  .adminButton {
+    width: 149px;
+    height: 46px;
+    font-size: 14px;
+  }
+}

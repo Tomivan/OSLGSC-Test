@@ -1,10 +1,11 @@
 "use client";
 
 import React, { useState, useEffect, useMemo, useCallback } from "react";
-import { NomineeCard } from "./NomineeCard";
-import { useVote, useSocket } from "../context/VoteContext";
-import { db } from "../lib/firebase";
+import { NomineeCard } from "../nomineeCard/NomineeCard";
+import { useVote, useSocket } from "../../context/VoteContext";
+import { db } from "../../lib/firebase";
 import { collection, getDocs } from "firebase/firestore";
+import styles from "./Categories.module.css";
 
 interface Contestant {
   id: string;
@@ -37,7 +38,6 @@ const Categories = () => {
   
   const { isConnected } = useSocket();
 
-  // Fetch contestants from Firestore
   useEffect(() => {
     const fetchContestants = async () => {
       try {
@@ -78,10 +78,8 @@ const Categories = () => {
     fetchContestants();
   }, []);
 
-  // AUTO-SYNC: Whenever votes change, sync to Firebase
   useEffect(() => {
     const autoSync = async () => {
-      // Only sync if there are votes and we're not already syncing
       if (Object.keys(votes).length > 0 && !isSyncing && isConnected) {
         const result = await syncWithFirebase();
         if (result.success) {
@@ -90,17 +88,14 @@ const Categories = () => {
       }
     };
 
-    // Debounce the sync to avoid too many requests
     const timeoutId = setTimeout(autoSync, 3000); 
     
     return () => clearTimeout(timeoutId);
   }, [votes, isSyncing, isConnected, syncWithFirebase]);
 
-  // Also sync when component unmounts (user leaves page)
   useEffect(() => {
     return () => {
       if (Object.keys(votes).length > 0 && !isSyncing) {
-        // Use navigator.sendBeacon for unmount sync (more reliable)
         const syncData = JSON.stringify({ votes, timestamp: Date.now() });
         navigator.sendBeacon('/api/sync-votes', syncData);
       }
@@ -124,13 +119,13 @@ const Categories = () => {
     const liveIncrement = liveVotes[contestant.id] || 0;
     return firebaseVotes + liveIncrement;
   }, [liveVotes]);
+
   const getImageUrl = (contestant: Contestant) => {
     return contestant.imageUrl || "/image.png";
   };
 
   const sortedContestantsByCategory = useMemo(() => {
-
-  const map = new Map();
+    const map = new Map();
     categories.forEach(category => {
       const categoryContestants = getContestantsForCategory(category.name);
       const sorted = [...categoryContestants].sort((a, b) => 
@@ -143,13 +138,11 @@ const Categories = () => {
 
   if (loading) {
     return (
-      <main className="bg-white flex justify-center py-[60px] min-h-screen">
-        <section className="w-full max-w-[900px] px-4">
-          <div className="flex justify-center items-center h-64">
-            <div className="text-center">
-              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#3B8501] mx-auto"></div>
-              <p className="mt-4 text-gray-600">Loading categories...</p>
-            </div>
+      <main className={styles.loadingMain}>
+        <section className={styles.loadingSection}>
+          <div className={styles.loaderContainer}>
+            <div className={styles.loader}></div>
+            <p className={styles.loaderText}>Loading categories...</p>
           </div>
         </section>
       </main>
@@ -158,13 +151,13 @@ const Categories = () => {
 
   if (error) {
     return (
-      <main className="bg-white flex justify-center py-[60px] min-h-screen">
-        <section className="w-full max-w-[900px] px-4">
-          <div className="text-center text-red-600 py-8">
-            <p>{error}</p>
+      <main className={styles.loadingMain}>
+        <section className={styles.loadingSection}>
+          <div className={styles.errorContainer}>
+            <p className={styles.errorText}>{error}</p>
             <button 
               onClick={() => window.location.reload()}
-              className="mt-4 px-4 py-2 bg-[#3B8501] text-white rounded hover:bg-[#2f6a01]"
+              className={styles.retryButton}
             >
               Retry
             </button>
@@ -176,10 +169,10 @@ const Categories = () => {
 
   if (categories.length === 0) {
     return (
-      <main className="bg-white flex justify-center py-[60px] min-h-screen">
-        <section className="w-full max-w-[900px] px-4">
-          <div className="text-center py-8">
-            <p className="text-gray-600">No categories available yet.</p>
+      <main className={styles.loadingMain}>
+        <section className={styles.loadingSection}>
+          <div className={styles.emptyContainer}>
+            <p className={styles.emptyText}>No categories available yet.</p>
           </div>
         </section>
       </main>
@@ -187,74 +180,54 @@ const Categories = () => {
   }
 
   return (
-    <main
-      className="bg-white flex justify-center py-[60px] min-h-screen"
-      id="categories"
-    >
-      <section className="w-full max-w-[1200px] px-4">
-        <div className="w-full">
-          <div className="flex justify-between items-center mb-8">
-            <h1 className="text-[#3B8501] text-center uppercase font-bold text-2xl md:text-[32px] tracking-0 leading-[43px]">
+    <main className={styles.mainContainer} id="categories">
+      <section className={styles.sectionContainer}>
+        <div className={styles.contentWrapper}>
+          <div className={styles.headerWrapper}>
+            <h1 className={styles.mainTitle}>
               CATEGORIES
             </h1>
-            
-            {/* Live connection indicator */}
-            {/* {isConnected ? (
-              <div className="flex items-center gap-2 bg-green-50 px-3 py-1 rounded-full">
-                <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
-                <span className="text-sm text-green-700">Live</span>
-              </div>
-            ) : (
-              <div className="flex items-center gap-2 bg-yellow-50 px-3 py-1 rounded-full">
-                <span className="w-2 h-2 bg-yellow-500 rounded-full"></span>
-                <span className="text-sm text-yellow-700">Reconnecting...</span>
-              </div>
-            )} */}
           </div>
 
-          {/* Auto-sync status indicator - subtle and temporary */}
           {isSyncing && (
-            <div className="mb-4 p-2 bg-blue-50 border border-blue-200 rounded-lg animate-pulse">
-              <p className="text-blue-600 text-sm text-center">
+            <div className={styles.syncIndicator}>
+              <p className={styles.syncText}>
                 ⚡ Syncing votes...
               </p>
             </div>
           )}
 
-          <div className="space-y-4">
+          <div className={styles.categoriesList}>
             {categories.map((category) => {
               const categoryContestants = sortedContestantsByCategory.get(category.name) || [];
               
               return (
                 <div
                   key={category.id}
-                  className="border-[0.93px] border-[#343434] rounded-[8px]"
+                  className={styles.categoryItem}
                 >
                   <button
                     onClick={() => toggleCategory(category.id)}
-                    className="w-full px-4 py-3 text-left text-black font-medium bg-white hover:bg-gray-50 rounded-[8px] transition-colors duration-200 flex items-center justify-between"
+                    className={styles.categoryToggle}
                   >
-                    <span className="flex items-center gap-2">
+                    <span className={styles.categoryToggleLeft}>
                       <span>
                         {category.name}
                         {categoryContestants.length > 0 && (
-                          <span className="ml-2 text-sm text-gray-500">
+                          <span className={styles.categoryCount}>
                             ({categoryContestants.length} nominee{categoryContestants.length !== 1 ? 's' : ''})
                           </span>
                         )}
                       </span>
                       
-                      {/* Show if category has live activity */}
                       {categoryContestants.some((c: { id: string | number; }) => liveVotes[c.id] > 0) && (
-                        <span className="ml-2 text-xs bg-orange-100 text-orange-700 px-2 py-1 rounded-full animate-pulse">
+                        <span className={styles.liveBadge}>
                           🔴 voting now
                         </span>
                       )}
                     </span>
                     <svg
-                      className={`w-5 h-5 text-gray-500 transition-transform duration-200 ${
-                        category.isOpen ? "rotate-180" : ""
-                      }`}
+                      className={`${styles.chevron} ${category.isOpen ? styles.chevronOpen : ''}`}
                       fill="none"
                       stroke="currentColor"
                       viewBox="0 0 24 24"
@@ -269,13 +242,13 @@ const Categories = () => {
                   </button>
 
                   {category.isOpen && (
-                    <div className="px-4 pb-4">
+                    <div className={styles.categoryContent}>
                       {categoryContestants.length === 0 ? (
-                        <div className="text-center py-8 text-gray-500">
+                        <div className={styles.emptyNominees}>
                           No nominees available for this category.
                         </div>
                       ) : (
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-4 cate">
+                        <div className={styles.nomineesGrid}>
                           {categoryContestants.map((contestant: Contestant) => {
                             const isSelected =
                               selectedNominees[category.id]?.includes(contestant.id);

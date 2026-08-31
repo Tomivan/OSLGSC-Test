@@ -1,4 +1,5 @@
 import React from "react";
+import styles from "./DetailsConfirmationModal.module.css";
 
 interface DetailsConfirmationModalProps {
   onClose: () => void;
@@ -6,15 +7,15 @@ interface DetailsConfirmationModalProps {
 
 const DetailsConfirmationModal: React.FC<DetailsConfirmationModalProps> = ({ onClose }) => {
   return (
-    <main className="fixed inset-0 z-50 min-h-screen bg-black bg-opacity-50 flex items-center justify-center p-4">
-      <div className="bg-white rounded-lg p-8 max-w-sm w-full relative">
+    <main className={styles.modalOverlay}>
+      <div className={styles.modalContainer}>
         <button 
           onClick={onClose}
-          className="absolute top-4 right-4 w-8 h-8 border-[#343434] border-[0.6px] hover:bg-gray-500 rounded-full flex items-center justify-center transition-colors duration-200"
+          className={styles.closeButton}
           aria-label="Close modal"
         >
           <svg
-            className="w-5 h-5 text-[#343434]"
+            className={styles.closeIcon}
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
@@ -27,15 +28,15 @@ const DetailsConfirmationModal: React.FC<DetailsConfirmationModalProps> = ({ onC
             />
           </svg>
         </button>
-        <div className="text-center pt-4">
-          <h2 className="text-black text-lg font-medium mb-8 mt-[10px] leading-relaxed">
+        <div className={styles.modalContent}>
+          <h2 className={styles.modalTitle}>
             Kindly fill the required details in this section to proceed
           </h2>
 
-          <div className="flex justify-center">
+          <div className={styles.buttonWrapper}>
             <button 
               onClick={onClose}
-              className="bg-[#3B8501] uppercase hover:bg-[#2d6801] text-white font-bold py-3 px-8 rounded transition-colors duration-200 min-w-[80px]"
+              className={styles.backButton}
             >
               Take me back
             </button>

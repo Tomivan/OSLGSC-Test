@@ -1,0 +1,253 @@
+.loadingMain {
+  background-color: white;
+  display: flex;
+  justify-content: center;
+  padding-top: 60px;
+  padding-bottom: 60px;
+  min-height: 100vh;
+}
+
+.loadingSection {
+  width: 100%;
+  max-width: 900px;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+.loaderContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 16rem;
+}
+
+.loader {
+  animation: spin 1s linear infinite;
+  border-radius: 9999px;
+  height: 3rem;
+  width: 3rem;
+  border-bottom: 2px solid #3B8501;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.loaderText {
+  margin-top: 1rem;
+  color: #4B5563;
+  text-align: center;
+}
+
+.errorContainer {
+  text-align: center;
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+}
+
+.errorText {
+  color: #DC2626;
+}
+
+.retryButton {
+  margin-top: 1rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  background-color: #3B8501;
+  color: white;
+  border-radius: 0.25rem;
+  border: none;
+  cursor: pointer;
+}
+
+.retryButton:hover {
+  background-color: #2f6a01;
+}
+
+.emptyContainer {
+  text-align: center;
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+}
+
+.emptyText {
+  color: #4B5563;
+}
+
+.mainContainer {
+  background-color: white;
+  display: flex;
+  justify-content: center;
+  padding-top: 60px;
+  padding-bottom: 60px;
+  min-height: 100vh;
+}
+
+.sectionContainer {
+  width: 100%;
+  max-width: 1200px;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+.contentWrapper {
+  width: 100%;
+}
+
+.headerWrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.mainTitle {
+  color: #3B8501;
+  text-align: center;
+  text-transform: uppercase;
+  font-weight: bold;
+  font-size: 1.5rem;
+  letter-spacing: 0;
+  line-height: 43px;
+}
+
+@media (min-width: 768px) {
+  .mainTitle {
+    font-size: 32px;
+  }
+}
+
+.syncIndicator {
+  margin-bottom: 1rem;
+  padding: 0.5rem;
+  background-color: #EFF6FF;
+  border: 1px solid #BFDBFE;
+  border-radius: 0.5rem;
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.syncText {
+  color: #2563EB;
+  font-size: 0.875rem;
+  text-align: center;
+}
+
+.categoriesList {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.categoryItem {
+  border: 0.93px solid #343434;
+  border-radius: 8px;
+}
+
+.categoryToggle {
+  width: 100%;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+  text-align: left;
+  color: black;
+  font-weight: 500;
+  background-color: white;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.categoryToggle:hover {
+  background-color: #F9FAFB;
+}
+
+.categoryToggleLeft {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.categoryCount {
+  margin-left: 0.5rem;
+  font-size: 0.875rem;
+  color: #6B7280;
+}
+
+.liveBadge {
+  margin-left: 0.5rem;
+  font-size: 0.75rem;
+  background-color: #FFEDD5;
+  color: #C2410C;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
+  border-radius: 9999px;
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+.chevron {
+  width: 1.25rem;
+  height: 1.25rem;
+  color: #6B7280;
+  transition: transform 0.2s ease;
+}
+
+.chevronOpen {
+  transform: rotate(180deg);
+}
+
+.categoryContent {
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-bottom: 1rem;
+}
+
+.emptyNominees {
+  text-align: center;
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+  color: #6B7280;
+}
+
+.nomineesGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+@media (min-width: 768px) {
+  .nomineesGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .nomineesGrid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}

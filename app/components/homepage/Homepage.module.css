@@ -80,32 +80,9 @@
   margin-bottom: 22.5px;
 }
 
-.heroSubtitle {
-  font-weight: 900;
-  color: #3b8501;
-  text-transform: uppercase;
-  font-size: 67.45px;
-  letter-spacing: 0;
-  line-height: 82px;
-  margin-bottom: 22.5px;
-}
-
-.timerDesktop {
+.timerWrapper {
   display: block;
   margin-top: 5%;
-}
-
-.timerMobile {
-  display: none;
-}
-
-.officialsDesktop {
-  display: block;
-  margin-top: 5%;
-}
-
-.officialsMobile {
-  display: none;
 }
 
 .spacer {
@@ -128,7 +105,7 @@
   }
 
   .heroTextWrapper {
-    margin-top: 50px;
+    margin-top: 70px;
   }
 
   .heroTitle {
@@ -137,26 +114,9 @@
     margin-bottom: 0;
   }
 
-  .heroSubtitle {
-    font-size: 32px;
-    line-height: 46px;
-    margin-bottom: 0;
-  }
-
-  .timerDesktop {
-    display: none;
-  }
-
-  .timerMobile {
+  .timerWrapper {
     display: block;
-  }
-
-  .officialsDesktop {
-    display: none;
-  }
-
-  .officialsMobile {
-    display: block;
+    margin-top: 5%;
   }
 
   .spacer {

@@ -34,15 +34,15 @@ const Officials = () => {
                 LET YOUR VOICE BE HEARD!
               </h2>
               <p className={styles.headerDescription}>
-                Explore the inspiring nominations, learn about the remarkable <br />
+                Explore the inspiring nominations, learn about the remarkable
                 initiatives and dedication of your colleagues, friends, and 
-                family, <br /> and cast your vote for those who best embody the spirit 
-                of <br /> public service.
+                family, and cast your vote for those who best embody the spirit 
+                of  public service.
               </p>
               <p className={styles.headerDescription}>
-                Thank you for joining this special recognition event. Your <br />
-                participation helps ensure deserving efforts are celebrated and  <br />
-                supports a continued culture of dedication and innovation within  <br />
+                Thank you for joining this special recognition event. Your 
+                participation helps ensure deserving efforts are celebrated and 
+                supports a continued culture of dedication and innovation within  
                 the Local Government Service Commission.
               </p>
             </div>
@@ -124,8 +124,8 @@ const Officials = () => {
               </h2>
               <p className={styles.footerDescription}>
                 Follow the voting rules carefully. The system is designed to 
-                ensure that <br /> your vote counts. Every stage of the voting process 
-                needs to be <br /> followed. A detailed instruction on how to vote is 
+                ensure that your vote counts. Every stage of the voting process 
+                needs to be followed. A detailed instruction on how to vote is 
                 provided below.
               </p>
             </div>

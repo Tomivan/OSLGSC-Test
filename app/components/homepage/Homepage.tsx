@@ -7,12 +7,10 @@ import Officials from "../officials/Officials";
 import VotingRules from "../votingRules/VotingRules";
 import HowToVote from "../howToVote/HowToVote";
 import FixedVoteWidget from "../fixedVoteWidget/FixedVoteWidget";
-import TimerMobile from "../timerMobile/TimerMobile";
 import Timer from "../timer/Timer";
 import Image from "next/image";
 import Hero from "../../assets/hero.svg";
 import dynamic from "next/dynamic";
-import OfficialsMobile from "../officialsMobile/OfficialsMobile";
 import { Exo } from "next/font/google";
 import styles from "./Homepage.module.css";
 
@@ -88,7 +86,7 @@ const Homepage = () => {
                 </h2>
               </div>
               
-              <div className={styles.timerDesktop}>
+              <div className={styles.timerWrapper}>
                 <Timer />
               </div>
             </div>
@@ -96,20 +94,8 @@ const Homepage = () => {
         </div>
       </div>
       
-      <div className={styles.timerMobile}>
-        <TimerMobile />
-      </div>
-      
       <VoteImage />
-      
-      <div className={styles.officialsDesktop}>
-        <Officials />
-      </div>
-      
-      <div className={styles.officialsMobile}>
-        <OfficialsMobile />
-      </div>
-      
+      <Officials />
       <VotingRules />
       <HowToVote />
       <Leaderboard />

@@ -10,7 +10,7 @@
 }
 
 .widgetInner {
-  max-width: 28rem;
+  max-width: 1280px;
   margin-left: auto;
   margin-right: auto;
   padding-left: 1.5rem;
@@ -19,26 +19,14 @@
   padding-bottom: 1rem;
 }
 
-@media (min-width: 768px) {
-  .widgetInner {
-    max-width: 1280px;
-  }
-}
-
 .widgetContent {
   display: flex;
   align-items: center;
   width: fit-content;
   margin-left: auto;
   margin-right: auto;
-  gap: 30px;
+  gap: 63px;
   justify-content: space-between;
-}
-
-@media (min-width: 768px) {
-  .widgetContent {
-    gap: 63px;
-  }
 }
 
 .voteDisplay {
@@ -49,13 +37,7 @@
 
 .voteLabel {
   color: #343434;
-  font-size: 15px;
-}
-
-@media (min-width: 768px) {
-  .voteLabel {
-    font-size: 20px;
-  }
+  font-size: 20px;
 }
 
 .voteCount {
@@ -93,4 +75,20 @@
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
   font-size: 0.75rem;
+}
+
+@media (max-width: 767px) {
+  .widgetInner {
+    max-width: 28rem;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+
+  .widgetContent {
+    gap: 30px;
+  }
+
+  .voteLabel {
+    font-size: 15px;
+  }
 }

@@ -1,7 +1,7 @@
 "use client";
 
-import { AdminAuthProvider, useAdminAuth } from "../context/AdminAuthContext";
-import { VoteProvider } from "../context/VoteContext";
+import { AdminAuthProvider, useAdminAuth } from "../../context/AdminAuthContext";
+import { VoteProvider } from "../../context/VoteContext";
 import { useRouter, usePathname } from "next/navigation";
 import { useEffect } from "react";
 

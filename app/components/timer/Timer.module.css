@@ -9,12 +9,7 @@
   padding-bottom: 20px;
   margin-left: auto;
   margin-right: auto;
-}
-
-@media (min-width: 768px) {
-  .timerContainer {
-    width: 375px;
-  }
+  width: 375px;
 }
 
 .timerLabel {
@@ -28,14 +23,8 @@
   align-items: center;
   justify-content: center;
   gap: 1rem;
-  font-size: 47px;
+  font-size: 42.36px;
   color: #3B8501;
-}
-
-@media (min-width: 768px) {
-  .timerDisplay {
-    font-size: 42.36px;
-  }
 }
 
 .timeUnit {
@@ -45,15 +34,9 @@
 }
 
 .timeValue {
-  font-size: 42px;
+  font-size: 42.36px;
   line-height: 50px;
   letter-spacing: 7%;
-}
-
-@media (min-width: 768px) {
-  .timeValue {
-    font-size: 42.36px;
-  }
 }
 
 .timeLabel {
@@ -63,4 +46,18 @@
 
 .timeSeparator {
   font-size: 21px;
+}
+
+@media (max-width: 767px) {
+  .timerContainer {
+    width: 375px;
+  }
+
+  .timerDisplay {
+    font-size: 47px;
+  }
+
+  .timeValue {
+    font-size: 42px;
+  }
 }

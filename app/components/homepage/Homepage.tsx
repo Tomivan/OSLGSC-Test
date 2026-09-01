@@ -80,10 +80,10 @@ const Homepage = () => {
                 <h1 className={`${exoFont.className} ${styles.heroTitle}`}>
                   2026 Local
                 </h1>
-                <h2 className={`${exoFont.className} ${styles.heroSubtitle}`}>
+                <h2 className={`${exoFont.className} ${styles.heroTitle}`}>
                   Government Service
                 </h2>
-                <h2 className={`${exoFont.className} ${styles.heroSubtitle}`}>
+                <h2 className={`${exoFont.className} ${styles.heroTitle}`}>
                   Week Award
                 </h2>
               </div>

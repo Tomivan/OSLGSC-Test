@@ -16,27 +16,15 @@
   padding-left: 1rem;
   padding-right: 1rem;
   max-width: 28rem;
-  width: 100%;
+  width: 350px;
   margin-left: 1rem;
   margin-right: 1rem;
 }
 
-@media (min-width: 768px) {
-  .modalContainer {
-    width: 350px;
-  }
-}
-
 .modalText {
-  font-size: 0.875rem;
+  font-size: 18.2px;
   text-align: center;
   margin-bottom: 28px;
-}
-
-@media (min-width: 768px) {
-  .modalText {
-    font-size: 18.2px;
-  }
 }
 
 .buttonContainer {
@@ -80,4 +68,15 @@
 
 .cancelButton:hover {
   background-color: #a63c3c;
+}
+
+@media (max-width: 767px) {
+  .modalContainer {
+    width: 100%;
+    max-width: 28rem;
+  }
+
+  .modalText {
+    font-size: 0.875rem;
+  }
 }

@@ -15,12 +15,7 @@
   padding-top: 18px;
   padding-bottom: 18px;
   border: 1px solid #FAFAFA;
-}
-
-@media (min-width: 768px) {
-  .timerContainer {
-    width: 375px;
-  }
+  width: 300px;
 }
 
 .timerLabel {
@@ -62,4 +57,18 @@
   font-weight: bold;
   letter-spacing: 7%;
   font-size: 21px;
+}
+
+@media (max-width: 767px) {
+  .timerContainer {
+    width: 300px;
+  }
+
+  .timerLabel {
+    font-size: 20px;
+  }
+
+  .timeValue {
+    font-size: 32px;
+  }
 }

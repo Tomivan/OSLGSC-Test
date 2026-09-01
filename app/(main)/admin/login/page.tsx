@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
-import { useAdminAuth } from "../../context/AdminAuthContext";
+import { useAdminAuth } from "../../../context/AdminAuthContext";
 import Link from "next/link";
 import AdminNav from "../adminNav";
 

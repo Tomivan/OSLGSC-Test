@@ -2,11 +2,11 @@
 
 import React, { useState, useEffect, useCallback, useMemo } from "react";
 import { collection, collectionGroup, getDocs } from "firebase/firestore";
-import { db } from "../../lib/firebase";
+import { db } from "../../../lib/firebase";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheckToSlot, faPerson, faTableColumns, faBolt, faWifi } from '@fortawesome/free-solid-svg-icons';
-import { useAdminAuth } from "../../context/AdminAuthContext";
-import { useSocket } from "../../context/VoteContext";
+import { useAdminAuth } from "../../../context/AdminAuthContext";
+import { useSocket } from "../../../context/VoteContext";
 
 interface Contestant {
   id: string;

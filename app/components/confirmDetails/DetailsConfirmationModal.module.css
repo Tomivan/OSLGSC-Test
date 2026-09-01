@@ -7,14 +7,14 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 1rem;
+  padding: 2rem;
 }
 
 .modalContainer {
   background-color: white;
   border-radius: 0.5rem;
   padding: 2rem;
-  max-width: 24rem;
+  max-width: 28rem;
   width: 100%;
   position: relative;
 }
@@ -79,4 +79,10 @@
 
 .backButton:hover {
   background-color: #2d6801;
+}
+
+@media (max-width: 768px) {
+  .modalOverlay {
+    padding: 1rem;
+  }
 }

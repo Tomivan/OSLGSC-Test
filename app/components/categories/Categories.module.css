@@ -115,15 +115,9 @@
   text-align: center;
   text-transform: uppercase;
   font-weight: bold;
-  font-size: 1.5rem;
+  font-size: 32px;
   letter-spacing: 0;
   line-height: 43px;
-}
-
-@media (min-width: 768px) {
-  .mainTitle {
-    font-size: 32px;
-  }
 }
 
 .syncIndicator {
@@ -235,19 +229,23 @@
 
 .nomineesGrid {
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: repeat(4, 1fr);
   gap: 1rem;
   margin-top: 1rem;
 }
 
-@media (min-width: 768px) {
+@media (max-width: 1024px) {
   .nomineesGrid {
     grid-template-columns: repeat(2, 1fr);
   }
 }
 
-@media (min-width: 1024px) {
+@media (max-width: 767px) {
+  .mainTitle {
+    font-size: 1.5rem;
+  }
+
   .nomineesGrid {
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: 1fr;
   }
 }

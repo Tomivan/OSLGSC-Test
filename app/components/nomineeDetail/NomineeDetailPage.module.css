@@ -170,15 +170,9 @@
 
 .cardGrid {
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: 1fr 1fr;
   gap: 1.5rem;
   padding: 1.5rem;
-}
-
-@media (min-width: 768px) {
-  .cardGrid {
-    grid-template-columns: 1fr 1fr;
-  }
 }
 
 .imageContainer {
@@ -453,4 +447,14 @@
 .confirmationText {
   color: #15803D;
   font-size: 0.875rem;
+}
+
+@media (max-width: 767px) {
+  .cardGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .imageContainer {
+    height: 250px;
+  }
 }

@@ -6,58 +6,31 @@
 }
 
 .sectionContainer {
-  width: 90%;
-}
-
-@media (min-width: 768px) {
-  .sectionContainer {
-    width: 100%;
-    max-width: 1280px;
-  }
+  width: 100%;
+  max-width: 1280px;
 }
 
 .contentWrapper {
-  margin-top: 60px;
-  margin-bottom: 60px;
+  margin-top: 71px;
+  margin-bottom: 71px;
   text-align: center;
-}
-
-@media (min-width: 768px) {
-  .contentWrapper {
-    margin-top: 71px;
-    margin-bottom: 71px;
-  }
 }
 
 .mainTitle {
   text-transform: uppercase;
   text-align: center;
   font-weight: bold;
-  font-size: 1.5rem;
+  font-size: 32px;
   letter-spacing: 0;
   line-height: 100%;
 }
 
-@media (min-width: 768px) {
-  .mainTitle {
-    font-size: 32px;
-  }
-}
-
 .subtitle {
   font-weight: bold;
-  margin-top: 8px;
-  font-size: 0.75rem;
+  margin-top: 16px;
+  font-size: 1rem;
   letter-spacing: 0;
-  line-height: 20px;
-}
-
-@media (min-width: 768px) {
-  .subtitle {
-    margin-top: 16px;
-    font-size: 1rem;
-    line-height: 100%;
-  }
+  line-height: 100%;
 }
 
 .rulesGrid {
@@ -65,13 +38,8 @@
   width: fit-content;
   margin-left: auto;
   margin-right: auto;
-}
-
-@media (min-width: 768px) {
-  .rulesGrid {
-    display: flex;
-    gap: 74px;
-  }
+  display: flex;
+  gap: 74px;
 }
 
 .ruleItem {
@@ -79,25 +47,12 @@
 }
 
 .ruleItemMiddle {
-  margin-top: 40px;
-  margin-bottom: 40px;
-}
-
-@media (min-width: 768px) {
-  .ruleItemMiddle {
-    margin-top: 0;
-    margin-bottom: 0;
-  }
+  margin-top: 0;
+  margin-bottom: 0;
 }
 
 .ruleItemLast {
-  margin-top: 40px;
-}
-
-@media (min-width: 768px) {
-  .ruleItemLast {
-    margin-top: 0;
-  }
+  margin-top: 0;
 }
 
 .ruleTitle {
@@ -121,4 +76,39 @@
   margin-left: auto;
   margin-right: auto;
   margin-bottom: 16px;
+}
+
+@media (max-width: 767px) {
+  .sectionContainer {
+    width: 90%;
+  }
+
+  .contentWrapper {
+    margin-top: 60px;
+    margin-bottom: 60px;
+  }
+
+  .mainTitle {
+    font-size: 1.5rem;
+  }
+
+  .subtitle {
+    margin-top: 8px;
+    font-size: 0.75rem;
+    line-height: 20px;
+  }
+
+  .rulesGrid {
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .ruleItemMiddle {
+    margin-top: 40px;
+    margin-bottom: 40px;
+  }
+
+  .ruleItemLast {
+    margin-top: 40px;
+  }
 }

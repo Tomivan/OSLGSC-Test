@@ -2,38 +2,20 @@
   background-color: white;
   display: flex;
   justify-content: center;
-  padding-bottom: 40px;
-}
-
-@media (min-width: 768px) {
-  .mainContainer {
-    padding-bottom: 65px;
-  }
+  padding-bottom: 65px;
 }
 
 .sectionContainer {
-  width: 90%;
+  width: 100%;
+  max-width: 1280px;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-@media (min-width: 768px) {
-  .sectionContainer {
-    width: 100%;
-    max-width: 1280px;
-  }
-}
-
 .contentWrapper {
-  padding-top: 40px;
+  padding-top: 95px;
   width: 100%;
-}
-
-@media (min-width: 768px) {
-  .contentWrapper {
-    padding-top: 95px;
-  }
 }
 
 .mainTitle {
@@ -41,33 +23,19 @@
   text-align: center;
   text-transform: uppercase;
   font-weight: bold;
-  font-size: 1.5rem;
+  font-size: 32px;
   letter-spacing: 0;
   line-height: 43px;
-}
-
-@media (min-width: 768px) {
-  .mainTitle {
-    font-size: 32px;
-  }
 }
 
 .subtitle {
   color: #343434;
   font-weight: bold;
-  margin-top: 8px;
+  margin-top: 16px;
   text-align: center;
-  font-size: 0.75rem;
+  font-size: 1rem;
   letter-spacing: 0;
-  line-height: 20px;
-}
-
-@media (min-width: 768px) {
-  .subtitle {
-    margin-top: 16px;
-    font-size: 1rem;
-    line-height: 100%;
-  }
+  line-height: 100%;
 }
 
 .stepsGrid {
@@ -88,51 +56,69 @@
 }
 
 .stepNumber {
-  font-size: 10px;
+  font-size: 13px;
   letter-spacing: 0;
   color: #FAFAFA;
-  line-height: 20px;
-}
-
-@media (min-width: 768px) {
-  .stepNumber {
-    font-size: 13px;
-    line-height: 100%;
-  }
+  line-height: 100%;
 }
 
 .stepTitle {
   font-weight: bold;
-  font-size: 14px;
+  font-size: 18px;
   letter-spacing: 0;
   color: #FAFAFA;
-  line-height: 20px;
+  line-height: 24px;
   margin-top: 6px;
   margin-bottom: 6px;
 }
 
-@media (min-width: 768px) {
-  .stepTitle {
-    font-size: 18px;
-    line-height: 24px;
-  }
-}
-
 .stepDescription {
-  font-size: 11px;
+  font-size: 14px;
   letter-spacing: 0;
-  line-height: 20px;
+  line-height: 24px;
   color: #FAFAFA;
-}
-
-@media (min-width: 768px) {
-  .stepDescription {
-    font-size: 14px;
-    line-height: 24px;
-  }
 }
 
 .noteText {
   color: #F3FF0D;
   font-weight: bold;
+}
+
+@media (max-width: 767px) {
+  .mainContainer {
+    padding-bottom: 40px;
+  }
+
+  .sectionContainer {
+    width: 90%;
+  }
+
+  .contentWrapper {
+    padding-top: 40px;
+  }
+
+  .mainTitle {
+    font-size: 1.5rem;
+  }
+
+  .subtitle {
+    margin-top: 8px;
+    font-size: 0.75rem;
+    line-height: 20px;
+  }
+
+  .stepNumber {
+    font-size: 10px;
+    line-height: 20px;
+  }
+
+  .stepTitle {
+    font-size: 14px;
+    line-height: 20px;
+  }
+
+  .stepDescription {
+    font-size: 11px;
+    line-height: 20px;
+  }
 }

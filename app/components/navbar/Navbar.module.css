@@ -1,22 +1,16 @@
 .navbarContainer {
-  max-width: 28rem;
+  max-width: 1280px;
   display: flex;
   justify-content: space-between;
   background-color: white;
   overflow: hidden;
-}
-
-@media (min-width: 768px) {
-  .navbarContainer {
-    max-width: 1280px;
-    margin-left: auto;
-    margin-right: auto;
-  }
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .navbarSection {
   padding: 1rem;
-  width: 100%;
+  width: 80%;
   display: flex;
   justify-content: space-between;
   margin-left: auto;
@@ -24,44 +18,24 @@
   align-items: center;
 }
 
-@media (min-width: 768px) {
-  .navbarSection {
-    width: 80%;
-  }
-}
-
 .logoWrapper {
   display: flex;
 }
 
 .logoImage {
-  width: 53px;
-  height: 53px;
-}
-
-@media (min-width: 768px) {
-  .logoImage {
-    width: 92px;
-    height: 92px;
-  }
+  width: 92px;
+  height: 92px;
 }
 
 .logoText {
   font-weight: bold;
-  width: 200px;
-  font-size: 11px;
+  width: 283px;
+  font-size: 1rem;
+  line-height: 18px;
   color: #343434;
   margin-top: auto;
   margin-bottom: auto;
-}
-
-@media (min-width: 768px) {
-  .logoText {
-    width: 283px;
-    line-height: 18px;
-    font-size: 1rem;
-    margin-left: 5px;
-  }
+  margin-left: 5px;
 }
 
 .adminLink {
@@ -80,18 +54,39 @@
 .adminButton {
   background-color: #3B8501;
   color: white;
-  width: 75px;
-  height: 31px;
-  font-size: 9px;
+  width: 149px;
+  height: 46px;
+  font-size: 14px;
   border-radius: 5px;
   border: none;
   cursor: pointer;
 }
 
-@media (min-width: 768px) {
+@media (max-width: 768px) {
+  .navbarContainer {
+    max-width: 28rem;
+  }
+
+  .navbarSection {
+    width: 100%;
+    padding: 1rem;
+  }
+
+  .logoImage {
+    width: 53px;
+    height: 53px;
+  }
+
+  .logoText {
+    width: 200px;
+    font-size: 11px;
+    line-height: normal;
+    margin-left: 0;
+  }
+
   .adminButton {
-    width: 149px;
-    height: 46px;
-    font-size: 14px;
+    width: 75px;
+    height: 31px;
+    font-size: 9px;
   }
 }

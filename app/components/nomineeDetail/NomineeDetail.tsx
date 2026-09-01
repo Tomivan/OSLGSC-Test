@@ -5,8 +5,8 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useVote, useSocket } from "../../context/VoteContext";
 import FixedVoteWidget from "../fixedVoteWidget/FixedVoteWidget";
-import minus from "../assets/minus.png";
-import plus from "../assets/plus.png";
+import minus from "../../assets/minus.png";
+import plus from "../../assets/plus.png";
 import styles from "./NomineeDetailPage.module.css";
 
 interface NomineeDetailProps {

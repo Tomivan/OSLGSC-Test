@@ -46,9 +46,7 @@
 
 .headerTitle {
   text-transform: uppercase;
-  font-weight: bold;
   font-size: 1.875rem;
-  margin-bottom: 0.5rem;
   color: #343434;
 }
 
@@ -134,9 +132,7 @@
 
 .footerTitle {
   text-transform: uppercase;
-  font-weight: bold;
   font-size: 1.875rem;
-  margin-bottom: 0.5rem;
   color: #343434;
 }
 

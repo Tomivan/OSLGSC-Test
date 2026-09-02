@@ -5,6 +5,7 @@ import { useParams, useSearchParams } from "next/navigation";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "../../../lib/firebase";
 import { NomineeDetailPage } from "../../../components/nomineeDetail/NomineeDetail";
+import styles from "./NomineePage.module.css";
 
 interface NomineeData {
   id: string;
@@ -63,10 +64,10 @@ export default function NomineePage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="text-center">
-          <div className="w-16 h-16 border-4 border-[#3B8501] border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-          <p className="text-gray-600 font-medium">Loading nominee details...</p>
+      <div className={styles.loadingContainer}>
+        <div className={styles.loadingContent}>
+          <div className={styles.spinner}></div>
+          <p className={styles.loadingText}>Loading nominee details...</p>
         </div>
       </div>
     );
@@ -74,18 +75,18 @@ export default function NomineePage() {
 
   if (error || !nominee) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="text-center bg-white rounded-lg shadow-lg p-8 max-w-md">
-          <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
-            <svg className="w-8 h-8 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <div className={styles.loadingContainer}>
+        <div className={styles.errorContainer}>
+          <div className={styles.errorIcon}>
+            <svg className={styles.errorIconSvg} fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
             </svg>
           </div>
-          <h2 className="text-xl font-bold text-gray-900 mb-2">Error</h2>
-          <p className="text-gray-600 mb-4">{error || "Nominee not found"}</p>
+          <h2 className={styles.errorTitle}>Error</h2>
+          <p className={styles.errorMessage}>{error || "Nominee not found"}</p>
           <button
             onClick={() => window.history.back()}
-            className="px-6 py-2 bg-[#3B8501] hover:bg-[#2d6601] text-white font-semibold rounded-lg transition-colors duration-200"
+            className={styles.backButton}
           >
             Go Back
           </button>

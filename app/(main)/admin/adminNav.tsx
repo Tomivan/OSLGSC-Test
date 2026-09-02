@@ -2,17 +2,18 @@
 import React from "react";
 import logo from "../../assets/logo.svg";
 import Image from "next/image";
+import styles from "./adminNav.module.css";
 
 const AdminNav = () => {
     return (
-        <div className="max-w-md md:max-w-[1280px] flex justify-center md:mx-auto bg-white overflow-hidden">
-            <section className="p-6 w-full md:w-[500px] flex">
+        <div className={styles.navContainer}>
+            <section className={styles.navSection}>
                 <Image
                     src={logo}
                     alt="OSLGSC Logo"
-                    className="w-[80px] h-[80px] md:w-[92px] md:h-[92px]"
+                    className={styles.logo}
                 />
-                <h1 className="font-bold w-fit text-[13.5px] leading-[18px] md:text-lg uppercase text-center text-[#343434] my-auto">
+                <h1 className={styles.navTitle}>
                     Ogun State Local Government Service Award
                 </h1>
             </section>
